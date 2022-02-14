@@ -6,14 +6,14 @@
 #    By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 14:31:21 by xvoorvaa      #+#    #+#                  #
-#    Updated: 2022/02/14 18:10:53 by xander        ########   odam.nl          #
+#    Updated: 2022/02/14 18:21:26 by xander        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	minishell
 CFLAGS			=	-Wall -Wextra -Werror
 OBJS			=	$(SRCS:.c=.o)
-SRCS			=	minishell.c \
+SRCS			=	SRC/minishell.c \
 
 ifdef LEAKS
 	CFLAGS += -g3 -fsanitize=address

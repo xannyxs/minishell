@@ -6,11 +6,11 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/14 18:12:36 by xander        ########   odam.nl         */
+/*   Updated: 2022/02/14 18:21:36 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../INC/minishell.h"
 
 int main(void)
 {
