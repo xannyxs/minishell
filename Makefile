@@ -6,14 +6,21 @@
 #    By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 14:31:21 by xvoorvaa      #+#    #+#                  #
-#    Updated: 2022/02/14 18:21:26 by xander        ########   odam.nl          #
+#    Updated: 2022/02/15 16:50:10 by jobvan-d      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	minishell
+CC				=	gcc
 CFLAGS			=	-Wall -Wextra -Werror
-OBJS			=	$(SRCS:.c=.o)
-SRCS			=	SRC/minishell.c \
+OBJ_DIR			=	OBJ
+SRC_DIR			=	SRC
+INC_DIR			=	INC
+
+# using temporary wildcards for now
+SRCS			=	$(wildcard $(SRC_DIR)/*.c)
+OBJS			=	$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+HEADERS			=	$(wildcard $(INC_DIR)/*.h)
 
 ifdef LEAKS
 	CFLAGS += -g3 -fsanitize=address
@@ -31,13 +38,15 @@ REM_MESSAGE		= "$(RED)Removing files...$(NC)"
 
 all:	$(NAME)
 
-%.o: %.c
-	gcc $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS) | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@ -I$(INC_DIR)
+
+$(OBJ_DIR):
+	mkdir $@
 
 $(NAME): $(OBJS)
-	@clear
 	@echo $(START)
-	@gcc $(CFLAGS) $(OBJS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	@printf $(COMP_MESSAGE) $(SRCS)
 	@echo $(MESSAGE)
 
