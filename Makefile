@@ -6,7 +6,7 @@
 #    By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 14:31:21 by xvoorvaa      #+#    #+#                  #
-#    Updated: 2022/02/16 13:20:49 by jobvan-d      ########   odam.nl          #
+#    Updated: 2022/02/16 14:00:23 by jobvan-d      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,11 +16,14 @@ CFLAGS			=	-Wall -Wextra -Werror
 OBJ_DIR			=	OBJ
 SRC_DIR			=	SRC
 INC_DIR			=	INC
+LIBFT_DIR		=	libft
+LIBFT_H			=	$(LIBFT_DIR)/libft.h
+LIBFT_A			=	$(LIBFT_DIR)/libft.a
 
 # using temporary wildcards for now
 SRCS			=	$(wildcard $(SRC_DIR)/*.c)
 OBJS			=	$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-HEADERS			=	$(wildcard $(INC_DIR)/*.h)
+HEADERS			=	$(wildcard $(INC_DIR)/*.h) $(LIBFT_H)
 
 ifdef LEAKS
 	CFLAGS += -g3 -fsanitize=address
@@ -39,16 +42,19 @@ REM_MESSAGE		= "$(RED)Removing files...$(NC)"
 all:	$(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS) | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@ -I$(INC_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@ -I$(INC_DIR) -I$(LIBFT_DIR)
 
 $(OBJ_DIR):
 	mkdir $@
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(LIBFT_A)
 	@echo $(START)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lreadline
 	@printf $(COMP_MESSAGE) $(SRCS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIBFT_DIR) -lreadline -lft
 	@echo $(MESSAGE)
+
+$(LIBFT_A): $(LIBFT_H)
+	$(MAKE) -C $(LIBFT_DIR)
 
 clean:
 	@echo "\n"
@@ -60,6 +66,7 @@ clean:
 fclean:		clean
 	@rm -f $(NAME)
 	@rm -rf $(NAME).dSYM
+	$(MAKE) -C $(LIBFT_DIR) $@
 
 re:			fclean all
 
