@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 16:15:22 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/16 16:25:43 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/16 16:52:51 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	print_list(t_token *head)
 	printf("NULL\n");
 	write(1, "\n", 1);
 }
-
 
 void	new_node(t_token **head, char *content)
 {
