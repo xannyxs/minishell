@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/17 14:58:59 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/17 14:59:16 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	print_list(t_token *head);
 t_token	*token_new(char *content, const enum e_token type);
 
 t_token	*token_li_last(t_token *lst);
+
 
 void	token_li_push_back(t_token **lst, t_token *new);
 
