@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/16 16:34:42 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/16 16:45:19 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ typedef struct s_parsing
 	char	**prompt;
 	int		flag_check;
 	int		pipe_check;
-	char	**commands;
-	char	**text;
+	t_token	*tokenizer;
 }	t_parsing;
 
 t_token	*token_new(char *content, const enum e_token type);
@@ -48,6 +47,15 @@ void	token_li_push_back(t_token **lst, t_token *new);
 	MINISHELL
 */
 
-int		start_parsing(char **prompt, t_parsing *parsing);
+int		init_parsing(t_parsing *parsing);
+
+
+/*
+	LINKED LIST
+*/
+
+void	new_node(t_token **head, char *content);
+
+void	print_list(t_token *head);
 
 #endif

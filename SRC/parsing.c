@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/16 15:57:59 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/16 16:24:26 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,17 @@ int	check_pipes(char **prompt)
 	return (false);
 }
 
-int	start_parsing(char **prompt, t_parsing *parsing)
+int	init_parsing(t_parsing *parsing)
 {
 	int	i;
 
 	i = 0;
-	parsing->pipe_check = check_pipes(prompt);
+	parsing->pipe_check = check_pipes(parsing->prompt);
+	while (parsing->prompt[i] != NULL)
+	{
+		new_node(&parsing->tokenizer, parsing->prompt[i]);
+		i++;
+	}
+	print_list(parsing->tokenizer);
 	return (0);
 }
