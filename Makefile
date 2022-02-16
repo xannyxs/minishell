@@ -6,7 +6,7 @@
 #    By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 14:31:21 by xvoorvaa      #+#    #+#                  #
-#    Updated: 2022/02/15 16:50:10 by jobvan-d      ########   odam.nl          #
+#    Updated: 2022/02/16 12:51:55 by jobvan-d      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ $(OBJ_DIR):
 
 $(NAME): $(OBJS)
 	@echo $(START)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	@printf $(COMP_MESSAGE) $(SRCS)
 	@echo $(MESSAGE)
 
