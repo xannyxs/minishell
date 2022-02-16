@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 16:16:23 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/02/16 16:31:36 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/16 16:37:02 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,12 @@ t_token	*token_new(char *content, const enum e_token type)
 /* gets the last token in the token list. Returns NULL if lst is NULL. */
 t_token	*token_li_last(t_token *lst)
 {
-	if (!lst)
+	if (lst)
 	{
-		return (NULL);
-	}
-	while (lst->next)
-	{
-		lst = lst->next;
+		while (lst->next)
+		{
+			lst = lst->next;
+		}
 	}
 	return (lst);
 }
