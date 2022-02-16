@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 16:16:23 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/02/16 17:40:01 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/16 17:42:29 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,14 @@ void	token_li_push_back(t_token **lst, t_token *new)
 	}
 }
 
+/* frees an individual token, also frees the content string.
+ * Does NOT set it to NULL. */
+void	token_free(t_token *token)
+{
+	free(token->content);
+	free(token);
+}
+
 /* frees a token list, including the content strings, and sets it to NULL. */
 void	token_li_free(t_token **lst)
 {
@@ -64,8 +72,7 @@ void	token_li_free(t_token **lst)
 	while (*lst)
 	{
 		tmp = (*lst)->next;
-		free((*lst)->content);
-		free(*lst);
+		token_free(*lst);
 		*lst = tmp;
 	}
 }
