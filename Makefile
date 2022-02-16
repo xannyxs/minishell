@@ -6,7 +6,7 @@
 #    By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 14:31:21 by xvoorvaa      #+#    #+#                  #
-#    Updated: 2022/02/16 14:00:23 by jobvan-d      ########   odam.nl          #
+#    Updated: 2022/02/16 14:20:28 by xvoorvaa      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ $(OBJ_DIR):
 $(NAME): $(OBJS) $(LIBFT_A)
 	@echo $(START)
 	@printf $(COMP_MESSAGE) $(SRCS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIBFT_DIR) -lreadline -lft
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIBFT_DIR) -lreadline -lft
 	@echo $(MESSAGE)
 
 $(LIBFT_A): $(LIBFT_H)
