@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/16 16:52:25 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/16 17:34:34 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "libft.h"
 
 enum e_token {
+	T_UNKNOWN,
 	T_LITERAL,
 	T_PIPE,
 	T_REDIRECT,
@@ -41,6 +42,7 @@ typedef struct s_parsing
 t_token	*token_new(char *content, const enum e_token type);
 t_token	*token_li_last(t_token *lst);
 void	token_li_push_back(t_token **lst, t_token *new);
+void	token_li_free(t_token **lst);
 
 /*
 	MINISHELL
