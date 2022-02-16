@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/16 14:18:59 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/16 14:53:12 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@
 int	main(void)
 {
 	int		err;
-	char	*str;
+	char	*line;
 	char	**prompt;
 
 	prompt = NULL;
 	while (true)
 	{
-		str = readline("minishell $> ");
-		prompt = ft_split(str, ' ');
+		line = readline("minishell $> ");
+		prompt = ft_split(line, ' ');
 		if (prompt == NULL)
 		{
 			printf("exit\n");
@@ -40,7 +40,7 @@ int	main(void)
 			err = start_parsing(prompt);
 			if (err != 0)
 				exit(0);
-			free(str);
+			free(line);
 		}
 	}
 	return (0);
