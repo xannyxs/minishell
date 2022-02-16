@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/16 16:45:19 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/16 16:51:03 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,17 @@
 # include "libft.h"
 
 enum e_token {
-	tok_unknown,
-	tok_literal,
-	tok_pipe,
-	tok_redirect,
-	tok_redirect_file_to_stdin
+	T_LITERAL,
+	T_PIPE,
+	T_REDIRECT,
+	T_REDIRECT_FILE_TO_STDIN
 };
 
 typedef struct s_token
 {
 	char			*content;
-	struct s_token	*next;
 	enum e_token	token;
+	struct s_token	*next;
 }			t_token;
 
 typedef struct s_parsing
