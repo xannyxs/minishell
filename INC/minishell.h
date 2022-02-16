@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/16 16:14:34 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/16 16:34:42 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,19 @@
 # include <errno.h>
 # include "libft.h"
 
-enum e_token { T_UNKNOWN, T_LITERAL, T_PIPE, T_REDIRECT, T_REDIRECT_FILE_TO_STDIN };
+enum e_token {
+	tok_unknown,
+	tok_literal,
+	tok_pipe,
+	tok_redirect,
+	tok_redirect_file_to_stdin
+};
 
 typedef struct s_token
 {
 	char			*content;
 	struct s_token	*next;
-	enum e_token	*token;
+	enum e_token	token;
 }			t_token;
 
 typedef struct s_parsing
@@ -33,6 +39,10 @@ typedef struct s_parsing
 	char	**commands;
 	char	**text;
 }	t_parsing;
+
+t_token	*token_new(char *content, const enum e_token type);
+t_token	*token_li_last(t_token *lst);
+void	token_li_push_back(t_token **lst, t_token *new);
 
 /*
 	MINISHELL
