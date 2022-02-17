@@ -6,11 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/02/17 14:59:23 by xvoorvaa      ########   odam.nl         */
-=======
-/*   Updated: 2022/02/17 14:53:07 by xvoorvaa      ########   odam.nl         */
->>>>>>> 24bd83e833d4ec05cad178ac9e2eec3b6d011b3d
+/*   Updated: 2022/02/17 15:02:41 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +39,6 @@ typedef struct s_parsing
 	t_token	*tokenizer;
 }	t_parsing;
 
-<<<<<<< HEAD
-t_token	*token_new(char *content, const enum e_token type);
-t_token	*token_li_last(t_token *lst);
-void	token_li_push_back(t_token **lst, t_token *new);
-void	token_free(t_token *token);
-void	token_li_free(t_token **lst);
-=======
->>>>>>> 24bd83e833d4ec05cad178ac9e2eec3b6d011b3d
 
 /*
 	MINISHELL
@@ -70,10 +58,10 @@ t_token	*token_new(char *content, const enum e_token type);
 
 t_token	*token_li_last(t_token *lst);
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 24bd83e833d4ec05cad178ac9e2eec3b6d011b3d
 void	token_li_push_back(t_token **lst, t_token *new);
+
+void	token_free(t_token *token);
+
+void	token_li_free(t_token **lst);
 
 #endif
