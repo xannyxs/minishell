@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 16:15:22 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/17 15:33:25 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/17 16:03:03 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
-
-/* Frees the whole list, including content */
-int	free_list(t_token **head)
-{
-	t_token	*temp;
-
-	while (*head != NULL)
-	{
-		temp = *head;
-		*head = (*head)->next;
-		free(temp->content);
-		free(temp);
-	}
-	return (0);
-}
 
 void	print_token(t_token *head)
 {

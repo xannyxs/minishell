@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/17 15:28:11 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/17 16:04:24 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,7 @@ void	token_li_push_back(t_token **lst, t_token *new);
 
 void	token_free(t_token *token);
 
-void	token_li_free(t_token **lst);
-
-int		free_list(t_token **head);
+void	token_free_list(t_token **lst);
 
 /*
 	CHECK_CHAR

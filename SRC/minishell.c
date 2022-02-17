@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/17 15:35:21 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/17 16:04:07 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(void)
 				exit(0);
 			free(line);
 			free(parsing.prompt);
-			free_list(&parsing.token_list);
+			token_free_list(&parsing.token_list);
 			system("leaks minishell");
 		}
 	}

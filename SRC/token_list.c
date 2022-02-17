@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 16:16:23 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/02/16 17:42:29 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/17 16:03:28 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	token_free(t_token *token)
 }
 
 /* frees a token list, including the content strings, and sets it to NULL. */
-void	token_li_free(t_token **lst)
+void	token_free_list(t_token **lst)
 {
 	t_token	*tmp;
 
