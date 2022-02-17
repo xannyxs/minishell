@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/16 16:52:25 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/17 14:53:07 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,6 @@ typedef struct s_parsing
 	t_token	*tokenizer;
 }	t_parsing;
 
-t_token	*token_new(char *content, const enum e_token type);
-t_token	*token_li_last(t_token *lst);
-void	token_li_push_back(t_token **lst, t_token *new);
 
 /*
 	MINISHELL
@@ -55,5 +52,11 @@ int		init_parsing(t_parsing *parsing);
 void	new_node(t_token **head, char *content);
 
 void	print_list(t_token *head);
+
+t_token	*token_new(char *content, const enum e_token type);
+
+t_token	*token_li_last(t_token *lst);
+
+void	token_li_push_back(t_token **lst, t_token *new);
 
 #endif
