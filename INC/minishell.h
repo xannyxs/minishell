@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/17 17:09:35 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/17 18:02:57 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,21 @@ enum e_token {
 	T_LITERAL_EXPANDING,
 	T_LITERAL_NONEXPANDING,
 	T_PIPE,
-	T_REDIRECT_STDOUT_TO_FILE, // >
-	T_REDIRECT_STDOUT_TO_FILE_APPEND, // >>
-	T_REDIRECT_FILE_TO_STDIN, // <
-	T_REDIRECT_FILE_TO_DELIMITER // <<
+	T_REDIRECT_STDOUT_TO_FILE, /* > */
+	T_REDIRECT_STDOUT_TO_FILE_APPEND, /* >> */
+	T_REDIRECT_FILE_TO_STDIN, /* < */
+	T_REDIRECT_FILE_TO_DELIMITER /* << */
 };
 
-typedef struct s_token
+typedef struct		s_token
 {
 	char			*content;
 	int				separated_from_previous;
 	enum e_token	token;
 	struct s_token	*next;
-}			t_token;
+}	t_token;
 
-typedef struct s_parsing
+typedef struct	s_parsing
 {
 	char	**prompt;
 	t_token	*token_list;
@@ -51,7 +51,7 @@ typedef struct s_parsing
 
 int		init_parsing(t_parsing *parsing);
 
-void    execute_program(t_parsing parsing);
+void    execute_line(t_parsing parsing);
 
 /*
 	LINKED LIST

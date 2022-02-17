@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/17 17:03:56 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/17 17:51:54 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,14 @@ int	main(void)
 		if (parsing.prompt == NULL)
 		{
 			printf("exit\n");
-			exit(0);
+			exit(errno);
 		}
 		else
 		{
 			err = init_parsing(&parsing);
 			if (err != 0)
-				exit(0);
+				exit(errno);
+			execute_line(parsing);
 			free(line);
 			free(parsing.prompt);
 			token_free_list(&parsing.token_list);
