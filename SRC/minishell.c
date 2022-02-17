@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/16 16:13:18 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/17 17:36:01 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ int	main(void)
 		if (parsing.prompt == NULL)
 		{
 			printf("exit\n");
-			system("leaks minishell");
-			exit(0);
+			exit(errno);
 		}
 		else
 		{
