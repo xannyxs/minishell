@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/17 17:09:35 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/17 18:09:59 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,13 @@ int		check_redirect_stdout_append(char *prompt);
 int		check_redirect_stdout(char *prompt);
 
 int		check_pipes(char *prompt);
+
+
+char	**ft_args_split(char *str);
+void	m_splitargs_error(const char *s);
+char	*m_copy_qword(char *dst, const char *str, size_t *i, size_t len);
+char	*m_create_quotew(const char *s, size_t *index);
+int		m_skip_quotew(const char *str, size_t *i, int *wordcount,
+			int decrement_on_escape);
 
 #endif
