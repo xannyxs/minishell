@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/16 17:43:03 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/17 14:45:51 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,25 @@
 # include <errno.h>
 # include "libft.h"
 
+// TODO: maybe after the literals have been expanded,
+// set to a more sane T_LITERAL so we don't have to if/else as much etc.
+// TODO: >> <<
 enum e_token {
 	T_UNKNOWN,
 	T_LITERAL,
+	T_LITERAL_EXPANDING,
+	T_LITERAL_NONEXPANDING,
 	T_PIPE,
-	T_REDIRECT,
-	T_REDIRECT_FILE_TO_STDIN
+	T_REDIRECT_STDOUT_TO_FILE, // >
+	T_REDIRECT_FILE_TO_STDIN // <
 };
 
 typedef struct s_token
 {
-	char			*content;
-	enum e_token	token;
 	struct s_token	*next;
+	char			*content;
+	int				separated_from_previous;
+	enum e_token	token;
 }			t_token;
 
 typedef struct s_parsing
