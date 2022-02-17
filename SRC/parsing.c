@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/16 16:24:26 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/17 15:24:14 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,22 @@
 	- Be careful with minus (-)
 */
 
-int	check_pipes(char **prompt)
-{
-	int	i;
-
-	i = 0;
-	while (prompt[i] != NULL)
-	{
-		if (ft_strcmp(prompt[i], "|") == 0)
-			return (true);
-		i++;
-	}
-	return (false);
-}
-
 int	init_parsing(t_parsing *parsing)
 {
 	int	i;
 
 	i = 0;
-	parsing->pipe_check = check_pipes(parsing->prompt);
 	while (parsing->prompt[i] != NULL)
 	{
-		new_node(&parsing->tokenizer, parsing->prompt[i]);
+		if (check_pipes(parsing->prompt) == true)
+			new_node(&parsing->token_list, parsing->prompt[i], T_PIPE);
+		else if (check_redirect(parsing->prompt) == true)
+			new_node(&parsing->token_list, parsing->prompt[i], T_REDIRECT_STDOUT_TO_FILE);
+		else
+			new_node(&parsing->token_list, parsing->prompt[i], T_LITERAL);
 		i++;
 	}
-	print_list(parsing->tokenizer);
+	print_list(parsing->token_list);
+	print_token(parsing->token_list);
 	return (0);
 }

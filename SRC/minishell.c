@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/16 16:13:18 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/17 15:35:21 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	main(void)
 		if (parsing.prompt == NULL)
 		{
 			printf("exit\n");
-			system("leaks minishell");
 			exit(0);
 		}
 		else
@@ -41,6 +40,9 @@ int	main(void)
 			if (err != 0)
 				exit(0);
 			free(line);
+			free(parsing.prompt);
+			free_list(&parsing.token_list);
+			system("leaks minishell");
 		}
 	}
 	return (0);
