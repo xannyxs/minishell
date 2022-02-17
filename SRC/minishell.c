@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/17 18:19:38 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/17 18:22:02 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,13 @@ int	main(void)
 			err = init_parsing(&parsing);
 			if (err != 0)
 				exit(errno);
-			execute_line(parsing);
-			free(line);
-			free(parsing.prompt);
-			token_free_list(&parsing.token_list);
+			if (parsing.token_list != NULL)
+			{
+				execute_line(parsing);
+				free(line);
+				free(parsing.prompt);
+				token_free_list(&parsing.token_list);
+			}
 			system("leaks minishell");
 		}
 	}
