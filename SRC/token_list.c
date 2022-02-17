@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 16:16:23 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/02/17 16:03:28 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/17 16:16:29 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	token_li_push_back(t_token **lst, t_token *new)
 
 /* frees an individual token, also frees the content string.
  * Does NOT set it to NULL. */
-void	token_free(t_token *token)
+static void	token_free(t_token *token)
 {
 	free(token->content);
 	free(token);

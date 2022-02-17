@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/17 16:04:24 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/17 17:09:35 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ enum e_token {
 	T_LITERAL_NONEXPANDING,
 	T_PIPE,
 	T_REDIRECT_STDOUT_TO_FILE, // >
-	T_REDIRECT_FILE_TO_STDIN // <
+	T_REDIRECT_STDOUT_TO_FILE_APPEND, // >>
+	T_REDIRECT_FILE_TO_STDIN, // <
+	T_REDIRECT_FILE_TO_DELIMITER // <<
 };
 
 typedef struct s_token
@@ -49,6 +51,8 @@ typedef struct s_parsing
 
 int		init_parsing(t_parsing *parsing);
 
+void    execute_program(t_parsing parsing);
+
 /*
 	LINKED LIST
 */
@@ -59,13 +63,13 @@ void	print_list(t_token *head);
 
 void	print_token(t_token *head);
 
+int		lstsize(t_token	*head);
+
 t_token	*token_new(char *content, const enum e_token type);
 
 t_token	*token_li_last(t_token *lst);
 
 void	token_li_push_back(t_token **lst, t_token *new);
-
-void	token_free(t_token *token);
 
 void	token_free_list(t_token **lst);
 
@@ -73,8 +77,14 @@ void	token_free_list(t_token **lst);
 	CHECK_CHAR
 */
 
-int		check_redirect(char **prompt);
+int		check_delimiter(char *prompt);
 
-int		check_pipes(char **prompt);
+int		check_redirect_stdin(char *prompt);
+
+int		check_redirect_stdout_append(char *prompt);
+
+int		check_redirect_stdout(char *prompt);
+
+int		check_pipes(char *prompt);
 
 #endif

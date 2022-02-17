@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 16:15:22 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/17 16:03:03 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/17 16:42:52 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,19 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+
+int	lstsize(t_token	*head)
+{
+	int	n;
+
+	n = 0;
+	while (head)
+	{
+		n++;
+		head = head->next;
+	}
+	return (n);
+}
 
 void	print_token(t_token *head)
 {
