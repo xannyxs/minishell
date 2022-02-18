@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/18 11:22:20 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/18 14:56:59 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(void)
 	t_vars		vars;
 
 	vars.prompt = NULL;
+	vars.token_list = NULL;
 	while (true)
 	{
 		line = readline("minishell $> ");
