@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/17 18:19:53 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/18 11:19:48 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,19 @@ typedef struct		s_token
 	struct s_token	*next;
 }	t_token;
 
-typedef struct	s_parsing
+typedef struct	s_vars
 {
 	char	**prompt;
 	t_token	*token_list;
-}	t_parsing;
+}	t_vars;
 
 /*
 	MINISHELL
 */
 
-int		init_parsing(t_parsing *parsing);
+int		init_vars(t_vars *vars);
 
-void    execute_line(t_parsing parsing);
+void    execute_line(t_vars vars);
 
 /*
 	LINKED LIST

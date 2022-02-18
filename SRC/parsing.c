@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/17 18:21:40 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/18 11:52:54 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 	- Be careful with minus (-)
 */
 
-int	init_parsing(t_parsing *parsing)
+int	init_vars(t_vars *parsing)
 {
 	int	i;
 
@@ -47,7 +47,7 @@ int	init_parsing(t_parsing *parsing)
 			new_node(&parsing->token_list, parsing->prompt[i], T_LITERAL);
 		i++;
 	}
-	print_list(parsing->token_list);
-	print_token(parsing->token_list);
+	// print_list(parsing->token_list);
+	// print_token(parsing->token_list);
 	return (0);
 }
