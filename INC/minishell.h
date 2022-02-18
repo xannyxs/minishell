@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/18 12:50:36 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/18 21:00:22 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include <errno.h>
 # include "libft.h"
+
+// TODO
+# define T_DEFAULT_TOKEN (T_LITERAL_EXPANDING)
 
 // TODO: maybe after the literals have been expanded,
 // set to a more sane T_LITERAL so we don't have to if/else as much etc.
