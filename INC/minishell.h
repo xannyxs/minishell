@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/18 11:19:48 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/18 12:50:36 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ enum e_token {
 	T_REDIRECT_FILE_TO_DELIMITER /* << */
 };
 
-typedef struct		s_token
+typedef struct	s_token
 {
 	char			*content;
 	int				separated_from_previous;
@@ -39,10 +39,10 @@ typedef struct		s_token
 	struct s_token	*next;
 }	t_token;
 
-typedef struct	s_vars
+typedef struct s_vars
 {
-	char	**prompt;
-	t_token	*token_list;
+	char			**prompt;
+	t_token			*token_list;
 }	t_vars;
 
 /*
@@ -51,7 +51,13 @@ typedef struct	s_vars
 
 int		init_vars(t_vars *vars);
 
-void    execute_line(t_vars vars);
+int		execute_line(t_vars vars);
+
+/*
+	FUNCTIONS
+*/
+
+int		exec_echo(t_vars vars);
 
 /*
 	LINKED LIST
@@ -87,11 +93,18 @@ int		check_redirect_stdout(char *prompt);
 
 int		check_pipes(char *prompt);
 
+/*
+	OVERIG
+*/
 
 char	**ft_args_split(char *str);
+
 void	m_splitargs_error(const char *s);
+
 char	*m_copy_qword(char *dst, const char *str, size_t *i, size_t len);
+
 char	*m_create_quotew(const char *s, size_t *index);
+
 int		m_skip_quotew(const char *str, size_t *i, int *wordcount,
 			int decrement_on_escape);
 
