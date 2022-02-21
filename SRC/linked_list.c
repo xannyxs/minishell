@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 16:15:22 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/17 16:42:52 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/18 14:57:43 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,24 +56,12 @@ void	print_list(t_token *head)
 void	new_node(t_token **head, char *content, int token)
 {
 	t_token	*new_node;
-	t_token	*last_token;
 
-	new_node = ft_calloc(sizeof(t_token), 1);
+	new_node = token_new(content, token);
 	if (!new_node)
 	{
-		free(new_node);
+		// TODO: error
 		return ;
 	}
-	last_token = *head;
-	new_node->content = content;
-	new_node->token = token;
-	new_node->next = NULL;
-	if (*head == NULL)
-		*head = new_node;
-	else
-	{
-		while (last_token->next != NULL)
-			last_token = last_token->next;
-		last_token->next = new_node;
-	}
+	token_li_push_back(head, new_node);
 }
