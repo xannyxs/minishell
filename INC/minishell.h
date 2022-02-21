@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/18 12:50:36 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/21 16:18:24 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ enum e_token {
 	T_REDIRECT_FILE_TO_DELIMITER /* << */
 };
 
-typedef struct	s_token
+typedef struct s_token
 {
 	char			*content;
 	int				separated_from_previous;
@@ -41,6 +41,8 @@ typedef struct	s_token
 
 typedef struct s_vars
 {
+	char			*old_pwd;
+	char			*pwd;
 	char			**prompt;
 	t_token			*token_list;
 }	t_vars;
@@ -51,13 +53,17 @@ typedef struct s_vars
 
 int		init_vars(t_vars *vars);
 
-int		execute_line(t_vars vars);
+int		execute_line(t_vars *vars);
 
 /*
 	FUNCTIONS
 */
 
 int		exec_echo(t_vars vars);
+
+int		exec_cd(t_vars *vars);
+
+int		exec_pwd(t_vars vars);
 
 /*
 	LINKED LIST

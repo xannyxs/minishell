@@ -1,39 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   execute_line.c                                     :+:    :+:            */
+/*   function_pwd.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/17 17:44:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/21 16:18:54 by xvoorvaa      ########   odam.nl         */
+/*   Created: 2022/02/21 12:17:10 by xvoorvaa      #+#    #+#                 */
+/*   Updated: 2022/02/21 16:10:16 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
+#include <stdio.h>
 #include <unistd.h>
-#include <string.h>
 
-//TODO: Error handeling
-int	execute_line(t_vars *vars)
+/*
+	PWD: Print Working Directory
+	It prints the directory you are in right now.
+	There are some small edgecasses.
+	If you use ANY flag. It should print: "pwd: bad option: *FLAG*"
+	or "pwd: too many arguments".
+	Check in your list if you use cd in a pipe.
+*/
+
+int	exec_pwd(t_vars vars)
 {
-	int	i;
-
-	i = 0;
-	if (ft_strcmp(vars->prompt[i], "echo") == 0)
-		exec_echo(*vars);
-	else if (ft_strcmp(vars->prompt[i], "cd") == 0)
-		exec_cd(vars);
-	else if (ft_strcmp(vars->prompt[i], "pwd") == 0)
-		exec_pwd(*vars);
-	else
+	vars.pwd = getcwd(NULL, 1);
+	if (vars.pwd == NULL)
 	{
-		printf("%s\n", strerror(errno));
-		exit(errno);
+		printf("pwd: bad option\n");
+		return (errno);
 	}
+	printf("%s\n", vars.pwd);
 	return (0);
 }

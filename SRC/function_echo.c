@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/18 11:55:37 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/18 12:20:22 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/21 12:01:57 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 
 #include <unistd.h>
 #include <stdbool.h>
+
+/*
+	ECHO FUNC:
+	Pretty easy. It just prints the line out to STDOUT.
+	We only need to use -n as flag, which doesn't place a newline at the end.
+
+	return 0 means I reached the end of the linked list.
+	return 1 means otherwise
+*/
 
 static int	print_echo(t_vars vars, int flag)
 {
