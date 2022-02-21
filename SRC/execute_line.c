@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:44:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/21 16:18:54 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/21 17:25:32 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	execute_line(t_vars *vars)
 		exec_pwd(*vars);
 	else
 	{
-		printf("%s\n", strerror(errno));
-		exit(errno);
+		printf("minishell: command not found: %s\n", vars->token_list->content);
+		return (127);
 	}
 	return (0);
 }
