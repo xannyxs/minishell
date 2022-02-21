@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/21 16:18:24 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/21 17:29:43 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_token
 
 typedef struct s_vars
 {
+	int				err_output;
 	char			*old_pwd;
 	char			*pwd;
 	char			**prompt;
