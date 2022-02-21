@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/18 11:55:37 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/21 18:29:36 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/21 21:15:04 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,26 +70,26 @@ static int	print_echo(t_vars vars, int is_dollar)
 	return (0);
 }
 
-int	exec_echo(t_vars vars)
+int	exec_echo(t_vars *vars)
 {
 	int	ret;
 	int	is_flag;
 	int	is_dollar;
 
 	is_flag = false;
-	vars.token_list = vars.token_list->next;
-	if (vars.token_list == NULL)
+	vars->token_list = vars->token_list->next;
+	if (vars->token_list == NULL)
 	{
 		write(STDOUT_FILENO, "\n", 1);
 		return (0);
 	}
-	else if (ft_strcmp(vars.token_list->content, "-n") == 0)
+	else if (ft_strcmp(vars->token_list->content, "-n") == 0)
 	{
-		vars.token_list = vars.token_list->next;
+		vars->token_list = vars->token_list->next;
 		is_flag = true;
 	}
-	is_dollar = check_dollar(vars);
-	ret = print_echo(vars, is_dollar);
+	is_dollar = check_dollar(*vars);
+	ret = print_echo(*vars, is_dollar);
 	if (is_flag == false)
 		write(STDOUT_FILENO, "\n", 1);
 	return (ret);

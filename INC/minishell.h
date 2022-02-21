@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/21 17:29:43 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/21 22:44:15 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,14 @@ enum e_token {
 	T_REDIRECT_FILE_TO_DELIMITER /* << */
 };
 
-typedef struct s_token
+typedef struct		s_envlist
+{
+	char				*variable;
+	char				*content;
+	struct s_envlist	*next;
+}	t_envlist;
+
+typedef struct		s_token
 {
 	char			*content;
 	int				separated_from_previous;
@@ -39,13 +46,14 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-typedef struct s_vars
+typedef struct		s_vars
 {
 	int				err_output;
 	char			*old_pwd;
 	char			*pwd;
 	char			**prompt;
 	t_token			*token_list;
+	t_envlist		*var_list;
 }	t_vars;
 
 /*
@@ -60,11 +68,19 @@ int		execute_line(t_vars *vars);
 	FUNCTIONS
 */
 
-int		exec_echo(t_vars vars);
+int		exec_echo(t_vars *vars);
 
 int		exec_cd(t_vars *vars);
 
-int		exec_pwd(t_vars vars);
+int		exec_pwd(t_vars *vars);
+
+int		exec_export(t_vars *vars);
+
+int		exec_unset(t_vars *vars);
+
+int		exec_env(t_vars *vars);
+
+int		exec_exit(t_vars *vars);
 
 /*
 	LINKED LIST
