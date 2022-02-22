@@ -6,11 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/02/22 11:42:20 by xvoorvaa      ########   odam.nl         */
-=======
-/*   Updated: 2022/02/18 21:00:22 by jobvan-d      ########   odam.nl         */
->>>>>>> lexer progress
+/*   Updated: 2022/02/22 12:43:19 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
