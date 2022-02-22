@@ -6,11 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/02/22 17:27:03 by jobvan-d      ########   odam.nl         */
-=======
-/*   Updated: 2022/02/22 17:04:12 by xvoorvaa      ########   odam.nl         */
->>>>>>> Fixed PWD. Changed function.h. Fixed leaks in all built-in execs.
+/*   Updated: 2022/02/22 18:56:37 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
