@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/22 11:42:51 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/22 18:39:51 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ int	main(void)
 	int			err;
 	char		*line;
 	t_vars		vars;
+	extern char	**environ;
 
 	vars.prompt = NULL;
 	vars.token_list = NULL;
 	vars.var_list = NULL;
+	vars.environ = environ;
 	while (true)
 	{
 		line = readline("minishell $> ");
@@ -48,8 +50,8 @@ int	main(void)
 				free(vars.prompt);
 				token_free_list(&vars.token_list);
 			}
-			// system("leaks minishell");
 		}
+		system("leaks minishell");
 	}
 	return (0);
 }
