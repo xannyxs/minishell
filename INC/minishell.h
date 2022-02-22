@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/22 12:43:19 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/22 17:27:03 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct		s_vars
 	unsigned char	err_output;
 	char			*old_pwd;
 	char			*pwd;
-	char			**prompt;
 	t_token			*token_list;
 	t_envlist		*var_list;
 }	t_vars;
@@ -63,7 +62,7 @@ typedef struct		s_vars
 	MINISHELL
 */
 
-int		init_vars(t_vars *vars);
+int		init_vars(const char *line, t_vars *vars);
 
 int		execute_line(t_vars *vars);
 
@@ -89,15 +88,11 @@ int		exec_exit(t_vars *vars);
 	LINKED LIST
 */
 
-void	new_node_token(t_token **head, char *content, int token);
-
 void	new_node(t_envlist **head, char *variable, char *content);
 
 void	print_list(t_envlist *head);
 
 void	print_token(t_token *head);
-
-int		lstsize(t_token	*head);
 
 t_token	*token_new(char *content, const enum e_token type);
 
@@ -105,7 +100,14 @@ t_token	*token_li_last(t_token *lst);
 
 void	token_li_push_back(t_token **lst, t_token *new);
 
+t_token	*token_li_pop_back(t_token **tlst);
+
 void	token_free_list(t_token **lst);
+
+/*
+	LEXER
+*/
+void	lex(t_token **tlst, const char *line);
 
 /*
 	CHECK_CHAR
@@ -124,16 +126,5 @@ int		check_pipes(char *prompt);
 /*
 	OVERIG
 */
-
-char	**ft_args_split(char *str);
-
-void	m_splitargs_error(const char *s);
-
-char	*m_copy_qword(char *dst, const char *str, size_t *i, size_t len);
-
-char	*m_create_quotew(const char *s, size_t *index);
-
-int		m_skip_quotew(const char *str, size_t *i, int *wordcount,
-			int decrement_on_escape);
 
 #endif

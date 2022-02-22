@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/22 11:42:51 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/22 17:24:14 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,21 @@ int	main(void)
 	char		*line;
 	t_vars		vars;
 
-	vars.prompt = NULL;
-	vars.token_list = NULL;
-	vars.var_list = NULL;
 	while (true)
 	{
 		line = readline("minishell $> ");
-		vars.prompt = ft_args_split(line);
-		free(line);
-		if (vars.prompt == NULL)
+
+		// TODO: eof
+		if (line)
 		{
-			printf("exit\n");
-			exit(errno);
-		}
-		else
-		{
-			err = init_vars(&vars);
+			err = init_vars(line, &vars);
+			free(line);
 			if (err != 0)
 				exit(errno);
+			//print_token(vars.token_list);
 			if (vars.token_list != NULL)
 			{
 				vars.err_output = execute_line(&vars);
-				free(vars.prompt);
 				token_free_list(&vars.token_list);
 			}
 			// system("leaks minishell");

@@ -6,15 +6,11 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/22 10:24:10 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/22 17:28:54 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-#include <stdio.h>
-#include <unistd.h>
-#include <stdbool.h>
 
 /*
 	LET OP HET VOLGENDE:
@@ -26,33 +22,32 @@
 	- Be careful with minus (-)
 */
 
-int	init_vars(t_vars *parsing)
+// this is temporary.
+// TODO: expansion.
+// TODO: merging of literals.
+static int	parse(t_vars *vars)
 {
-	int	i;
+	t_token	*cur;
 
-	i = 0;
-	while (parsing->prompt[i] != NULL)
+	cur = vars->token_list;
+	while (cur)
 	{
-		if (check_pipes(parsing->prompt[i]) == true)
-			new_node_token(&parsing->token_list, parsing->prompt[i], \
-				T_PIPE);
-		else if (check_redirect_stdout(parsing->prompt[i]) == true)
-			new_node_token(&parsing->token_list, parsing->prompt[i], \
-				T_REDIRECT_STDOUT_TO_FILE);
-		else if (check_redirect_stdout_append(parsing->prompt[i]) == true)
-			new_node_token(&parsing->token_list, parsing->prompt[i], \
-				T_REDIRECT_STDOUT_TO_FILE_APPEND);
-		else if (check_redirect_stdin(parsing->prompt[i]) == true)
-			new_node_token(&parsing->token_list, parsing->prompt[i], \
-				T_REDIRECT_FILE_TO_STDIN);
-		else if (check_delimiter(parsing->prompt[i]) == true)
-			new_node_token(&parsing->token_list, parsing->prompt[i], \
-				T_REDIRECT_FILE_TO_DELIMITER);
-		else
-			new_node_token(&parsing->token_list, parsing->prompt[i], \
-				T_LITERAL);
-		i++;
+		if (cur->token == T_LITERAL_EXPANDING
+			|| cur->token == T_LITERAL_NONEXPANDING)
+		{
+			cur->token = T_LITERAL;
+		}
+		cur = cur->next;
 	}
+	return (1);
+}
+
+int	init_vars(const char *line, t_vars *vars)
+{
+	vars->token_list = NULL;
+	vars->var_list = NULL;
+	lex(&vars->token_list, line);
+	parse(vars);
 	// print_list(parsing->token_list);
 	// print_token(parsing->token_list);
 	return (0);

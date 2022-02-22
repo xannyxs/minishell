@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 16:15:22 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/22 11:00:22 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/22 17:29:21 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,14 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int	lstsize(t_token	*head)
-{
-	int	n;
-
-	n = 0;
-	while (head)
-	{
-		n++;
-		head = head->next;
-	}
-	return (n);
-}
-
 void	print_token(t_token *head)
 {
 	printf("\n");
 	while (head != NULL)
 	{
-		printf("%d -> ", head->token);
+		printf("%s(%d, %d) -> ", head->content, head->separated_from_previous,
+			head->token);
+		//printf("%s(%d) -> ", head->content, head->token);
 		head = head->next;
 	}
 	printf("NULL\n");
@@ -51,20 +40,6 @@ void	print_list(t_envlist *head)
 	}
 	printf("NULL\n");
 	write(1, "\n", 1);
-}
-
-void	new_node_token(t_token **head, char *content, int token)
-{
-	t_token	*new_node;
-
-	new_node = token_new(content, token);
-	if (!new_node)
-	{
-		// TODO: Error management
-		free(new_node);
-		return ;
-	}
-	token_li_push_back(head, new_node);
 }
 
 void	new_node(t_envlist **head, char *variable, char *content)

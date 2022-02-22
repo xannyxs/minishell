@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 12:23:00 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/02/18 21:01:51 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/22 17:29:55 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	lex_word_copy(t_token *cur, const char *line, size_t start_index,
 {
 	size_t	i;
 	size_t	len;
-	
+
 	i = start_index;
 	len = end_index - start_index;
 	if (line[i] == '"' || line[i] == '\'')
@@ -83,6 +83,19 @@ static void	loop_until_quote_closes(t_token *cur, const char *line, size_t *i)
 	(*i)++;
 }
 
+static int	lex_check_token(t_token *cur, const char *str)
+{
+	enum e_token	old_token;
+
+	old_token = cur->token;
+	if (*str == '|')
+	{
+		cur->token = T_PIPE;
+	}
+	return (old_token != cur->token);
+}
+
+// TODO; clean up
 static void	loop_words(t_token **cur, const char *line, size_t *i)
 {
 	size_t	start_index;
@@ -102,26 +115,34 @@ static void	loop_words(t_token **cur, const char *line, size_t *i)
 			finish_word(cur, line, &start_index, *i);
 			(*cur)->separated_from_previous = false;
 		}
-		else if (line[*i] == '|')
+		else if (lex_check_token(*cur, line + *i))
 		{
+			if (*i > start_index)
+			{
+				// TODO: this ugly. fix.
+				(*cur)->token = T_LITERAL_EXPANDING;
+				finish_word(cur, line, &start_index, *i);
+				lex_check_token(*cur, line + *i);
+				(*cur)->separated_from_previous = false;
+			}
 			(*i)++;
-			(*cur)->token = T_PIPE;
 			finish_word(cur, line, &start_index, *i);
 		}
 		else if (line[*i] == ' ')
-		{
-			finish_word(cur, line, &start_index, *i);
-			return ;
-		}
+			break ;
 		else
 			(*i)++;
 	}
+	finish_word(cur, line, &start_index, *i);
 }
 
 // TODO: # comments?
 // TODO: check if separated from the previous.
-static void	loop(t_token *cur, const char *line, size_t i)
+static void	loop(t_token *cur, const char *line)
 {
+	size_t	i;
+
+	i = 0;
 	while (line[i])
 	{
 		loop_words(&cur, line, &i);
@@ -129,17 +150,13 @@ static void	loop(t_token *cur, const char *line, size_t i)
 			i++;
 	}
 	// TODO: now we're done with this word. Add the current token to the list,
-	// and repeat the process.
+	// and repeat the process
 }
 
 void	lex(t_token **tlst, const char *line)
 {
 	t_token	*cur;
-	size_t	i;
 
-	i = 0;
-	while (line[i] == ' ')
-		i++;
 	cur = token_new(NULL, T_DEFAULT_TOKEN);
 	if (!cur)
 	{
@@ -147,5 +164,9 @@ void	lex(t_token **tlst, const char *line)
 	}
 	cur->separated_from_previous = true;
 	token_li_push_back(tlst, cur);
-	loop(cur, line, i);
+	while (*line == ' ')
+		line++;
+	loop(cur, line);
+	cur = token_li_pop_back(tlst);
+	free(cur);
 }
