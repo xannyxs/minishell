@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/22 19:32:33 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/22 21:41:23 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ enum e_token {
 	T_REDIRECT_STDOUT_TO_FILE, /* > */
 	T_REDIRECT_STDOUT_TO_FILE_APPEND, /* >> */
 	T_REDIRECT_FILE_TO_STDIN, /* < */
-	T_REDIRECT_FILE_TO_DELIMITER /* << */
+	T_HEREDOC /* << */
 };
 
 typedef struct		s_envlist

@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 12:23:00 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/02/22 17:29:55 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/22 21:49:08 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,14 @@ static int	lex_check_token(t_token *cur, const char *str)
 
 	old_token = cur->token;
 	if (*str == '|')
-	{
 		cur->token = T_PIPE;
+	else if (*str == '<')
+	{
+		cur->token = T_REDIRECT_FILE_TO_STDIN;
+	}
+	else if (*str == '>')
+	{
+		cur->token = T_REDIRECT_STDOUT_TO_FILE;
 	}
 	return (old_token != cur->token);
 }
