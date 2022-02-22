@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/22 14:28:56 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/22 21:47:08 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	change_homedir(t_token *vars)
 		if (err != 0)
 		{
 			perror("cd");
-			return (errno);
+			return (EPERM);
 		}
 		return (true);
 	}
@@ -63,7 +63,7 @@ static int	change_dir(t_vars vars, t_token *temp)
 		if (err != 0)
 		{
 			perror("cd");
-			return (errno);
+			return (EPERM);
 		}
 	}
 	else
@@ -72,7 +72,7 @@ static int	change_dir(t_vars vars, t_token *temp)
 		if (err != 0)
 		{
 			perror("cd");
-			return (errno);
+			return (EPERM);
 		}
 	}
 	return (0);
@@ -86,10 +86,14 @@ int	exec_cd(t_vars *vars)
 	vars->pwd = getcwd(NULL, 1);
 	temp = vars->token_list->next;
 	if (change_homedir(temp) == true)
+	{
+		change_env_pwd(vars);
 		return (0);
+	}
 	if (vars->pwd == NULL)
 		return (errno);
 	if (change_dir(*vars, temp) != 0)
-		return (errno);
+		return (EPERM);
+	change_env_pwd(vars);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/22 18:58:51 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/22 20:58:04 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_token
 
 typedef struct s_vars
 {
-	unsigned char	err_output;
+	unsigned char	exit_code;
 	char			*old_pwd;
 	char			*pwd;
 	char			**environ;
@@ -74,6 +74,8 @@ int		execute_line(t_vars *vars);
 int		exec_echo(t_vars *vars);
 
 int		exec_cd(t_vars *vars);
+
+int		change_env_pwd(t_vars *vars);
 
 int		exec_pwd(t_vars *vars);
 

@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:17:10 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/22 18:45:59 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/22 21:30:11 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,33 @@ static int	find_env_pwd(t_vars *vars)
 	return (-1);
 }
 
-int	exec_pwd(t_vars *vars)
+int	change_env_pwd(t_vars *vars)
 {
-	int	i;
-	char *env_pwd;
+	int		i;
+	char	*env_pwd;
 
-	free(vars->pwd);
-	vars->pwd = getcwd(NULL, 1);
-	if (vars->pwd == NULL)
-	{
-		printf("pwd: bad option\n");
-		return (errno);
-	}
-	printf("%s\n", vars->pwd);
 	i = find_env_pwd(vars);
 	if (i < 0)
 		return (-1);
-	env_pwd = ft_strjoin("PWD=", vars->pwd);
+	env_pwd = ft_strjoin("PWD=", getcwd(NULL, 1));
 	ft_memcpy(vars->environ[i], env_pwd, ft_strlen(vars->environ[i]));
 	free(env_pwd);
+	return (0);
+}
+
+int	exec_pwd(t_vars *vars)
+{
+	free(vars->pwd);
+	vars->pwd = getcwd(NULL, 1);
+	if (vars->pwd == NULL || vars->token_list->next != NULL)
+	{
+		if (vars->token_list->next->token != T_PIPE)
+		{
+			ft_putstr_fd("pwd: bad option\n", STDERR_FILENO);
+			return (errno);
+		}
+	}
+	printf("%s\n", vars->pwd);
+	change_env_pwd(vars);
 	return (0);
 }

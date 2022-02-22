@@ -6,11 +6,13 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/22 17:28:54 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/22 21:15:53 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+#include <stdlib.h>
 
 /*
 	LET OP HET VOLGENDE:
@@ -47,6 +49,8 @@ int	init_vars(const char *line, t_vars *vars)
 	vars->token_list = NULL;
 	vars->var_list = NULL;
 	lex(&vars->token_list, line);
+	if (vars->token_list == NULL)
+		exit (ENOMEM);
 	parse(vars);
 	// print_list(parsing->token_list);
 	// print_token(parsing->token_list);

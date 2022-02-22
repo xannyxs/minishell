@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/22 17:04:47 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/22 21:14:20 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	exec_export(t_vars *vars)
 		if (content == NULL)
 		{
 			printf("bash: export: '%s': not a valid identifier\n", temp->content);
-			vars->err_output = 1;
+			vars->exit_code = 1;
 			return (EPERM);
 		}
 		content = ft_substr(content, 1, ft_strlen(content) - 1);
@@ -75,7 +75,7 @@ int	exec_export(t_vars *vars)
 		if (content == NULL || variable == NULL)
 		{
 			printf("bash: export: '%s': not a valid identifier\n", temp->content);
-			vars->err_output = 1;
+			vars->exit_code = 1;
 			return (EPERM);
 		}
 		new_node(&vars->var_list, variable, content);

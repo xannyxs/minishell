@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 11:06:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/22 14:38:18 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/22 19:05:31 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ int	exec_exit(t_vars *vars)
 		printf("bash: exit: %s: numeric argument required\n", temp->content);
 		exit (255);
 	}
-	vars->err_output = ft_atoi(temp->content);
-	exit(vars->err_output);
+	vars->exit_code = ft_atoi(temp->content);
+	exit(vars->exit_code);
 }
