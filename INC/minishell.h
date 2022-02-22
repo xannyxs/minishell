@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/22 18:56:37 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/22 18:57:43 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ typedef struct s_vars
 	unsigned char	err_output;
 	char			*old_pwd;
 	char			*pwd;
+<<<<<<< HEAD
+=======
+	char			**prompt;
+>>>>>>> refs/remotes/origin/xander
 	char			**environ;
 	t_token			*token_list;
 	t_envlist		*var_list;
