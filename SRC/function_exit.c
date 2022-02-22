@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 11:06:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/22 11:34:09 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/22 14:38:18 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,22 @@
 int	exec_exit(t_vars *vars)
 {
 	int	i;
+	t_token	*temp;
 
 	i = 0;
+	temp = vars->token_list;
 	if (vars->token_list->next != NULL)
-		vars->token_list = vars->token_list->next;
-	if (ft_strcmp(vars->token_list->content, "exit") == 0)
+		temp = temp->next;
+	if (ft_strcmp(temp->content, "exit") == 0)
 		exit (0);
-	while (ft_isdigit(vars->token_list->content[i]) == true)
+	while (ft_isdigit(temp->content[i]) == true)
 		i++;
-	if (ft_isdigit(vars->token_list->content[i]) == false && \
-		vars->token_list->content[i] != '\0')
+	if (ft_isdigit(temp->content[i]) == false && \
+		temp->content[i] != '\0')
 	{
-		printf("bash: exit: %s: numeric argument required\n", vars->token_list->content);
+		printf("bash: exit: %s: numeric argument required\n", temp->content);
 		exit (255);
 	}
-	vars->err_output = ft_atoi(vars->token_list->content);
+	vars->err_output = ft_atoi(temp->content);
 	exit(vars->err_output);
 }
