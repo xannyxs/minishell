@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/21 22:44:15 by xander        ########   odam.nl         */
+/*   Updated: 2022/02/22 11:42:20 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct		s_token
 
 typedef struct		s_vars
 {
-	int				err_output;
+	unsigned char	err_output;
 	char			*old_pwd;
 	char			*pwd;
 	char			**prompt;
@@ -86,9 +86,11 @@ int		exec_exit(t_vars *vars);
 	LINKED LIST
 */
 
-void	new_node(t_token **head, char *content, int token);
+void	new_node_token(t_token **head, char *content, int token);
 
-void	print_list(t_token *head);
+void	new_node(t_envlist **head, char *variable, char *content);
+
+void	print_list(t_envlist *head);
 
 void	print_token(t_token *head);
 

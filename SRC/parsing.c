@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/18 12:19:45 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/22 10:24:10 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,22 @@ int	init_vars(t_vars *parsing)
 	while (parsing->prompt[i] != NULL)
 	{
 		if (check_pipes(parsing->prompt[i]) == true)
-			new_node(&parsing->token_list, parsing->prompt[i], \
+			new_node_token(&parsing->token_list, parsing->prompt[i], \
 				T_PIPE);
 		else if (check_redirect_stdout(parsing->prompt[i]) == true)
-			new_node(&parsing->token_list, parsing->prompt[i], \
+			new_node_token(&parsing->token_list, parsing->prompt[i], \
 				T_REDIRECT_STDOUT_TO_FILE);
 		else if (check_redirect_stdout_append(parsing->prompt[i]) == true)
-			new_node(&parsing->token_list, parsing->prompt[i], \
+			new_node_token(&parsing->token_list, parsing->prompt[i], \
 				T_REDIRECT_STDOUT_TO_FILE_APPEND);
 		else if (check_redirect_stdin(parsing->prompt[i]) == true)
-			new_node(&parsing->token_list, parsing->prompt[i], \
+			new_node_token(&parsing->token_list, parsing->prompt[i], \
 				T_REDIRECT_FILE_TO_STDIN);
 		else if (check_delimiter(parsing->prompt[i]) == true)
-			new_node(&parsing->token_list, parsing->prompt[i], \
+			new_node_token(&parsing->token_list, parsing->prompt[i], \
 				T_REDIRECT_FILE_TO_DELIMITER);
 		else
-			new_node(&parsing->token_list, parsing->prompt[i], \
+			new_node_token(&parsing->token_list, parsing->prompt[i], \
 				T_LITERAL);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/21 17:29:57 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/22 11:42:51 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ int	main(void)
 
 	vars.prompt = NULL;
 	vars.token_list = NULL;
+	vars.var_list = NULL;
 	while (true)
 	{
 		line = readline("minishell $> ");
 		vars.prompt = ft_args_split(line);
+		free(line);
 		if (vars.prompt == NULL)
 		{
 			printf("exit\n");
@@ -43,7 +45,6 @@ int	main(void)
 			if (vars.token_list != NULL)
 			{
 				vars.err_output = execute_line(&vars);
-				free(line);
 				free(vars.prompt);
 				token_free_list(&vars.token_list);
 			}

@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:25:24 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/21 22:19:32 by xander        ########   odam.nl         */
+/*   Updated: 2022/02/22 11:42:23 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_function	g_function[] = {
 {"export", &exec_export},
 //{"unset", &exec_unset},
 {"env", &exec_env},
-//{"exit", &exec_exit},
+{"exit", &exec_exit},
 {0, NULL}
 };
 
