@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/21 16:57:36 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/22 21:47:08 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,46 +31,48 @@
 	2. Check if I need to go to the HOME DIR.
 	3. Otherwise check if "-" is being used.
 	4. Do a normal CD.
+
+	LEAK FREE
 */
 
-static int	change_homedir(t_vars vars)
+static int	change_homedir(t_token *vars)
 {
 	int	err;
 
-	if (vars.token_list == NULL || vars.token_list->token == T_PIPE || \
-		ft_strcmp(vars.token_list->content, "~") == 0)
+	if (vars == NULL || vars->token == T_PIPE || \
+		ft_strcmp(vars->content, "~") == 0)
 	{
 		err = chdir(getenv("HOME"));
 		if (err != 0)
 		{
 			perror("cd");
-			return (errno);
+			return (EPERM);
 		}
 		return (true);
 	}
 	return (false);
 }
 
-static int	change_dir(t_vars vars)
+static int	change_dir(t_vars vars, t_token *temp)
 {
 	int	err;
 
-	if (ft_strcmp(vars.token_list->content, "-") == 0)
+	if (ft_strcmp(temp->content, "-") == 0)
 	{
 		err = chdir(vars.old_pwd);
 		if (err != 0)
 		{
 			perror("cd");
-			return (errno);
+			return (EPERM);
 		}
 	}
 	else
 	{
-		err = chdir(vars.token_list->content);
+		err = chdir(temp->content);
 		if (err != 0)
 		{
 			perror("cd");
-			return (errno);
+			return (EPERM);
 		}
 	}
 	return (0);
@@ -78,14 +80,20 @@ static int	change_dir(t_vars vars)
 
 int	exec_cd(t_vars *vars)
 {
+	t_token	*temp;
+
 	vars->old_pwd = vars->pwd;
 	vars->pwd = getcwd(NULL, 1);
-	vars->token_list = vars->token_list->next;
-	if (change_homedir(*vars) == true)
+	temp = vars->token_list->next;
+	if (change_homedir(temp) == true)
+	{
+		change_env_pwd(vars);
 		return (0);
+	}
 	if (vars->pwd == NULL)
 		return (errno);
-	if (change_dir(*vars) != 0)
-		return (errno);
+	if (change_dir(*vars, temp) != 0)
+		return (EPERM);
+	change_env_pwd(vars);
 	return (0);
 }
