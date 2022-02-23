@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 12:23:00 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/02/22 21:49:08 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/23 13:57:38 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	lex_word_copy(t_token *cur, const char *line, size_t start_index,
 	cur->content = ft_strndup_unsafe(line + i, len);
 	if (!cur->content)
 	{
-		// TODO: malloc fail
+		fatal_perror("malloc");
 	}
 }
 
@@ -55,7 +55,7 @@ static void	finish_word(t_token **cur, const char *line, size_t *start_index,
 	new_node = token_new(NULL, T_DEFAULT_TOKEN);
 	if (!new_node)
 	{
-		// TODO error
+		fatal_perror("malloc");
 	}
 	(*cur)->next = new_node;
 	*cur = (*cur)->next;
@@ -83,6 +83,7 @@ static void	loop_until_quote_closes(t_token *cur, const char *line, size_t *i)
 	(*i)++;
 }
 
+// TODO: >>
 static int	lex_check_token(t_token *cur, const char *str)
 {
 	enum e_token	old_token;
@@ -166,7 +167,7 @@ void	lex(t_token **tlst, const char *line)
 	cur = token_new(NULL, T_DEFAULT_TOKEN);
 	if (!cur)
 	{
-		// TODO ERROR
+		fatal_perror("malloc");
 	}
 	cur->separated_from_previous = true;
 	token_li_push_back(tlst, cur);

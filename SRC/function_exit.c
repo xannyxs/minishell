@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 11:06:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/22 11:34:09 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/23 13:46:37 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	exec_exit(t_vars *vars)
 	if (ft_isdigit(vars->token_list->content[i]) == false && \
 		vars->token_list->content[i] != '\0')
 	{
-		printf("bash: exit: %s: numeric argument required\n", vars->token_list->content);
+		// TODO: write to STDERR instead
+		printf("minishell: exit: %s: numeric argument required\n", vars->token_list->content);
 		exit (255);
 	}
 	vars->err_output = ft_atoi(vars->token_list->content);

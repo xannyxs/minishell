@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 14:09:18 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/22 21:41:23 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/23 13:42:03 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,11 @@ int		check_pipes(char *prompt);
 /*
 	OVERIG
 */
+
+/*
+	ERRORS
+*/
+
+void	fatal_perror(const char *msg);
 
 #endif
