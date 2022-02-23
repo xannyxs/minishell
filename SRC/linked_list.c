@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 16:15:22 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/22 17:29:21 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/22 21:20:09 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_token(t_token *head)
 	printf("\n");
 	while (head != NULL)
 	{
-		printf("%s(%d, %d) -> ", head->content, head->separated_from_previous,
+		printf("%s(%s, %d) -> ", head->content, head->separated_from_previous ? "sep" : "nosep",
 			head->token);
 		//printf("%s(%d) -> ", head->content, head->token);
 		head = head->next;
