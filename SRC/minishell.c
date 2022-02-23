@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/22 19:05:31 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/23 14:42:13 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(void)
 			free(line);
 			if (err != 0)
 				exit(errno);
-			//print_token(vars.token_list);
+			print_token(vars.token_list);
 			if (vars.token_list != NULL)
 			{
 				vars.exit_code = execute_line(&vars);

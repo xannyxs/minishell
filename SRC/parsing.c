@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/23 14:38:46 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/23 16:19:43 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,22 @@
 	- "<< >>" is different from "< >"
 	- Be careful with minus (-)
 */
+
+static void	expand_vars(t_vars *vars)
+{
+	t_token	*cur;
+	
+	cur = vars->token_list;
+	while (cur)
+	{
+		if (cur->token == T_LITERAL_EXPANDING)
+		{
+			expand_token(cur, vars);
+			cur->token = T_LITERAL;
+		}
+		cur = cur->next;
+	}
+}
 
 /* checks if the current and next token needs merging.
  * returns true if it has done a merge, else false. */
@@ -64,6 +80,7 @@ static int	parse(t_vars *vars)
 {
 	t_token	*cur;
 
+	expand_vars(vars);
 	cur = vars->token_list;
 	while (cur)
 	{
