@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/23 16:44:51 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/23 16:51:47 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-
-/* Mag dit leaken als malloc fout gaat? */
-// NEE!
 static int	allocate_env(t_vars *vars)
 {
 	int			i;
@@ -35,9 +32,12 @@ static int	allocate_env(t_vars *vars)
 	i = 0;
 	while (environ[i] != NULL)
 	{
-		vars->environ[i] = ft_strdup(environ[i]);;
+		vars->environ[i] = ft_strdup(environ[i]);
 		if (vars->environ[i] == NULL)
+		{
+			ft_free_str_arr(vars->environ);
 			return (-1);
+		}
 		i++;
 	}
 	vars->environ[i] = NULL;
@@ -52,8 +52,8 @@ int	main(void)
 
 	vars.token_list = NULL;
 	vars.var_list = NULL;
-	if (allocate_env(&vars) != 0)
-		exit (ENOMEM);
+	if (allocate_env(&vars) == -1)
+		fatal_perror("malloc");
 	while (true)
 	{
 		line = readline("minishell $> ");
