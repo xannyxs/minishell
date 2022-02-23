@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:44:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/22 19:05:31 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/23 13:00:19 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static const t_function	g_function[] = {
 {"cd", &exec_cd},
 {"pwd", &exec_pwd},
 {"export", &exec_export},
-//{"unset", &exec_unset},
+{"unset", &exec_unset},
 {"env", &exec_env},
 {"exit", &exec_exit},
 {0, NULL}

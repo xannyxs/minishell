@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 22:18:38 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/22 19:05:31 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/23 14:03:26 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,13 @@
 
 int	exec_env(t_vars *vars)
 {
-	int			i;
-	extern char	**environ;
+	int	i;
 
 	i = 0;
 	vars->exit_code = 0;
-	while (environ[i] != NULL)
+	while (vars->environ[i] != NULL)
 	{
-		printf("%s\n", environ[i]);
+		printf("%s\n", vars->environ[i]);
 		i++;
 	}
 	return (0);
