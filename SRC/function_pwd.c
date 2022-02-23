@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:17:10 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/23 14:39:03 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/23 16:29:01 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,12 @@ static int	find_env_pwd(t_vars *vars)
 int	change_env_pwd(t_vars *vars)
 {
 	int		i;
-	char	*env_pwd;
 
 	i = find_env_pwd(vars);
 	if (i < 0)
 		return (-1);
-	env_pwd = ft_strjoin("PWD=", getcwd(NULL, 1));
-	ft_memcpy(vars->environ[i], env_pwd, ft_strlen(vars->environ[i]));
-	free(env_pwd);
+	free(vars->environ[i]);
+	vars->environ[i] = ft_strjoin("PWD=", getcwd(NULL, 1));
 	return (0);
 }
 

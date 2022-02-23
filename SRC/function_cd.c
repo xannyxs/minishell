@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/22 21:47:08 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/23 16:24:26 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,6 @@
 #include <stdbool.h>
 
 /*
-	EDGECASES:
-	cd -
-	cd .
-	cd ../
-	PWD & CD mixen is pretty annoooooyyyiingg
-*/
-
-/*
 	STEPS OF MY CD:
 	1. I first put the old PWD in vars->old_pwd, and get the new one.
 	2. Check if I need to go to the HOME DIR.
@@ -34,6 +26,34 @@
 
 	LEAK FREE
 */
+
+static int	find_env_oldpwd(t_vars *vars)
+{
+	int	i;
+
+	i = 0;
+	while (vars->environ[i] != NULL)
+	{
+		if (ft_strncmp(vars->environ[i], "OLDPWD", 6) == 0)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+static int	change_env_oldpwd(t_vars *vars)
+{
+	int		i;
+
+	i = find_env_oldpwd(vars);
+	if (i < 0)
+		return (-1);
+	free(vars->environ[i]);
+	if (vars->old_pwd == NULL)
+		vars->old_pwd = getcwd(NULL, 1);
+	vars->environ[i] = ft_strjoin("OLDPWD=", vars->old_pwd);
+	return (0);
+}
 
 static int	change_homedir(t_token *vars)
 {
@@ -82,8 +102,9 @@ int	exec_cd(t_vars *vars)
 {
 	t_token	*temp;
 
-	vars->old_pwd = vars->pwd;
 	vars->pwd = getcwd(NULL, 1);
+	vars->old_pwd = vars->pwd;
+	change_env_oldpwd(vars);
 	temp = vars->token_list->next;
 	if (change_homedir(temp) == true)
 	{
