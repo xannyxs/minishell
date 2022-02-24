@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:44:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/24 12:17:57 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/24 13:02:22 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ static const t_function	g_function[] = {
 {0, NULL}
 };
 
+static int	nonfatal_error(t_vars vars)
+{
+	write(STDERR_FILENO, "minishell: command not found: ", 30);
+	write(STDERR_FILENO, vars.token_list->content, ft_strlen(vars.token_list->content));
+	write(STDERR_FILENO, "\n", 1);
+	return (127);
+}
+
 //TODO: Error handeling
 int	execute_line(t_vars *vars)
 {
@@ -50,11 +58,6 @@ int	execute_line(t_vars *vars)
 	if (path_check(vars->token_list->content, find_dir(vars->environ)) != NULL)
 		exec_command(vars);
 	else if (g_function[i].key == NULL)
-	{
-		write(STDERR_FILENO, "minishell: command not found: ", 30);
-		write(STDERR_FILENO, vars->token_list->content, ft_strlen(vars->token_list->content));
-		write(STDERR_FILENO, "\n", 1);
-		return (127);
-	}
+		return (nonfatal_error(*vars));
 	return (vars->exit_code);
 }
