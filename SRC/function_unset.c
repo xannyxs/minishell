@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 16:48:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/23 15:18:06 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/24 14:21:56 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,42 @@
 	This function doesn't remove $
 */
 
-static int	move_arrays(t_vars *vars, t_token *temp)
+static int	check_usr_vars(t_vars *vars, t_token *temp)
 {
-	int	i;
-	char *temp_var;
+	t_envlist *temp_env = vars->var_list, *prev;
+
+	if (temp_env != NULL && ft_strcmp(temp_env->variable, temp->content) == 0)
+	{
+		vars->var_list = temp_env->next;
+		free(temp_env->variable);
+		free(temp_env->content);
+		free(temp_env);
+		return (0);
+	}
+	while (temp_env != NULL && ft_strcmp(temp_env->variable, temp->content) == 0)
+	{
+		print_list(vars->var_list);
+		prev = temp_env;
+		temp_env = temp_env->next;
+	}
+	if (temp_env == NULL)
+		return (-1);
+	prev->next = temp_env->next;
+	free(temp_env->variable);
+	free(temp_env->content);
+	free(temp_env);
+	return (0);
+}
+
+static int	check_env_vars(t_vars *vars, t_token *temp)
+{
+	int		i;
+	char	*temp_var;
 
 	i = 0;
 	temp_var = ft_strjoin(temp->content, "=");
+	if (temp_var == NULL)
+		fatal_error("malloc:");
 	while (vars->environ[i] != NULL)
 	{
 		if (ft_strncmp(temp_var, vars->environ[i], \
@@ -42,21 +71,24 @@ static int	move_arrays(t_vars *vars, t_token *temp)
 				}
 				free(vars->environ[i]);
 				vars->environ[i] = NULL;
-				return (1);
+				return (0);
 			}
 			i++;
 	}
 	free(temp_var);
-	return (0);
+	return (-1);
 }
 
 int	exec_unset(t_vars *vars)
 {
+	int		ret;
 	t_token	*temp;
 
 	if (vars->token_list->next == NULL)
 		return (0);
 	temp  = vars->token_list->next;
-	move_arrays(vars, temp);
+	ret = check_env_vars(vars, temp);
+	if (ret != 0)
+		check_usr_vars(vars, temp);
 	return (0);
 }

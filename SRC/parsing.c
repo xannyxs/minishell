@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/24 11:24:13 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/24 13:29:15 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,9 @@ static int	parse(t_vars *vars)
 int	init_vars(const char *line, t_vars *vars)
 {
 	vars->token_list = NULL;
-	vars->var_list = NULL;
 	lex(&vars->token_list, line);
 	if (vars->token_list == NULL)
-		exit (ENOMEM);
+		fatal_error("malloc:");
 	parse(vars);
 	// print_list(parsing->token_list);
 	// print_token(parsing->token_list);
