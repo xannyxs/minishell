@@ -6,11 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/02/23 16:19:43 by jobvan-d      ########   odam.nl         */
-=======
-/*   Updated: 2022/02/23 16:29:20 by xvoorvaa      ########   odam.nl         */
->>>>>>> master
+/*   Updated: 2022/02/24 11:24:13 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +35,7 @@ static void	expand_vars(t_vars *vars)
 	{
 		if (cur->token == T_LITERAL_EXPANDING)
 		{
-			expand_token(cur, vars);
+			// expand_token(cur, vars);
 			cur->token = T_LITERAL;
 		}
 		cur = cur->next;

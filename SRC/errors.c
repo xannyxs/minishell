@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 13:38:41 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/02/23 13:57:08 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/24 12:19:30 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@
 	exit(exit_code);
 }*/
 
-void	fatal_perror(const char *msg)
+void	fatal_error(const char *msg, unsigned char err_number)
 {
+	errno = err_number;
 	perror(msg);
-	exit(errno);
+	exit(err_number);
 }

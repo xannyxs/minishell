@@ -122,7 +122,7 @@ int		check_pipes(char *prompt);
 	ERRORS
 */
 
-void	fatal_perror(const char *msg);
+void	fatal_error(const char *msg, unsigned char err_number);
 
 /*
 	ACCESS

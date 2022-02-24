@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 16:15:22 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/23 13:43:56 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/24 11:39:04 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	new_node(t_envlist **head, char *variable, char *content)
 	new_node = ft_calloc(sizeof(t_envlist), 1);
 	if (!new_node)
 	{
-		fatal_perror("malloc");
+		fatal_error("malloc", ENOMEM);
 	}
 	last_node = *head;
 	new_node->variable = variable;
