@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:44:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/23 13:00:19 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/24 12:17:57 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,17 @@ int	execute_line(t_vars *vars)
 		if (ft_strcmp(vars->token_list->content, g_function[i].key) == 0)
 		{
 			vars->exit_code = g_function[i].func(vars);
-			break ;
+			return (vars->exit_code);
 		}
 		i++;
 	}
-	if (g_function[i].key == NULL)
+	if (path_check(vars->token_list->content, find_dir(vars->environ)) != NULL)
+		exec_command(vars);
+	else if (g_function[i].key == NULL)
 	{
-		printf("minishell: command not found: %s\n", vars->token_list->content);
+		write(STDERR_FILENO, "minishell: command not found: ", 30);
+		write(STDERR_FILENO, vars->token_list->content, ft_strlen(vars->token_list->content));
+		write(STDERR_FILENO, "\n", 1);
 		return (127);
 	}
 	return (vars->exit_code);

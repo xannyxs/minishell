@@ -75,6 +75,8 @@ int		exec_env(t_vars *vars);
 
 int		exec_exit(t_vars *vars);
 
+int		exec_command(t_vars *vars);
+
 /*
 	LINKED LIST
 */
@@ -119,13 +121,17 @@ int		check_redirect_stdout(char *prompt);
 int		check_pipes(char *prompt);
 
 /*
-	OVERIG
-*/
-
-/*
 	ERRORS
 */
 
-void	fatal_perror(const char *msg);
+void	fatal_error(const char *msg, unsigned char err_number);
+
+/*
+	ACCESS
+*/
+
+char	**find_dir(char *envp[]);
+
+char	*path_check(char *func, char **path);
 
 #endif
