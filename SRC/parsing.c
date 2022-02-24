@@ -6,11 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/02/23 16:19:43 by jobvan-d      ########   odam.nl         */
-=======
-/*   Updated: 2022/02/23 16:29:20 by xvoorvaa      ########   odam.nl         */
->>>>>>> master
+/*   Updated: 2022/02/24 17:12:07 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +29,7 @@
 static void	expand_vars(t_vars *vars)
 {
 	t_token	*cur;
-	
+
 	cur = vars->token_list;
 	while (cur)
 	{
@@ -62,7 +58,7 @@ static int	try_merge(t_token *lst)
 		free(lst->content);
 		if (!new_content)
 		{
-			// TODO: error
+			fatal_perror("malloc");
 		}
 		token_free(next);
 		lst->content = new_content;
@@ -86,8 +82,7 @@ static int	parse(t_vars *vars)
 	cur = vars->token_list;
 	while (cur)
 	{
-		if (cur->token == T_LITERAL_EXPANDING
-			|| cur->token == T_LITERAL_NONEXPANDING)
+		if (cur->token == T_LITERAL_NONEXPANDING)
 		{
 			cur->token = T_LITERAL;
 		}
@@ -112,6 +107,7 @@ int	init_vars(const char *line, t_vars *vars)
 	if (vars->token_list == NULL)
 		exit (ENOMEM);
 	parse(vars);
+	//system("leaks minishell");
 	// print_list(parsing->token_list);
 	// print_token(parsing->token_list);
 	return (0);

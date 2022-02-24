@@ -102,6 +102,8 @@ void	token_free_list(t_token **lst);
 */
 void	lex(t_token **tlst, const char *line);
 
+void	expand_token(t_token *el, const t_vars *vars);
+
 /*
 	CHECK_CHAR
 */
