@@ -4,7 +4,7 @@
 # include <errno.h>
 
 // TODO
-# define T_DEFAULT_TOKEN (T_LITERAL_EXPANDING)
+# define T_DEFAULT_TOKEN (T_LITERAL)
 
 // TODO: maybe after the literals have been expanded,
 // set to a more sane T_LITERAL so we don't have to if/else as much etc.
@@ -12,7 +12,7 @@
 enum e_token {
 	T_UNKNOWN,
 	T_LITERAL,
-	T_LITERAL_EXPANDING,
+	T_LITERAL_QUOTED,
 	T_LITERAL_NONEXPANDING,
 	T_PIPE,
 	T_REDIRECT_STDOUT_TO_FILE, /* > */
@@ -97,6 +97,8 @@ t_token	*token_li_pop_back(t_token **tlst);
 void	token_free(t_token *token);
 
 void	token_free_list(t_token **lst);
+
+void	token_remove_from_list(t_token **tlst, t_token *to_remove);
 
 /*
 	LEXER

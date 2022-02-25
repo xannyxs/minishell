@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 12:23:00 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/02/25 12:46:56 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/25 13:57:04 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	loop_until_quote_closes(t_token *cur, const char *line, size_t *i)
 
 	quote_char = line[*i];
 	if (quote_char == '"')
-		cur->token = T_LITERAL_EXPANDING;
+		cur->token = T_LITERAL_QUOTED;
 	else
 		cur->token = T_LITERAL_NONEXPANDING;
 	(*i)++;
@@ -127,7 +127,7 @@ static void	loop_words(t_token **cur, const char *line, size_t *i)
 			if (*i > start_index)
 			{
 				// TODO: this ugly. fix.
-				(*cur)->token = T_LITERAL_EXPANDING;
+				(*cur)->token = T_LITERAL;
 				finish_word(cur, line, &start_index, *i);
 				lex_check_token(*cur, line + *i);
 				(*cur)->separated_from_previous = false;

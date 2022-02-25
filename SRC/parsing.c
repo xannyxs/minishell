@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/25 12:58:47 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/25 14:24:20 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,26 @@
 	- Be careful with minus (-)
 */
 
+#include <stdio.h>
+
+
 static void	expand_vars(t_vars *vars)
 {
+	//t_token	*prev;
 	t_token	*cur;
+	//t_token	*next;
 
 	cur = vars->token_list;
+	//prev = NULL;
 	while (cur)
 	{
-		if (cur->token == T_LITERAL_EXPANDING)
+		if (cur->token == T_LITERAL || cur->token == T_LITERAL_QUOTED)
 		{
 			expand_token(cur, vars);
-			cur->token = T_LITERAL;
+			if (cur->token == T_LITERAL && *cur->content == 0)
+			{
+				token_remove_from_list(&vars->token_list, cur);
+			}
 		}
 		cur = cur->next;
 	}
@@ -82,7 +91,8 @@ static int	parse(t_vars *vars)
 	cur = vars->token_list;
 	while (cur)
 	{
-		if (cur->token == T_LITERAL_NONEXPANDING)
+		if (cur->token == T_LITERAL_NONEXPANDING
+			|| cur->token == T_LITERAL_QUOTED)
 		{
 			cur->token = T_LITERAL;
 		}
