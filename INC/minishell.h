@@ -107,20 +107,6 @@ void	lex(t_token **tlst, const char *line);
 void	expand_token(t_token *el, const t_vars *vars);
 
 /*
-	CHECK_CHAR
-*/
-
-int		check_delimiter(char *prompt);
-
-int		check_redirect_stdin(char *prompt);
-
-int		check_redirect_stdout_append(char *prompt);
-
-int		check_redirect_stdout(char *prompt);
-
-int		check_pipes(char *prompt);
-
-/*
 	ERRORS
 */
 
