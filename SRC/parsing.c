@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/25 14:24:20 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/25 16:32:17 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,10 @@
 
 static void	expand_vars(t_vars *vars)
 {
-	//t_token	*prev;
 	t_token	*cur;
-	//t_token	*next;
+	t_token	*next;
 
 	cur = vars->token_list;
-	//prev = NULL;
 	while (cur)
 	{
 		if (cur->token == T_LITERAL || cur->token == T_LITERAL_QUOTED)
@@ -44,7 +42,10 @@ static void	expand_vars(t_vars *vars)
 			expand_token(cur, vars);
 			if (cur->token == T_LITERAL && *cur->content == 0)
 			{
+				next = cur->next;
 				token_remove_from_list(&vars->token_list, cur);
+				cur = next;
+				continue;
 			}
 		}
 		cur = cur->next;
