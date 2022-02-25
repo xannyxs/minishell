@@ -6,18 +6,16 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:44:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/24 13:02:22 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/25 13:06:02 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
 #include "function.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
-#include <string.h>
 
 static const t_function	g_function[] = {
 {"echo", &exec_echo},
@@ -32,9 +30,8 @@ static const t_function	g_function[] = {
 
 static int	nonfatal_error(t_vars vars)
 {
-	write(STDERR_FILENO, "minishell: command not found: ", 30);
-	write(STDERR_FILENO, vars.token_list->content, ft_strlen(vars.token_list->content));
-	write(STDERR_FILENO, "\n", 1);
+	ft_putstr_fd("minishell: command not found: ", STDERR_FILENO);
+	ft_putendl_fd(vars.token_list->content, STDERR_FILENO);
 	return (127);
 }
 
