@@ -6,11 +6,12 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 13:22:17 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/02/22 14:21:30 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/25 13:54:30 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
 
 /* TODO: lstiter? */
 

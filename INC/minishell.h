@@ -2,7 +2,6 @@
 # define MINISHELL_H
 
 # include <errno.h>
-# include "libft.h"
 
 // TODO
 # define T_DEFAULT_TOKEN (T_LITERAL_EXPANDING)
