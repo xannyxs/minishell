@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/24 13:04:29 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/25 12:47:00 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(void)
 	vars.token_list = NULL;
 	vars.var_list = NULL;
 	if (allocate_env(&vars) == -1)
-		fatal_error("malloc");
+		fatal_perror("malloc");
 	while (true)
 	{
 		line = readline("minishell $> ");

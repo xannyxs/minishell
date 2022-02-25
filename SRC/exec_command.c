@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 16:55:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/24 13:02:41 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/25 12:46:50 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	exec_command(t_vars *vars)
 		if (usr_func == NULL || input == NULL)
 			return (-1);
 		execve(usr_func, input, vars->environ);
-		fatal_error(vars->token_list->content);
+		fatal_perror(vars->token_list->content);
 		return (errno);
 	}
 	if (fork_id1 < 0)

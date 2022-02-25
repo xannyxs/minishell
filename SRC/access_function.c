@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 16:39:52 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/23 16:49:31 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/25 12:46:18 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,18 @@
 static int	path_row(char *envp[])
 {
 	int		i;
-	char	*path;
 
 	i = 0;
 	while (envp[i] != NULL)
 	{
 		if (envp[i][0] == 'P')
 		{
-			path = ft_substr(envp[i], 0, 5);
-			if (ft_strncmp(path, "PATH=", 5) == 0)
+			if (ft_strncmp(envp[i], "PATH=", 5) == 0)
 				return (i);
 		}
 		i++;
 	}
-	perror("ENV error");
+	perror("ENV error"); // TODO
 	return (-1);
 }
 
@@ -50,6 +48,7 @@ char	**find_dir(char *envp[])
 	return (path);
 }
 
+// TODO: I am fairly sure this will leak
 char	*path_check(char *func, char **path)
 {
 	int		i;
