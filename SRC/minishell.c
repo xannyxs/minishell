@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/25 12:47:00 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/25 12:59:52 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static int	allocate_env(t_vars *vars)
 	return (0);
 }
 
+// TODO: norm
 int	main(void)
 {
 	int			err;
@@ -58,8 +59,12 @@ int	main(void)
 	{
 		line = readline("minishell $> ");
 
-		// TODO: eof
-		if (line)
+		if (!line)
+		{
+			// TODO: exit code
+			exit(errno);
+		}
+		else if (*line != 0)
 		{
 			err = init_vars(line, &vars);
 			free(line);
@@ -71,8 +76,8 @@ int	main(void)
 				vars.exit_code = execute_line(&vars);
 				token_free_list(&vars.token_list);
 			}
+			//system("leaks minishell");
 		}
-		// system("leaks minishell");
 	}
 	return (0);
 }
