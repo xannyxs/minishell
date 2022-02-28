@@ -6,36 +6,32 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 13:22:17 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/02/25 16:30:58 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/02/28 15:29:27 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stddef.h>
 
-/* TODO: lstiter? */
-
+/* removes the last element from the loken list and returns it.
+ * Does NOT delete/free it. */
 t_token	*token_li_pop_back(t_token **tlst)
 {
-	t_token	*li;
-	t_token	*prev;
+	t_token	**tracer;
+	t_token	*to_return;
 
-	li = *tlst;
-	if (!li)
-		return (NULL);
-	else if (!li->next)
+	tracer = tlst;
+	to_return = NULL;
+	if (*tracer)
 	{
-		*tlst = NULL;
-		return (li);
+		while ((*tracer)->next)
+		{
+			tracer = &((*tracer)->next);
+		}
+		to_return = *tracer;
+		*tracer = NULL;
 	}
-	prev = li;
-	while (li->next)
-	{
-		prev = li;
-		li = li->next;
-	}
-	prev->next = NULL;
-	return (li);
+	return (to_return);
 }
 
 // removes a token from the list and frees it.
