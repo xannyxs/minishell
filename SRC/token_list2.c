@@ -6,12 +6,11 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 13:22:17 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/01 17:27:52 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/01 17:52:11 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stddef.h>
 
 /* removes the last element from the loken list and returns it.
  * Does NOT delete/free it. */
