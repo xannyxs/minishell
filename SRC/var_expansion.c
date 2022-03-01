@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 14:36:18 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/02/24 17:11:46 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/01 14:01:10 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ static size_t	count_var_length(const char *str)
 	size_t	i;
 
 	i = 1;
-	while (str[i] && ((str[i] >= 'a' && str[i] <= 'z')
-			|| (str[i] >= 'A' && str[i] <= 'Z')
-			|| (str[i] >= '0' && str[i] <= '9')
-			|| (str[i] == '_'))
+	while ((str[i] >= 'a' && str[i] <= 'z')
+		|| (str[i] >= 'A' && str[i] <= 'Z')
+		|| (str[i] >= '0' && str[i] <= '9')
+		|| (str[i] == '_')
 	)
 	{
 		i++;
