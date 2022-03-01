@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/25 16:32:17 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/01 17:30:13 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,12 @@ static int	try_merge(t_token *lst)
 	return (false);
 }
 
-// this is temporary.
-// TODO: expansion.
 /* basic process:
  * 1: expand the literals that need expansion
  * 2: boil all literals down to just T_LITERAL.
  * 3: merge literals that are together.
- * 4: done. */
+ * 4: make list doubly linked.
+ * 5: done. */
 static int	parse(t_vars *vars)
 {
 	t_token	*cur;
@@ -107,6 +106,7 @@ static int	parse(t_vars *vars)
 			cur = cur->next;
 		}
 	}
+	token_make_list_doubly_linked(vars->token_list);
 	return (1);
 }
 

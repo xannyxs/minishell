@@ -28,12 +28,16 @@ typedef struct s_envlist
 	struct s_envlist	*next;
 }	t_envlist;
 
+/* So, standard this is a singly linked list. But when the list is
+ * "finalized", it becomes as doubly linked one so it's easier to parse it.
+ * Note that ALL token functions do not support doubly linked lists! */
 typedef struct s_token
 {
 	char			*content;
 	int				separated_from_previous;
 	enum e_token	token;
 	struct s_token	*next;
+	struct s_token	*prev;
 }	t_token;
 
 typedef struct s_vars
@@ -99,6 +103,8 @@ void	token_free(t_token *token);
 void	token_free_list(t_token **lst);
 
 void	token_remove_from_list(t_token **tlst, t_token *to_remove);
+
+void	token_make_list_doubly_linked(t_token *lst);
 
 /*
 	LEXER

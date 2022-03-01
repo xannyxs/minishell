@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 13:22:17 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/02/28 15:29:27 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/01 17:27:52 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,19 @@ void	token_remove_from_list(t_token **tlst, t_token *to_remove)
 				= to_remove->separated_from_previous;
 		}
 		token_free(to_remove);
+	}
+}
+
+/* converts the token list from singly linked to doubly linked. */
+void	token_make_list_doubly_linked(t_token *lst)
+{
+	t_token	*prev;
+
+	prev = NULL;
+	while (lst)
+	{
+		lst->prev = prev;
+		prev = lst;
+		lst = lst->next;
 	}
 }
