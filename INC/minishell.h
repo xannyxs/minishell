@@ -2,8 +2,8 @@
 # define MINISHELL_H
 
 # include <errno.h>
+# include <stddef.h> /* size_t */
 
-// TODO
 # define T_DEFAULT_TOKEN (T_LITERAL)
 
 // TODO: maybe after the literals have been expanded,
@@ -106,6 +106,17 @@ void	token_remove_from_list(t_token **tlst, t_token *to_remove);
 void	lex(t_token **tlst, const char *line);
 
 void	expand_token(t_token *el, const t_vars *vars);
+
+void	lex_finish_word(t_token **cur, const char *line, size_t *start_index,
+			size_t end_index);
+
+void	lex_set_quote_token_and_loop(t_token *cur, const char *line,
+			size_t *i);
+
+void	lex_check_other_token_and_loop(t_token *cur, const char *str,
+			size_t *i);
+
+int		is_token_char_present(const char c);
 
 /*
 	ERRORS
