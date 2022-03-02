@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 12:23:00 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/01 13:54:10 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/02 14:21:53 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@
 /* I know it's kind of ugly to essentially do the same if statement twice
  * (see is_token_char_present in lexer_util.c), but it seems to me the 
  * cleanest way to write it. */
-static void	process_token(t_token **cur, const char *line,
+static int	process_token(t_token **cur, const char *line,
 	size_t *start_index, size_t *i)
 {
 	if (line[*i] == '"' || line[*i] == '\'')
 	{
-		lex_set_quote_token_and_loop(*cur, line, i);
+		if (lex_set_quote_token_and_loop(*cur, line, i) == -1)
+			return (-1);
 	}
 	else
 	{
@@ -31,9 +32,10 @@ static void	process_token(t_token **cur, const char *line,
 	}
 	lex_finish_word(cur, line, start_index, *i);
 	(*cur)->separated_from_previous = false;
+	return (0);
 }
 
-static void	loop_words(t_token **cur, const char *line, size_t *i)
+static int	loop_words(t_token **cur, const char *line, size_t *i)
 {
 	size_t	start_index;
 
@@ -48,7 +50,8 @@ static void	loop_words(t_token **cur, const char *line, size_t *i)
 				lex_finish_word(cur, line, &start_index, *i);
 				(*cur)->separated_from_previous = false;
 			}
-			process_token(cur, line, &start_index, i);
+			if (process_token(cur, line, &start_index, i) == -1)
+				return (-1);
 		}
 		else if (line[*i] == ' ')
 			break ;
@@ -56,24 +59,25 @@ static void	loop_words(t_token **cur, const char *line, size_t *i)
 			(*i)++;
 	}
 	lex_finish_word(cur, line, &start_index, *i);
+	return (0);
 }
 
-static void	loop(t_token *cur, const char *line)
+static int	loop(t_token *cur, const char *line, size_t i)
 {
-	size_t	i;
-
-	i = 0;
 	while (line[i])
 	{
-		loop_words(&cur, line, &i);
+		if (loop_words(&cur, line, &i) == -1)
+			return (-1);
 		while (line[i] == ' ')
 			i++;
 	}
+	return (0);
 }
 
-void	lex(t_token **tlst, const char *line)
+int	lex(t_token **tlst, const char *line)
 {
 	t_token	*cur;
+	size_t	i;
 
 	cur = token_new(NULL, T_DEFAULT_TOKEN);
 	if (!cur)
@@ -82,9 +86,12 @@ void	lex(t_token **tlst, const char *line)
 	}
 	cur->separated_from_previous = true;
 	token_li_push_back(tlst, cur);
-	while (*line == ' ')
-		line++;
-	loop(cur, line);
+	i = 0;
+	while (line[i] == ' ')
+		i++;
+	if (loop(cur, line, i) == -1)
+		return (-1);
 	cur = token_li_pop_back(tlst);
 	free(cur);
+	return (0);
 }

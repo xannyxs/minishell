@@ -6,12 +6,12 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/28 18:30:25 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/01 13:53:29 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/02 14:31:02 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h" /* ft_memcpy, ft_strndup_unsafe */
+#include "libft.h" /* ft_memcpy, ft_strndup_unsafe, ft_putendl_fd */
 
 /* TODO: I don't like this. Perhaps lookup table? */
 /* returns whether c is a token char. */
@@ -59,11 +59,14 @@ void	lex_finish_word(t_token **cur, const char *line,
 }
 
 // No need to check if quote_char == '\'' because that is implied.
-void	lex_set_quote_token_and_loop(t_token *cur, const char *line,
+// Also, what a bummer that I cannot use my own ft_dprintf...
+int	lex_set_quote_token_and_loop(t_token *cur, const char *line,
 	size_t *i)
 {
 	char	quote_char;
+	size_t	orig_i;
 
+	orig_i = *i;
 	quote_char = line[*i];
 	if (quote_char == '"')
 		cur->token = T_LITERAL_QUOTED;
@@ -74,11 +77,17 @@ void	lex_set_quote_token_and_loop(t_token *cur, const char *line,
 	{
 		if (line[*i] == 0)
 		{
-			// TODO: error, quote not closed.
+			ft_putstr_fd("minishell: syntax error: quote ", 2);
+			ft_putchar_fd(quote_char, 2);
+			ft_putstr_fd(" at column ", 2);
+			ft_putnbr_fd(orig_i, 2);
+			ft_putendl_fd(" did not close", 2);
+			return (-1);
 		}
 		(*i)++;
 	}
 	(*i)++;
+	return (0);
 }
 
 // No need to check if char is pipe, because that is implied.

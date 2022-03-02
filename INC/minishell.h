@@ -109,14 +109,14 @@ void	token_make_list_doubly_linked(t_token *lst);
 /*
 	LEXER
 */
-void	lex(t_token **tlst, const char *line);
+int		lex(t_token **tlst, const char *line);
 
 void	expand_token(t_token *el, const t_vars *vars);
 
 void	lex_finish_word(t_token **cur, const char *line, size_t *start_index,
 			size_t end_index);
 
-void	lex_set_quote_token_and_loop(t_token *cur, const char *line,
+int		lex_set_quote_token_and_loop(t_token *cur, const char *line,
 			size_t *i);
 
 void	lex_check_other_token_and_loop(t_token *cur, const char *str,

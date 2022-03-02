@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/01 17:30:13 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/02 14:33:53 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@
 	- Be careful with minus (-)
 */
 
-#include <stdio.h>
-
-
 static void	expand_vars(t_vars *vars)
 {
 	t_token	*cur;
@@ -45,7 +42,7 @@ static void	expand_vars(t_vars *vars)
 				next = cur->next;
 				token_remove_from_list(&vars->token_list, cur);
 				cur = next;
-				continue;
+				continue ;
 			}
 		}
 		cur = cur->next;
@@ -114,9 +111,11 @@ int	init_vars(const char *line, t_vars *vars)
 {
 	vars->token_list = NULL;
 	vars->var_list = NULL;
-	lex(&vars->token_list, line);
-	if (vars->token_list == NULL)
-		exit (ENOMEM);
+	if (lex(&vars->token_list, line) == -1)
+	{
+		token_free_list(&vars->token_list);
+		return (-1);
+	}
 	parse(vars);
 	//system("leaks minishell");
 	// print_list(parsing->token_list);
