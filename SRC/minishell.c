@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/02 18:22:06 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/02 22:19:08 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	main(void)
 	while (true)
 	{
 		line = readline("minishell $> ");
-
 		if (!line)
 		{
 			// TODO: exit code
@@ -80,7 +79,7 @@ int	main(void)
 				vars.exit_code = execute_line(&vars);
 				token_free_list(&vars.token_list);
 			}
-			//system("leaks minishell");
+			// system("leaks minishell");
 		}
 	}
 	return (0);

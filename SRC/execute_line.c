@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:44:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/25 13:06:02 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/02 22:18:21 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 #include <stdbool.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 static const t_function	g_function[] = {
 {"echo", &exec_echo},

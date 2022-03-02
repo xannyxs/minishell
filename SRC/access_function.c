@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 16:39:52 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/01 15:19:15 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/02 22:17:55 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,20 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+static void	free_path(char **path)
+{
+	int	i;
+
+	i = 0;
+	while (path[i] != NULL)
+	{
+		free(path[i]);
+		i++;
+	}
+	free(path);
+}
 
 static int	path_row(char *envp[])
 {
@@ -47,24 +61,39 @@ char	**find_dir(char *envp[])
 	return (path);
 }
 
-// TODO: I am fairly sure this will leak
 char	*path_check(char *func, char **path)
 {
 	int		i;
 	int		access_ok;
+	char	*temp;
 	char	*joined_path;
 
 	i = 0;
 	access_ok = -1;
-	path[0] = ft_substr(path[0], 5, ft_strlen(path[0]) - 4);
+	temp = path[0];
+	path[0] = ft_substr(temp, 5, ft_strlen(path[0]) - 4);
+	free(temp);
 	if (ft_strchr(func, ' ') != NULL)
-		func = *ft_split(func, ' ');
+	{
+		temp = func;
+		func = *ft_split(temp, ' ');
+		free(temp);
+	}
 	if (access(func, X_OK) == 0)
 		return (func);
 	while (path[i] != NULL && access_ok != 0)
 	{
-		joined_path = ft_strjoin(ft_strjoin(path[i], "/"), func);
+		temp = ft_strjoin(path[i], "/");
+		joined_path = ft_strjoin(temp, func);
 		access_ok = access(joined_path, X_OK);
+		free(temp);
+		if (access_ok == 0)
+		{
+			free_path(path);
+			free(joined_path);
+			return (joined_path);
+		}
+		free(joined_path);
 		i++;
 	}
 	if (access_ok == -1)
