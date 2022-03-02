@@ -2,10 +2,9 @@
 # define MINISHELL_H
 
 # include <errno.h>
-# include "libft.h"
+# include <stddef.h> /* size_t */
 
-// TODO
-# define T_DEFAULT_TOKEN (T_LITERAL_EXPANDING)
+# define T_DEFAULT_TOKEN (T_LITERAL)
 
 // TODO: maybe after the literals have been expanded,
 // set to a more sane T_LITERAL so we don't have to if/else as much etc.
@@ -13,7 +12,7 @@
 enum e_token {
 	T_UNKNOWN,
 	T_LITERAL,
-	T_LITERAL_EXPANDING,
+	T_LITERAL_QUOTED,
 	T_LITERAL_NONEXPANDING,
 	T_PIPE,
 	T_REDIRECT_STDOUT_TO_FILE, /* > */
@@ -29,12 +28,16 @@ typedef struct s_envlist
 	struct s_envlist	*next;
 }	t_envlist;
 
+/* So, standard this is a singly linked list. But when the list is
+ * "finalized", it becomes as doubly linked one so it's easier to parse it.
+ * Note that ALL token functions do not support doubly linked lists! */
 typedef struct s_token
 {
 	char			*content;
 	int				separated_from_previous;
 	enum e_token	token;
 	struct s_token	*next;
+	struct s_token	*prev;
 }	t_token;
 
 typedef struct s_vars
@@ -99,30 +102,35 @@ void	token_free(t_token *token);
 
 void	token_free_list(t_token **lst);
 
+void	token_remove_from_list(t_token **tlst, t_token *to_remove);
+
+void	token_make_list_doubly_linked(t_token *lst);
+
 /*
 	LEXER
 */
-void	lex(t_token **tlst, const char *line);
+int		lex(t_token **tlst, const char *line);
 
-/*
-	CHECK_CHAR
-*/
+void	expand_token(t_token *el, const t_vars *vars);
 
-int		check_delimiter(char *prompt);
+void	lex_finish_word(t_token **cur, const char *line, size_t *start_index,
+			size_t end_index);
 
-int		check_redirect_stdin(char *prompt);
+int		lex_set_quote_token_and_loop(t_token *cur, const char *line,
+			size_t *i);
 
-int		check_redirect_stdout_append(char *prompt);
+void	lex_check_other_token_and_loop(t_token *cur, const char *str,
+			size_t *i);
 
-int		check_redirect_stdout(char *prompt);
+int		is_token_char_present(const char c);
 
-int		check_pipes(char *prompt);
+int		lex_validate(t_token *lst);
 
 /*
 	ERRORS
 */
 
-void	fatal_error(const char *msg);
+void	fatal_perror(const char *msg);
 
 /*
 	ACCESS

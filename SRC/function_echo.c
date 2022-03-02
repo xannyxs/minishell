@@ -6,16 +6,15 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/18 11:55:37 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/24 11:41:11 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/25 13:53:16 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
 
 #include <stdbool.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include <unistd.h> /* STDOUT_FILENO */
 
 /*
 	ECHO FUNC:
@@ -29,44 +28,18 @@
 	LEAK FREE
 */
 
-static int	check_dollar(t_token *temp)
-{
-	if (ft_strncmp(temp->content, "$", 1) == 0)
-		return (true);
-	return (false);
-}
-
-static int	print_env_variable(t_token *temp)
-{
-	char	*input_user;
-	char	*env;
-
-	input_user = ft_substr(temp->content, 1, \
-		ft_strlen(temp->content) - 1);
-	env = getenv(input_user);
-	if (env == NULL)
-		return (-1);
-	ft_putstr_fd(env, STDOUT_FILENO);
-	return (0);
-}
-
-static int	print_echo(t_token *temp, int is_dollar)
+static int	print_echo(t_token *temp)
 {
 	int	ret;
 
 	ret = 0;
-	if (is_dollar == true)
-	{
-		ret = print_env_variable(temp);
-		return (ret);
-	}
 	while (temp != NULL)
 	{
 		if (temp->token != T_LITERAL)
 			return (1);
 		ft_putstr_fd(temp->content, STDOUT_FILENO);
 		if (temp->next != NULL)
-			write(STDOUT_FILENO, " ", 1);
+			ft_putchar_fd(' ', STDOUT_FILENO);
 		temp = temp->next;
 	}
 	return (0);
@@ -76,14 +49,13 @@ int	exec_echo(t_vars *vars)
 {
 	int		ret;
 	int		is_flag;
-	int		is_dollar;
 	t_token	*temp;
 
 	is_flag = false;
 	temp = vars->token_list->next;
 	if (temp == NULL)
 	{
-		write(STDOUT_FILENO, "\n", 1);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 		return (0);
 	}
 	else if (ft_strcmp(temp->content, "-n") == 0)
@@ -91,9 +63,8 @@ int	exec_echo(t_vars *vars)
 		temp = temp->next;
 		is_flag = true;
 	}
-	is_dollar = check_dollar(temp);
-	ret = print_echo(temp, is_dollar);
+	ret = print_echo(temp);
 	if (is_flag == false)
-		write(STDOUT_FILENO, "\n", 1);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (ret);
 }

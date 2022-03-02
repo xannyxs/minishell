@@ -6,7 +6,11 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2022/02/24 13:29:15 by xvoorvaa      ########   odam.nl         */
+=======
+/*   Updated: 2022/03/02 18:25:12 by jobvan-d      ########   odam.nl         */
+>>>>>>> origin/master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +33,21 @@
 static void	expand_vars(t_vars *vars)
 {
 	t_token	*cur;
-	
+	t_token	*next;
+
 	cur = vars->token_list;
 	while (cur)
 	{
-		if (cur->token == T_LITERAL_EXPANDING)
+		if (cur->token == T_LITERAL || cur->token == T_LITERAL_QUOTED)
 		{
-			// expand_token(cur, vars);
-			cur->token = T_LITERAL;
+			expand_token(cur, vars);
+			if (cur->token == T_LITERAL && *cur->content == 0)
+			{
+				next = cur->next;
+				token_remove_from_list(&vars->token_list, cur);
+				cur = next;
+				continue ;
+			}
 		}
 		cur = cur->next;
 	}
@@ -58,7 +69,7 @@ static int	try_merge(t_token *lst)
 		free(lst->content);
 		if (!new_content)
 		{
-			// TODO: error
+			fatal_perror("malloc");
 		}
 		token_free(next);
 		lst->content = new_content;
@@ -67,13 +78,12 @@ static int	try_merge(t_token *lst)
 	return (false);
 }
 
-// this is temporary.
-// TODO: expansion.
 /* basic process:
  * 1: expand the literals that need expansion
  * 2: boil all literals down to just T_LITERAL.
  * 3: merge literals that are together.
- * 4: done. */
+ * 4: make list doubly linked.
+ * 5: done. */
 static int	parse(t_vars *vars)
 {
 	t_token	*cur;
@@ -82,8 +92,8 @@ static int	parse(t_vars *vars)
 	cur = vars->token_list;
 	while (cur)
 	{
-		if (cur->token == T_LITERAL_EXPANDING
-			|| cur->token == T_LITERAL_NONEXPANDING)
+		if (cur->token == T_LITERAL_NONEXPANDING
+			|| cur->token == T_LITERAL_QUOTED)
 		{
 			cur->token = T_LITERAL;
 		}
@@ -97,16 +107,26 @@ static int	parse(t_vars *vars)
 			cur = cur->next;
 		}
 	}
+	token_make_list_doubly_linked(vars->token_list);
 	return (1);
 }
 
 int	init_vars(const char *line, t_vars *vars)
 {
 	vars->token_list = NULL;
+<<<<<<< HEAD
 	lex(&vars->token_list, line);
 	if (vars->token_list == NULL)
 		fatal_error("malloc:");
+=======
+	vars->var_list = NULL;
+	if (lex(&vars->token_list, line) == -1)
+		return (-1);
+>>>>>>> origin/master
 	parse(vars);
+	if (!lex_validate(vars->token_list))
+		return (-1);
+	//system("leaks minishell");
 	// print_list(parsing->token_list);
 	// print_token(parsing->token_list);
 	return (0);

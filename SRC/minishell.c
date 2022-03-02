@@ -6,11 +6,12 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/24 13:04:29 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/02 18:22:06 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,6 +45,7 @@ static int	allocate_env(t_vars *vars)
 	return (0);
 }
 
+// TODO: norm
 int	main(void)
 {
 	int			err;
@@ -53,26 +55,33 @@ int	main(void)
 	vars.token_list = NULL;
 	vars.var_list = NULL;
 	if (allocate_env(&vars) == -1)
-		fatal_error("malloc");
+		fatal_perror("malloc");
 	while (true)
 	{
 		line = readline("minishell $> ");
 
-		// TODO: eof
-		if (line)
+		if (!line)
+		{
+			// TODO: exit code
+			exit(errno);
+		}
+		else if (*line != 0)
 		{
 			err = init_vars(line, &vars);
 			free(line);
 			if (err != 0)
-				exit(errno);
+			{
+				token_free_list(&vars.token_list);
+				continue ;
+			}
 			// print_token(vars.token_list);
 			if (vars.token_list != NULL)
 			{
 				vars.exit_code = execute_line(&vars);
 				token_free_list(&vars.token_list);
 			}
+			//system("leaks minishell");
 		}
-		// system("leaks minishell");
 	}
 	return (0);
 }

@@ -6,11 +6,12 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 16:15:22 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/24 13:03:52 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/02/25 13:54:05 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -50,7 +51,7 @@ void	new_node(t_envlist **head, char *variable, char *content)
 	new_node = ft_calloc(sizeof(t_envlist), 1);
 	if (!new_node)
 	{
-		fatal_error("malloc");
+		fatal_perror("malloc");
 	}
 	last_node = *head;
 	new_node->variable = variable;
