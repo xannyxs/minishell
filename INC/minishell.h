@@ -124,6 +124,8 @@ void	lex_check_other_token_and_loop(t_token *cur, const char *str,
 
 int		is_token_char_present(const char c);
 
+int		lex_validate(t_token *lst);
+
 /*
 	ERRORS
 */
