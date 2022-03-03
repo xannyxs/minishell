@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/02 20:01:56 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/03 13:49:38 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,8 @@ static int	parse(t_vars *vars)
 int	init_vars(const char *line, t_vars *vars)
 {
 	vars->token_list = NULL;
-	lex(&vars->token_list, line);
-	if (vars->token_list == NULL)
-		fatal_perror("malloc:");
+	if (lex(&vars->token_list, line) == -1)
+		return (-1);
 	parse(vars);
 	if (!lex_validate(vars->token_list))
 		return (-1);
