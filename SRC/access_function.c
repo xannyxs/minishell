@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 16:39:52 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/02 22:17:55 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/03 13:24:00 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-static void	free_path(char **path)
-{
-	int	i;
-
-	i = 0;
-	while (path[i] != NULL)
-	{
-		free(path[i]);
-		i++;
-	}
-	free(path);
-}
 
 static int	path_row(char *envp[])
 {
@@ -89,7 +76,7 @@ char	*path_check(char *func, char **path)
 		free(temp);
 		if (access_ok == 0)
 		{
-			free_path(path);
+			ft_free_str_arr(path);
 			free(joined_path);
 			return (joined_path);
 		}
