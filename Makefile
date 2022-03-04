@@ -6,7 +6,7 @@
 #    By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 14:31:21 by xvoorvaa      #+#    #+#                  #
-#    Updated: 2022/03/02 23:04:20 by xvoorvaa      ########   odam.nl          #
+#    Updated: 2022/03/04 12:45:18 by jobvan-d      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ LIBFT_A			=	$(LIBFT_DIR)/libft.a
 
 # using temporary wildcards for now
 SOURCES		:= $(shell find $(SRC_DIR) -type f -name "*.c")
+HEADERS		:= $(LIBFT_H) $(wildcard INC/*.h)
 OBJS		:= $(SOURCES:.c=.o)
 OBJECTS		:= $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(OBJS))
 
