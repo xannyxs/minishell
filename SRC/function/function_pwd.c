@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:17:10 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/25 13:53:46 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/07 13:25:18 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	find_env_pwd(t_vars *vars)
 	i = 0;
 	while (vars->environ[i] != NULL)
 	{
-		if (ft_strncmp(vars->environ[i], "PWD", 3) == 0)
+		if (ft_strncmp(vars->environ[i], "PWD=", 4) == 0)
 			return (i);
 		i++;
 	}
@@ -42,12 +42,15 @@ static int	find_env_pwd(t_vars *vars)
 int	change_env_pwd(t_vars *vars)
 {
 	int		i;
+	char	*temp;
 
 	i = find_env_pwd(vars);
 	if (i < 0)
 		return (-1);
+	temp = getcwd(NULL, 1);
 	free(vars->environ[i]);
-	vars->environ[i] = ft_strjoin("PWD=", getcwd(NULL, 1));
+	vars->environ[i] = ft_strjoin("PWD=", temp);
+	free(temp);
 	return (0);
 }
 

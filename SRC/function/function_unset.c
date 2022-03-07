@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 16:48:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/02 19:57:52 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/07 12:48:12 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,13 @@ static int	check_env_vars(t_vars *vars, t_token *temp)
 		if (ft_strncmp(temp_var, vars->environ[i], \
 				ft_strlen(temp_var)) == 0)
 		{
+			free(vars->environ[i]);
 			while (vars->environ[i + 1] != NULL)
 			{
-				free(vars->environ[i]);
-				vars->environ[i] = NULL;
-				return (0);
+				vars->environ[i] = vars->environ[i + 1];
+				i++;
 			}
+			free(temp_var);
 			free(vars->environ[i]);
 			vars->environ[i] = NULL;
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/02 23:00:23 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/07 14:17:56 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,10 @@ int	exec_cd(t_vars *vars)
 {
 	t_token	*temp;
 
-	vars->pwd = getcwd(NULL, 1);
-	vars->old_pwd = vars->pwd;
+	if (vars->old_pwd != NULL)
+		free(vars->old_pwd);
+	vars->old_pwd = getcwd(NULL, 1);
+	system("leaks minishell");
 	change_env_oldpwd(vars);
 	temp = vars->token_list->next;
 	if (change_homedir(temp) == true)

@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 11:06:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/02/25 13:53:27 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/07 14:36:56 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <unistd.h>
 
 /*
 	FUNCTION EXIT:
@@ -26,6 +27,13 @@
 	LEAK FREE
 */
 
+static void	write_error(t_token *temp)
+{
+	write(STDERR_FILENO,"minishell: exit: ", 18);
+	write(STDERR_FILENO, temp->content, ft_strlen(temp->content));
+	write(STDERR_FILENO, ": numeric argument required\n", 29);
+	exit(255);
+}
 int	exec_exit(t_vars *vars)
 {
 	int		i;
@@ -41,12 +49,7 @@ int	exec_exit(t_vars *vars)
 		i++;
 	if (ft_isdigit(temp->content[i]) == false && \
 		temp->content[i] != '\0')
-	{
-		// TODO: write to STDERR instead
-		printf("minishell: exit: %s: numeric argument required\n",
-			vars->token_list->content);
-		exit (255);
-	}
+		write_error(temp);
 	vars->exit_code = ft_atoi(temp->content);
 	exit(vars->exit_code);
 }

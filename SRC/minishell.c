@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/02 22:19:08 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/07 14:21:06 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 #include <stdbool.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+
+static void	init_base_vars(t_vars *vars)
+{
+	vars->token_list = NULL;
+	vars->var_list = NULL;
+	vars->old_pwd = NULL;
+}
 
 static int	allocate_env(t_vars *vars)
 {
@@ -52,13 +59,13 @@ int	main(void)
 	char		*line;
 	t_vars		vars;
 
-	vars.token_list = NULL;
-	vars.var_list = NULL;
+	init_base_vars(&vars);
 	if (allocate_env(&vars) == -1)
 		fatal_perror("malloc");
 	while (true)
 	{
-		line = readline("minishell $> ");
+		line = readline("\e[1;36mminishell \e[0;32m$> \e[0m");
+		add_history(line);
 		if (!line)
 		{
 			// TODO: exit code
@@ -79,7 +86,7 @@ int	main(void)
 				vars.exit_code = execute_line(&vars);
 				token_free_list(&vars.token_list);
 			}
-			// system("leaks minishell");
+			//system("leaks minishell");
 		}
 	}
 	return (0);

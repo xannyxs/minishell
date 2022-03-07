@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 16:39:52 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/03 13:24:00 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/07 13:01:25 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,10 @@ static int	path_row(char *envp[])
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		if (envp[i][0] == 'P')
-		{
-			if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-				return (i);
-		}
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+			return (i);
 		i++;
 	}
-	perror("ENV error"); // TODO
 	return (-1);
 }
 
@@ -55,6 +51,8 @@ char	*path_check(char *func, char **path)
 	char	*temp;
 	char	*joined_path;
 
+	if (path == NULL)
+		return (NULL);
 	i = 0;
 	access_ok = -1;
 	temp = path[0];
