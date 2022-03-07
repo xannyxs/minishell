@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 16:31:14 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/04 12:43:09 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/07 18:54:27 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <unistd.h> /* execve, dup, close etc. */
 #include <stdlib.h> /* malloc */
 #include <sys/wait.h> /* wait */
+#include <stdio.h> /* perror */
 #include <errno.h> /* ECHILD */
 
 static int	is_pipe(t_token *tok)
@@ -63,7 +64,6 @@ static char	**create_argv(t_token **lst)
 	return (argv);
 }
 
-// TODO: exit(127)
 static void	m_proc(int infd, int outfd, char **args, char **envp)
 {
 	char	*path;
@@ -85,7 +85,8 @@ static void	m_proc(int infd, int outfd, char **args, char **envp)
 		path = "";
 	if (execve(path, args, envp) == -1)
 	{
-		fatal_perror(*args);
+		perror(*args);
+		exit(127);
 	}
 }
 
@@ -136,6 +137,7 @@ void	pipe_next(int readfd, t_token *tlst, char **envp)
 	pipe_next(pfds[0], tlst, envp);
 }
 
+// TODO: Return 127 for _the last_ command, not just some race condtion.
 int	execute_multiple(t_vars *vars)
 {
 	pid_t	waitpid;
@@ -151,6 +153,10 @@ int	execute_multiple(t_vars *vars)
 				fatal_perror("wait");
 			break ;
 		}
+		else if (WIFEXITED(status))
+		{
+			vars->exit_code = WEXITSTATUS(status);
+		}
 	}
-	return (1);
+	return (vars->exit_code);
 }
