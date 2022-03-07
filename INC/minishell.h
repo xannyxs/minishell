@@ -106,6 +106,12 @@ void	token_remove_from_list(t_token **tlst, t_token *to_remove);
 
 void	token_make_list_doubly_linked(t_token *lst);
 
+int		token_count_occurrences(t_token *lst, int (*f)(t_token *));
+
+t_token	*token_get_first_occurrence(t_token *lst, int (*f)(t_token *));
+
+//size_t	token_list_size(t_token *lst);
+
 /*
 	LEXER
 */
@@ -139,5 +145,13 @@ void	fatal_perror(const char *msg);
 char	**find_dir(char *envp[]);
 
 char	*path_check(char *func, char **path);
+
+/*
+	PIPE EXECUTING
+*/
+
+char	*pathresolve_tryfind(char *name, char **envp);
+
+int		execute_multiple(t_vars *vars);
 
 #endif

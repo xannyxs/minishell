@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:44:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/02 22:18:21 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/03 13:58:49 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,21 @@ static int	nonfatal_error(t_vars vars)
 	return (127);
 }
 
+static int	is_pipe_present(t_token *lst)
+{
+	while (lst)
+	{
+		if (lst->token == T_PIPE)
+		{
+			return (1);
+		}
+		lst = lst->next;
+	}
+	return (0);
+}
+
 //TODO: Error handeling
-int	execute_line(t_vars *vars)
+int	execute_single_line(t_vars *vars)
 {
 	int	i;
 	int	err;
@@ -58,4 +71,18 @@ int	execute_line(t_vars *vars)
 	else if (g_function[i].key == NULL)
 		return (nonfatal_error(*vars));
 	return (vars->exit_code);
+}
+
+//TODO: Error handeling
+// TODO: unify
+int	execute_line(t_vars *vars)
+{
+	if (is_pipe_present(vars->token_list))
+	{
+		return (execute_multiple(vars));
+	}
+	else
+	{
+		return (execute_single_line(vars));
+	}
 }

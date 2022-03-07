@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/02 18:13:21 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/02 18:39:00 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/04 12:07:08 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static enum	e_token	token_after(t_token *cur)
 
 /* does some basic validation of the input.
  * (ex. redirect is followed by a literal) */
+// TODO: more accurate validation. for ex. > wc | cat is valid but shouldn't
 int	lex_validate(t_token *lst)
 {
 	while (lst)
