@@ -6,21 +6,30 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 14:36:18 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/01 14:01:10 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/07 15:25:44 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h" /* ft_str* */
+#include "libft.h" /* ft_str*, ft_uitoa */
 
 #include <stdlib.h> /* free */
 
 /* looks up a variable. kind of specialized function, hence it's weird. */
-static char	*var_lookup(const char *var, char **envp, size_t len)
+static char	*var_lookup(const char *var, const t_vars *vars, size_t len)
 {
 	char	*value;
+	char	**envp;
 
+	if (*var == '?')
+	{
+		value = ft_uitoa(vars->exit_code);
+		if (!value)
+			fatal_perror("malloc");
+		return (value);
+	}
 	value = NULL;
+	envp = vars->environ;
 	while (*envp != NULL)
 	{
 		if (ft_strncmp(var, *envp, len) == 0 && (*envp)[len] == '=')
@@ -40,6 +49,11 @@ static size_t	count_var_length(const char *str)
 	size_t	i;
 
 	i = 1;
+	if (str[i] == '?')
+	{
+		i++;
+		return (i);
+	}
 	while ((str[i] >= 'a' && str[i] <= 'z')
 		|| (str[i] >= 'A' && str[i] <= 'Z')
 		|| (str[i] >= '0' && str[i] <= '9')
@@ -69,7 +83,7 @@ static char	*m_strfjoin(char *a, char *b)
 	return (tmp);
 }
 
-static char	*get_part(size_t i, char **cstr, char **envp)
+static char	*get_part(size_t i, char **cstr, const t_vars *vars)
 {
 	size_t	var_length;
 	char	*val;
@@ -84,7 +98,7 @@ static char	*get_part(size_t i, char **cstr, char **envp)
 	*cstr += i;
 	if (var_length > 1)
 	{
-		val = var_lookup(*cstr + 1, envp, var_length - 1);
+		val = var_lookup(*cstr + 1, vars, var_length - 1);
 		if (val)
 		{
 			tmp = m_strfjoin(tmp, val);
@@ -113,8 +127,6 @@ static void	token_expand_finish(t_token *el, char *cstr, char *new_content)
 }
 
 // TODO: check leaks
-// TODO: token should be REMOVED if there var lookup fails and is not quoted
-// and no other text present.
 void	expand_token(t_token *el, const t_vars *vars)
 {
 	size_t	i;
@@ -130,7 +142,7 @@ void	expand_token(t_token *el, const t_vars *vars)
 			break ;
 		i -= (size_t)cstr;
 		new_content = m_strfjoin(new_content,
-				get_part(i, &cstr, vars->environ));
+				get_part(i, &cstr, vars));
 		if (!new_content)
 			fatal_perror("malloc");
 	}
