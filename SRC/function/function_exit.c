@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 11:06:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/07 14:36:56 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/07 14:49:54 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "libft.h"
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <stdbool.h>
 #include <unistd.h>
 
@@ -29,11 +28,12 @@
 
 static void	write_error(t_token *temp)
 {
-	write(STDERR_FILENO,"minishell: exit: ", 18);
-	write(STDERR_FILENO, temp->content, ft_strlen(temp->content));
-	write(STDERR_FILENO, ": numeric argument required\n", 29);
+	ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+	ft_putstr_fd(temp->content, STDERR_FILENO);
+	ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 	exit(255);
 }
+
 int	exec_exit(t_vars *vars)
 {
 	int		i;
