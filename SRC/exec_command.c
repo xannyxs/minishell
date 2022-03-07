@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 16:55:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/02 22:07:32 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/07 14:42:46 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-#define READ 0
-#define WRITE 1
+#include <sys/wait.h>
+#include <sys/types.h>
 
 /*
 	Needs some cleaning. Not my best code.
@@ -33,7 +33,7 @@ static char	**allocate_input(t_vars *vars)
 
 	i = 0;
 	temp = vars->token_list->next;
-	while (temp != NULL && temp->token != T_PIPE)
+	while (temp != NULL && temp->token == T_LITERAL)
 	{
 		temp = temp->next;
 		i++;
