@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:44:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/07 12:58:09 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/07 14:47:11 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,8 @@ static int	is_pipe_present(t_token *lst)
 static int	execute_single_cmd(t_vars *vars)
 {
 	int	i;
-	int	err;
 
 	i = 0;
-	err = 0;
 	while (g_function[i].key)
 	{
 		if (ft_strcmp(vars->token_list->content, g_function[i].key) == 0)

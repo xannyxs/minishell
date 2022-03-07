@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/02/25 13:53:37 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/07 14:46:24 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,10 @@ static int	print_export(t_vars *vars)
 
 int	exec_export(t_vars *vars)
 {
-	int			i;
-	int			err;
 	char		*variable;
 	char		*content;
 	t_token		*temp;
 
-	i = 0;
-	err = 0;
 	temp = vars->token_list->next;
 	if (temp == NULL || temp->token == T_PIPE)
 	{
