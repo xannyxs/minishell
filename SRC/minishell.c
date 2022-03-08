@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/07 14:21:06 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/08 16:01:28 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	init_base_vars(t_vars *vars)
 	vars->token_list = NULL;
 	vars->var_list = NULL;
 	vars->old_pwd = NULL;
+	vars->pwd = NULL;
 }
 
 static int	allocate_env(t_vars *vars)

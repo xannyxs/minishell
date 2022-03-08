@@ -68,6 +68,8 @@ int		exec_cd(t_vars *vars);
 
 int		change_env_pwd(t_vars *vars);
 
+int		change_env_oldpwd(t_vars *vars);
+
 int		exec_pwd(t_vars *vars);
 
 int		exec_export(t_vars *vars);
@@ -145,6 +147,8 @@ void	fatal_perror(const char *msg);
 char	**find_dir(char *envp[]);
 
 char	*path_check(char *func, char **path);
+
+char	*ft_getenv(const char *name, char *environ[]);
 
 /*
 	PIPE EXECUTING

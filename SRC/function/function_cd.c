@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/07 14:17:56 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/08 15:51:06 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,46 +28,25 @@
 	LEAK FREE
 */
 
-static int	find_env_oldpwd(t_vars *vars)
+static int	change_homedir(t_token *token_list, char *environ[])
 {
-	int	i;
+	int		err;
+	char	*home;
 
-	i = 0;
-	while (vars->environ[i] != NULL)
+	if (token_list->token == T_PIPE || \
+		ft_strcmp(token_list->content, "~") == 0 || \
+		ft_strcmp(token_list->content, "cd") == 0)
 	{
-		if (ft_strncmp(vars->environ[i], "OLDPWD", 6) == 0)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-static int	change_env_oldpwd(t_vars *vars)
-{
-	int		i;
-
-	i = find_env_oldpwd(vars);
-	if (i < 0)
-		return (-1);
-	free(vars->environ[i]);
-	if (vars->old_pwd == NULL)
-		vars->old_pwd = getcwd(NULL, 1);
-	vars->environ[i] = ft_strjoin("OLDPWD=", vars->old_pwd);
-	return (0);
-}
-
-static int	change_homedir(t_token *vars)
-{
-	int	err;
-
-	if (vars == NULL || vars->token == T_PIPE || \
-		ft_strcmp(vars->content, "~") == 0)
-	{
-		err = chdir(getenv("HOME"));
+		home = ft_getenv("HOME", environ);
+		err = chdir(home);
+		free(home);
 		if (err != 0)
 		{
-			perror("cd");
-			return (EPERM);
+			write(STDERR_FILENO, "minishell: cd: ", 11);
+			write(STDERR_FILENO, token_list->content, ft_strlen(token_list->content));
+			perror(" ");
+			write(STDERR_FILENO, "\n", 1);
+			return (errno);
 		}
 		return (true);
 	}
@@ -76,48 +55,74 @@ static int	change_homedir(t_token *vars)
 
 static int	change_dir(t_vars vars, t_token *temp)
 {
-	int	err;
+	int		err;
 
 	if (ft_strcmp(temp->content, "-") == 0)
 	{
 		err = chdir(vars.old_pwd);
-		if (err != 0)
-		{
-			perror("cd");
-			return (EPERM);
-		}
+		if (err == 0)
+			printf("%s\n", vars.old_pwd);
 	}
 	else
-	{
 		err = chdir(temp->content);
-		if (err != 0)
-		{
-			perror("cd");
-			return (EPERM);
-		}
+	if (err != 0)
+	{
+		write(STDERR_FILENO, "minishell: cd: ", 16);
+		write(STDERR_FILENO, temp->content, ft_strlen(temp->content));
+		perror(" ");
+		return (errno);
+	}
+	return (0);
+}
+
+static int	examine_cd(t_vars *vars, t_token *temp, char **temp_pwd)
+{
+	if (vars->old_pwd == NULL && ft_strcmp(temp->content, "-") == 0)
+	{
+		write(STDERR_FILENO, "minishell: cd: OLDPWD not set\n", 31);
+		errno = EPERM;
+		return (-1);
+	}
+	else if (ft_strcmp(temp->content, "-") != 0)
+	{
+		if (vars->old_pwd != NULL)
+			free(vars->old_pwd);
+		vars->old_pwd = ft_getenv("PWD", vars->environ);
+		change_env_oldpwd(vars);
+	}
+	else if (ft_strcmp(temp->content, "-") == 0)
+	{
+		temp_pwd[0] = ft_getenv("PWD", vars->environ);
+		return (1);
 	}
 	return (0);
 }
 
 int	exec_cd(t_vars *vars)
 {
-	t_token	*temp;
+	int			check_dash;
+	char		*temp_pwd;
+	t_token		*temp;
 
-	if (vars->old_pwd != NULL)
-		free(vars->old_pwd);
-	vars->old_pwd = getcwd(NULL, 1);
-	system("leaks minishell");
-	change_env_oldpwd(vars);
-	temp = vars->token_list->next;
-	if (change_homedir(temp) == true)
+	if (vars->token_list->next != NULL)
+		temp = vars->token_list->next;
+	else
+		temp = vars->token_list;
+	check_dash = examine_cd(vars, temp, &temp_pwd);
+	if (check_dash == -1)
+		return (errno);
+	if (change_homedir(temp, vars->environ) == true)
 	{
 		change_env_pwd(vars);
 		return (0);
 	}
-	if (vars->pwd == NULL)
-		return (errno);
 	if (change_dir(*vars, temp) != 0)
-		return (EPERM);
+		return (errno);
+	if (check_dash == 1)
+	{
+		free(vars->old_pwd);
+		vars->old_pwd = temp_pwd;
+	}
 	change_env_pwd(vars);
 	return (0);
 }
