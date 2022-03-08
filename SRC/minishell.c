@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/08 16:01:28 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/08 18:29:03 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	init_base_vars(t_vars *vars)
 	vars->pwd = NULL;
 }
 
-static int	allocate_env(t_vars *vars)
+static void	allocate_env(t_vars *vars)
 {
 	int			i;
 	extern char	**environ;
@@ -37,20 +37,16 @@ static int	allocate_env(t_vars *vars)
 		i++;
 	vars->environ = malloc((i + 1) * sizeof(char *));
 	if (vars->environ == NULL)
-		return (-1);
+		fatal_perror("malloc");
 	i = 0;
 	while (environ[i] != NULL)
 	{
 		vars->environ[i] = ft_strdup(environ[i]);
 		if (vars->environ[i] == NULL)
-		{
-			ft_free_str_arr(vars->environ);
-			return (-1);
-		}
+			fatal_perror("malloc");
 		i++;
 	}
 	vars->environ[i] = NULL;
-	return (0);
 }
 
 // TODO: norm
@@ -61,8 +57,7 @@ int	main(void)
 	t_vars		vars;
 
 	init_base_vars(&vars);
-	if (allocate_env(&vars) == -1)
-		fatal_perror("malloc");
+	allocate_env(&vars);
 	while (true)
 	{
 		line = readline("\e[1;36mminishell \e[0;32m$> \e[0m");
