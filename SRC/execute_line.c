@@ -6,15 +6,15 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:44:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/07 14:47:11 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/08 13:10:43 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 #include "function.h"
+#include "ft_printf.h"
 
-#include <stdbool.h>
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -29,10 +29,10 @@ static const t_function	g_function[] = {
 {0, NULL}
 };
 
-static int	nonfatal_error(t_vars vars)
+static int	nonfatal_error(t_vars *vars)
 {
-	ft_putstr_fd("minishell: command not found: ", STDERR_FILENO);
-	ft_putendl_fd(vars.token_list->content, STDERR_FILENO);
+	ft_dprintf(STDERR_FILENO, "minishell: command not found: %s\n",
+		vars->token_list->content);
 	return (127);
 }
 
@@ -67,7 +67,7 @@ static int	execute_single_cmd(t_vars *vars)
 	if (path_check(vars->token_list->content, find_dir(vars->environ)) != NULL)
 		exec_command(vars);
 	else if (g_function[i].key == NULL)
-		return (nonfatal_error(*vars));
+		return (nonfatal_error(vars));
 	return (vars->exit_code);
 }
 

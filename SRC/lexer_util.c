@@ -6,12 +6,13 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/28 18:30:25 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/02 14:31:02 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/08 13:13:39 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h" /* ft_memcpy, ft_strndup_unsafe, ft_putendl_fd */
+#include "libft.h" /* ft_memcpy, ft_strndup_unsafe */
+#include "ft_printf.h" /* ft_dprintf */
 
 /* TODO: I don't like this. Perhaps lookup table? */
 /* returns whether c is a token char. */
@@ -77,11 +78,8 @@ int	lex_set_quote_token_and_loop(t_token *cur, const char *line,
 	{
 		if (line[*i] == 0)
 		{
-			ft_putstr_fd("minishell: syntax error: quote ", 2);
-			ft_putchar_fd(quote_char, 2);
-			ft_putstr_fd(" at column ", 2);
-			ft_putnbr_fd(orig_i, 2);
-			ft_putendl_fd(" did not close", 2);
+			ft_dprintf(2, "minishell: syntax error: quote %c at column %u \
+did not close\n", quote_char,	orig_i);
 			return (-1);
 		}
 		(*i)++;

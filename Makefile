@@ -6,7 +6,7 @@
 #    By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 14:31:21 by xvoorvaa      #+#    #+#                  #
-#    Updated: 2022/03/04 12:45:18 by jobvan-d      ########   odam.nl          #
+#    Updated: 2022/03/08 13:15:51 by jobvan-d      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,18 @@ OBJ_DIR			=	OBJ
 SRC_DIR			=	SRC
 INC_DIR			=	INC
 LIBFT_DIR		=	libft
+PF_DIR			=	ft_printf
 LIBFT_H			=	$(LIBFT_DIR)/libft.h
 LIBFT_A			=	$(LIBFT_DIR)/libft.a
+
+# ft_printf stuff
+PF_H			=	$(PF_DIR)/ft_printf.h $(PF_DIR)/pf_util.h $(LIBFT_H)
+PF_A			=	$(PF_DIR)/libftprintf.a
+PF_PDEPS		=	pf_parsing.c pf_print_hex.c pf_print_int.c \
+					pf_print_pointer.c pf_print_str_char.c pf_printing.c \
+					pf_printing_util.c ft_printf.c
+PF_DEPS			=	$(PF_PDEPS:%.c=$(PF_DIR)/%.c)
+PF_OBJ			=	$(PF_DEPS:$(PF_DIR)/%.c=$(PF_DIR)/$(OBJ_DIR)/%.o)
 
 # using temporary wildcards for now
 SOURCES		:= $(shell find $(SRC_DIR) -type f -name "*.c")
@@ -44,20 +54,31 @@ all:	$(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS) | $(OBJ_DIR)
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -c $< -o $@ -I$(INC_DIR) -I$(LIBFT_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@ -I$(INC_DIR) -I$(LIBFT_DIR) -I$(PF_DIR)
 
 $(OBJ_DIR):
 	@mkdir $@
 
-$(NAME): $(OBJECTS) $(LIBFT_A)
+$(NAME): $(OBJECTS) $(LIBFT_A) $(PF_A)
 	@clear
 	@echo $(START)
 	@printf $(COMP_MESSAGE) $(SOURCES)
-	@$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) -L$(LIBFT_DIR) -lreadline -lft -I$(INC_DIR)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) -L$(LIBFT_DIR) -L$(PF_DIR) \
+		-lft -lftprintf -lreadline
 	@echo $(MESSAGE)
 
 $(LIBFT_A): $(LIBFT_H)
 	$(MAKE) -C $(LIBFT_DIR)
+
+# ft_printf stuff
+$(PF_A): $(PF_OBJ)
+	ar rcs $@ $^
+
+$(PF_DIR)/$(OBJ_DIR)/%.o: $(PF_DIR)/%.c $(PF_H) | $(PF_DIR)/$(OBJ_DIR)
+	$(CC) $(CFLAGS) -I$(PF_DIR) -I$(LIBFT_DIR) -c -o $@ $<
+
+$(PF_DIR)/$(OBJ_DIR):
+	mkdir $@
 
 clean:
 	@echo "\n"
@@ -70,6 +91,9 @@ clean:
 fclean:		clean
 	@rm -f $(NAME)
 	@rm -rf $(NAME).dSYM
+	@rm -f $(PF_DIR)/$(OBJ_DIR)/*.o
+	@rm -f $(LIBFT_A)
+	@rm -f $(PF_A)
 	$(MAKE) -C $(LIBFT_DIR) $@
 
 re:			fclean all
