@@ -6,12 +6,13 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:17:10 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/07 13:25:18 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/08 13:08:51 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
+#include "ft_printf.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -62,7 +63,7 @@ int	exec_pwd(t_vars *vars)
 	{
 		if (vars->token_list->next->token != T_PIPE)
 		{
-			ft_putstr_fd("pwd: bad option\n", STDERR_FILENO);
+			ft_dprintf(STDERR_FILENO, "pwd: bad option\n");
 			return (errno);
 		}
 	}

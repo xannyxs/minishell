@@ -6,12 +6,13 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 11:06:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/07 14:49:54 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/08 13:08:25 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
+#include "ft_printf.h"
 
 #include <stdlib.h>
 #include <stdbool.h>
@@ -28,9 +29,9 @@
 
 static void	write_error(t_token *temp)
 {
-	ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-	ft_putstr_fd(temp->content, STDERR_FILENO);
-	ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+	ft_dprintf(STDERR_FILENO,
+		"minishell: exit: %s: numeric argument required\n",
+		temp->content);
 	exit(255);
 }
 
