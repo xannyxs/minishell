@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/08 15:51:06 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/08 16:52:51 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	change_dir(t_vars vars, t_token *temp)
 	return (0);
 }
 
-static int	examine_cd(t_vars *vars, t_token *temp, char **temp_pwd)
+static int	examine_input(t_vars *vars, t_token *temp, char **temp_pwd)
 {
 	if (vars->old_pwd == NULL && ft_strcmp(temp->content, "-") == 0)
 	{
@@ -108,7 +108,7 @@ int	exec_cd(t_vars *vars)
 		temp = vars->token_list->next;
 	else
 		temp = vars->token_list;
-	check_dash = examine_cd(vars, temp, &temp_pwd);
+	check_dash = examine_input(vars, temp, &temp_pwd);
 	if (check_dash == -1)
 		return (errno);
 	if (change_homedir(temp, vars->environ) == true)

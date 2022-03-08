@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 16:39:52 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/07 13:01:25 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/08 18:15:45 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,14 @@ char	**find_dir(char *envp[])
 	return (path);
 }
 
-char	*path_check(char *func, char **path)
+char	*check_access(char *func, char **path, char *temp)
 {
 	int		i;
 	int		access_ok;
-	char	*temp;
 	char	*joined_path;
 
-	if (path == NULL)
-		return (NULL);
 	i = 0;
 	access_ok = -1;
-	temp = path[0];
-	path[0] = ft_substr(temp, 5, ft_strlen(path[0]) - 4);
-	free(temp);
-	if (ft_strchr(func, ' ') != NULL)
-	{
-		temp = func;
-		func = *ft_split(temp, ' ');
-		free(temp);
-	}
-	if (access(func, X_OK) == 0)
-		return (func);
 	while (path[i] != NULL && access_ok != 0)
 	{
 		temp = ft_strjoin(path[i], "/");
@@ -81,7 +67,33 @@ char	*path_check(char *func, char **path)
 		free(joined_path);
 		i++;
 	}
+	ft_free_str_arr(path);
 	if (access_ok == -1)
 		return (NULL);
+	free(joined_path);
 	return (joined_path);
+}
+
+char	*path_check(char *func, char **path)
+{
+	char	*temp;
+
+	if (path == NULL)
+		return (NULL);
+	temp = path[0];
+	path[0] = ft_substr(temp, 5, ft_strlen(path[0]) - 4);
+	if (path[0] == NULL)
+		fatal_perror("malloc");
+	free(temp);
+	if (ft_strchr(func, ' ') != NULL)
+	{
+		temp = func;
+		func = *ft_split(temp, ' ');
+		if (func == NULL)
+			fatal_perror("malloc");
+		free(temp);
+	}
+	if (access(func, X_OK) == 0)
+		return (func);
+	return (check_access(func, path, temp));
 }

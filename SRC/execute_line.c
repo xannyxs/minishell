@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:44:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/08 13:10:43 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/08 18:16:19 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,7 @@ static int	execute_single_cmd(t_vars *vars)
 int	execute_line(t_vars *vars)
 {
 	if (is_pipe_present(vars->token_list))
-	{
 		return (execute_multiple(vars));
-	}
 	else
-	{
 		return (execute_single_cmd(vars));
-	}
 }

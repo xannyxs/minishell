@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/03 13:49:38 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/08 18:16:27 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ int	init_vars(const char *line, t_vars *vars)
 	parse(vars);
 	if (!lex_validate(vars->token_list))
 		return (-1);
-	//system("leaks minishell");
 	// print_list(parsing->token_list);
 	// print_token(parsing->token_list);
 	return (0);
