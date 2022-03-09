@@ -6,11 +6,13 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 16:31:14 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/07 18:54:27 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/09 13:48:21 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "function.h"
+#include "libft.h"
 
 #include <unistd.h> /* execve, dup, close etc. */
 #include <stdlib.h> /* malloc */
@@ -18,53 +20,19 @@
 #include <stdio.h> /* perror */
 #include <errno.h> /* ECHILD */
 
-static int	is_pipe(t_token *tok)
+/* runs a builtin if it encounters it. */
+static void	m_run_builtin(char **args, t_vars *vars)
 {
-	return (tok->token == T_PIPE);
+	t_function	tf;
+
+	tf = get_function(*args);
+	if (tf.key != NULL)
+	{
+		exit((*tf.func)(args, vars));
+	}
 }
 
-/* counts amount of elements until f(token) returns 1 */
-static size_t	count_upto(t_token *lst, int (*f)(t_token *))
-{
-	size_t	n;
-
-	n = 0;
-	while (lst)
-	{
-		if (f(lst))
-			break ;
-		n++;
-		lst = lst->next;
-	}
-	return (n);
-}
-
-static char	**create_argv(t_token **lst)
-{
-	size_t	size;
-	size_t	i;
-	char	**argv;
-
-	size = count_upto(*lst, &is_pipe);
-	argv = malloc((size + 1) * sizeof(char *));
-	if (!argv)
-		fatal_perror("malloc");
-	i = 0;
-	while (i < size)
-	{
-		argv[i] = (*lst)->content;
-		i++;
-		*lst = (*lst)->next;
-	}
-	if (*lst)
-	{
-		*lst = (*lst)->next;
-	}
-	argv[i] = NULL;
-	return (argv);
-}
-
-static void	m_proc(int infd, int outfd, char **args, char **envp)
+static void	m_proc(int infd, int outfd, char **args, t_vars *vars)
 {
 	char	*path;
 
@@ -80,10 +48,11 @@ static void	m_proc(int infd, int outfd, char **args, char **envp)
 		if (dup(outfd) == -1)
 			fatal_perror("dup(outfd)");
 	}
-	path = pathresolve_tryfind(*args, envp);
+	m_run_builtin(args, vars);
+	path = pathresolve_tryfind(*args, vars->environ);
 	if (!path)
 		path = "";
-	if (execve(path, args, envp) == -1)
+	if (execve(path, args, vars->environ) == -1)
 	{
 		perror(*args);
 		exit(127);
@@ -91,7 +60,8 @@ static void	m_proc(int infd, int outfd, char **args, char **envp)
 }
 
 // I hate this duplicate code
-static void	final_proc(int readfd, char **argv, char **envp)
+static void	final_proc(int readfd, char **argv, t_vars *vars,
+	t_token *old_tlst)
 {
 	pid_t	pid;
 
@@ -102,7 +72,8 @@ static void	final_proc(int readfd, char **argv, char **envp)
 	}
 	else if (pid == 0)
 	{
-		m_proc(readfd, -1, argv, envp);
+		vars->token_list = old_tlst;
+		m_proc(readfd, -1, argv, vars);
 	}
 	free(argv);
 }
@@ -110,16 +81,18 @@ static void	final_proc(int readfd, char **argv, char **envp)
 // TODO: builtins
 // TODO: redir
 // TODO: perhaps create_argv in m_proc?
-void	pipe_next(int readfd, t_token *tlst, char **envp)
+void	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 {
 	int		pfds[2];
 	char	**argv;
 	pid_t	pid;
+	t_token	*old_tlst;
 
+	old_tlst = tlst;
 	argv = create_argv(&tlst);
 	if (tlst == NULL)
 	{
-		final_proc(readfd, argv, envp);
+		final_proc(readfd, argv, vars, old_tlst);
 		return ;
 	}
 	if (pipe(pfds) == -1)
@@ -130,11 +103,12 @@ void	pipe_next(int readfd, t_token *tlst, char **envp)
 	else if (pid == 0)
 	{
 		close(pfds[0]);
-		m_proc(readfd, pfds[1], argv, envp);
+		vars->token_list = old_tlst;
+		m_proc(readfd, pfds[1], argv, vars);
 	}
 	free(argv);
 	close(pfds[1]);
-	pipe_next(pfds[0], tlst, envp);
+	pipe_next(pfds[0], tlst, vars);
 }
 
 // TODO: Return 127 for _the last_ command, not just some race condtion.
@@ -143,7 +117,7 @@ int	execute_multiple(t_vars *vars)
 	pid_t	waitpid;
 	int		status;
 
-	pipe_next(-1, vars->token_list, vars->environ);
+	pipe_next(-1, vars->token_list, vars);
 	while (1)
 	{
 		waitpid = wait(&status);

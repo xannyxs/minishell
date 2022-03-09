@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:17:10 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/08 16:04:15 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/09 12:47:41 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	change_env_pwd(t_vars *vars)
 	return (0);
 }
 
-int	exec_pwd(t_vars *vars)
+int	exec_pwd(char **argv, t_vars *vars)
 {
 	if (vars->pwd != NULL)
 		free(vars->pwd);

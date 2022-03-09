@@ -62,25 +62,25 @@ int		execute_line(t_vars *vars);
 	FUNCTIONS
 */
 
-int		exec_echo(t_vars *vars);
+int		exec_echo(char **argv, t_vars *vars);
 
-int		exec_cd(t_vars *vars);
+int		exec_cd(char **argv, t_vars *vars);
 
 int		change_env_pwd(t_vars *vars);
 
 int		change_env_oldpwd(t_vars *vars);
 
-int		exec_pwd(t_vars *vars);
+int		exec_pwd(char **argv, t_vars *vars);
 
-int		exec_export(t_vars *vars);
+int		exec_export(char **argv, t_vars *vars);
 
-int		exec_unset(t_vars *vars);
+int		exec_unset(char **argv, t_vars *vars);
 
-int		exec_env(t_vars *vars);
+int		exec_env(char **argv, t_vars *vars);
 
-int		exec_exit(t_vars *vars);
+int		exec_exit(char **argv, t_vars *vars);
 
-int		exec_command(t_vars *vars);
+int		exec_command(char **argv, t_vars *vars);
 
 /*
 	LINKED LIST
@@ -112,7 +112,9 @@ int		token_count_occurrences(t_token *lst, int (*f)(t_token *));
 
 t_token	*token_get_first_occurrence(t_token *lst, int (*f)(t_token *));
 
-//size_t	token_list_size(t_token *lst);
+size_t	token_count_upto(t_token *lst, int (*f)(t_token *));
+
+int		token_is_pipe(t_token *tok);
 
 /*
 	LEXER

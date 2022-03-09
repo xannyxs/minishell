@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:44:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/08 18:16:19 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/09 13:47:58 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,6 @@
 
 #include <unistd.h>
 #include <stdlib.h>
-
-static const t_function	g_function[] = {
-{"echo", &exec_echo},
-{"cd", &exec_cd},
-{"pwd", &exec_pwd},
-{"export", &exec_export},
-{"unset", &exec_unset},
-{"env", &exec_env},
-{"exit", &exec_exit},
-{0, NULL}
-};
-
-static int	nonfatal_error(t_vars *vars)
-{
-	ft_dprintf(STDERR_FILENO, "minishell: command not found: %s\n",
-		vars->token_list->content);
-	return (127);
-}
 
 static int	is_pipe_present(t_token *lst)
 {
@@ -52,27 +34,27 @@ static int	is_pipe_present(t_token *lst)
 //TODO: Error handeling
 static int	execute_single_cmd(t_vars *vars)
 {
-	int	i;
+	t_function	tf;
+	char		**argv;
+	t_token		*tlst;
 
-	i = 0;
-	while (g_function[i].key)
+	tlst = vars->token_list;
+	argv = create_argv(&tlst);
+	tf = get_function(*argv);
+	if (tf.key != NULL)
 	{
-		if (ft_strcmp(vars->token_list->content, g_function[i].key) == 0)
-		{
-			vars->exit_code = g_function[i].func(vars);
-			return (vars->exit_code);
-		}
-		i++;
+		vars->exit_code = (*tf.func)(argv, vars);
 	}
-	if (path_check(vars->token_list->content, find_dir(vars->environ)) != NULL)
-		exec_command(vars);
-	else if (g_function[i].key == NULL)
-		return (nonfatal_error(vars));
+	else
+	{
+		exec_command(argv, vars);
+	}
+	free(argv);
 	return (vars->exit_code);
 }
 
 //TODO: Error handeling
-// TODO: unify
+// TODO: unify?
 int	execute_line(t_vars *vars)
 {
 	if (is_pipe_present(vars->token_list))

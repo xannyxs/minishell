@@ -6,73 +6,42 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 16:55:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/07 14:44:22 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/09 13:46:01 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <fcntl.h>
+#include <unistd.h> /* execve */
+#include <stdlib.h> /* exit */
+#include <stdio.h> /* perror */
 
-#include <sys/wait.h>
+#include <sys/wait.h> /* wait */
 #include <sys/types.h>
 
-/*
-	Needs some cleaning. Not my best code.
-*/
-
-static char	**allocate_input(t_vars *vars)
+// TODO: is exit(127) correct?
+int	exec_command(char **argv, t_vars *vars)
 {
-	int		i;
-	int		j;
-	char	**input;
-	t_token	*temp;
+	pid_t	pid;
+	char	*path;
+	int		status;
 
-	i = 0;
-	temp = vars->token_list->next;
-	while (temp != NULL && temp->token != T_PIPE)
+	pid = fork();
+	if (pid == 0)
 	{
-		temp = temp->next;
-		i++;
+		path = pathresolve_tryfind(*argv, vars->environ);
+		if (!path)
+			path = "";
+		execve(path, argv, vars->environ);
+		perror(*argv);
+		exit(127);
 	}
-	temp = vars->token_list->next;
-	input = malloc((i + 2) * sizeof(char *));
-	input[0] = vars->token_list->content;
-	j = i;
-	i = 1;
-	while (i <= j)
+	else if (pid == -1)
+		fatal_perror("fork");
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
 	{
-		input[i] = temp->content;
-		temp = temp->next;
-		i++;
+		vars->exit_code = WEXITSTATUS(status);
 	}
-	input[i] = NULL;
-	return (input);
-}
-
-int	exec_command(t_vars *vars)
-{
-	pid_t	fork_id1;
-	char	*usr_func;
-	char	**input;
-
-	fork_id1 = fork();
-	if (fork_id1 == 0)
-	{
-		input = allocate_input(vars);
-		usr_func = path_check(vars->token_list->content, \
-			find_dir(vars->environ));
-		if (usr_func == NULL || input == NULL)
-			return (-1);
-		execve(usr_func, input, vars->environ);
-		fatal_perror(vars->token_list->content);
-		return (errno);
-	}
-	if (fork_id1 < 0)
-		return (-1);
-	waitpid(fork_id1, NULL, 0);
-	return (0);
+	return (vars->exit_code);
 }
