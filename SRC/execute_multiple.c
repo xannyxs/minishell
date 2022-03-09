@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 16:31:14 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/09 13:48:21 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/09 16:22:52 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	m_proc(int infd, int outfd, char **args, t_vars *vars)
 }
 
 // I hate this duplicate code
-static void	final_proc(int readfd, char **argv, t_vars *vars,
+static pid_t	final_proc(int readfd, char **argv, t_vars *vars,
 	t_token *old_tlst)
 {
 	pid_t	pid;
@@ -76,12 +76,15 @@ static void	final_proc(int readfd, char **argv, t_vars *vars,
 		m_proc(readfd, -1, argv, vars);
 	}
 	free(argv);
+	return (pid);
 }
 
 // TODO: builtins
 // TODO: redir
 // TODO: perhaps create_argv in m_proc?
-void	pipe_next(int readfd, t_token *tlst, t_vars *vars)
+/* runs the next command in the pipe list. Returns the pid of the final
+ * command executed. */
+pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 {
 	int		pfds[2];
 	char	**argv;
@@ -92,8 +95,7 @@ void	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 	argv = create_argv(&tlst);
 	if (tlst == NULL)
 	{
-		final_proc(readfd, argv, vars, old_tlst);
-		return ;
+		return (final_proc(readfd, argv, vars, old_tlst));
 	}
 	if (pipe(pfds) == -1)
 		fatal_perror("pipe");
@@ -108,16 +110,16 @@ void	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 	}
 	free(argv);
 	close(pfds[1]);
-	pipe_next(pfds[0], tlst, vars);
+	return (pipe_next(pfds[0], tlst, vars));
 }
 
-// TODO: Return 127 for _the last_ command, not just some race condtion.
 int	execute_multiple(t_vars *vars)
 {
 	pid_t	waitpid;
+	pid_t	final_pid;
 	int		status;
 
-	pipe_next(-1, vars->token_list, vars);
+	final_pid = pipe_next(-1, vars->token_list, vars);
 	while (1)
 	{
 		waitpid = wait(&status);
@@ -127,7 +129,7 @@ int	execute_multiple(t_vars *vars)
 				fatal_perror("wait");
 			break ;
 		}
-		else if (WIFEXITED(status))
+		else if (WIFEXITED(status) && waitpid == final_pid)
 		{
 			vars->exit_code = WEXITSTATUS(status);
 		}
