@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/18 11:55:37 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/09 12:47:18 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/09 14:40:55 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,14 @@ static int	print_echo(t_token *temp)
 	return (0);
 }
 
-int	exec_echo(char **argv, t_vars *vars)
+int	exec_echo(char *argv[], t_vars *vars)
 {
 	int		ret;
 	int		is_flag;
 	t_token	*temp;
 
 	is_flag = false;
+	argv = NULL;
 	temp = vars->token_list->next;
 	if (temp == NULL)
 	{

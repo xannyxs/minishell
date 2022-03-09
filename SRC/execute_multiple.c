@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 16:31:14 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/09 13:48:21 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/09 14:49:14 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	m_proc(int infd, int outfd, char **args, t_vars *vars)
 }
 
 // I hate this duplicate code
-static void	final_proc(int readfd, char **argv, t_vars *vars,
+static void	final_proc(int readfd, char *argv[], t_vars *vars,
 	t_token *old_tlst)
 {
 	pid_t	pid;

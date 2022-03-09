@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:17:10 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/09 12:47:41 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/09 14:50:35 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,20 +85,14 @@ int	change_env_pwd(t_vars *vars)
 	return (0);
 }
 
-int	exec_pwd(char **argv, t_vars *vars)
+int	exec_pwd(char *argv[], t_vars *vars)
 {
-	if (vars->pwd != NULL)
-		free(vars->pwd);
-	vars->pwd = getcwd(NULL, 1);
-	if (vars->pwd == NULL || vars->token_list->next != NULL)
+	if (argv != NULL)
 	{
-		if (vars->token_list->next->token != T_PIPE)
-		{
-			ft_dprintf(STDERR_FILENO, "pwd: bad option\n");
-			return (errno);
-		}
+		if (vars->pwd != NULL)
+			free(vars->pwd);
+		vars->pwd = getcwd(NULL, 1);
+		printf("%s\n", vars->pwd);
 	}
-	printf("%s\n", vars->pwd);
-	change_env_pwd(vars);
 	return (0);
 }

@@ -62,25 +62,25 @@ int		execute_line(t_vars *vars);
 	FUNCTIONS
 */
 
-int		exec_echo(char **argv, t_vars *vars);
+int		exec_echo(char *argv[], t_vars *vars);
 
-int		exec_cd(char **argv, t_vars *vars);
+int		exec_cd(char *argv[], t_vars *vars);
 
 int		change_env_pwd(t_vars *vars);
 
 int		change_env_oldpwd(t_vars *vars);
 
-int		exec_pwd(char **argv, t_vars *vars);
+int		exec_pwd(char *argv[], t_vars *vars);
 
-int		exec_export(char **argv, t_vars *vars);
+int		exec_export(char *argv[], t_vars *vars);
 
-int		exec_unset(char **argv, t_vars *vars);
+int		exec_unset(char *argv[], t_vars *vars);
 
-int		exec_env(char **argv, t_vars *vars);
+int		exec_env(char *argv[], t_vars *vars);
 
-int		exec_exit(char **argv, t_vars *vars);
+int		exec_exit(char *argv[], t_vars *vars);
 
-int		exec_command(char **argv, t_vars *vars);
+int		exec_command(char *argv[], t_vars *vars);
 
 /*
 	LINKED LIST

@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 16:55:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/09 13:46:01 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/09 14:40:55 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <sys/types.h>
 
 // TODO: is exit(127) correct?
-int	exec_command(char **argv, t_vars *vars)
+int	exec_command(char *argv[], t_vars *vars)
 {
 	pid_t	pid;
 	char	*path;

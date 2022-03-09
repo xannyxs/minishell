@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/09 12:47:19 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/09 16:47:06 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,69 +28,75 @@
 	LEAK FREE
 */
 
-static int	change_homedir(t_token *token_list, char *environ[])
+static int	nonfatal_error(char *argv[])
+{
+	write(STDERR_FILENO, "minishell: cd: ", 16);
+	write(STDERR_FILENO, argv[1], ft_strlen(argv[1]));
+	perror(" ");
+	return (errno);
+}
+
+static int	change_homedir(char *argv[], char *environ[])
 {
 	int		err;
+	int		is_home;
 	char	*home;
 
-	if (token_list->token == T_PIPE || \
-		ft_strcmp(token_list->content, "~") == 0 || \
-		ft_strcmp(token_list->content, "cd") == 0)
+	is_home = false;
+	if (ft_strcmp(argv[0], "cd") == 0 && argv[1] == NULL)
+		is_home = true;
+	else if (argv[1] != NULL && ft_strcmp(argv[1], "~") == 0)
+			is_home = true;
+	if (is_home == true)
 	{
 		home = ft_getenv("HOME", environ);
+		if (home == NULL)
+		{
+			write(STDERR_FILENO, "minishell: cd: HOME not set\n", 29);
+			return (EPERM);
+		}
 		err = chdir(home);
 		free(home);
 		if (err != 0)
-		{
-			write(STDERR_FILENO, "minishell: cd: ", 11);
-			write(STDERR_FILENO, token_list->content, ft_strlen(token_list->content));
-			perror(" ");
-			write(STDERR_FILENO, "\n", 1);
-			return (errno);
-		}
+			return (nonfatal_error(argv));
 		return (true);
 	}
 	return (false);
 }
 
-static int	change_dir(t_vars vars, t_token *temp)
+static int	change_dir(char *argv[], t_vars vars)
 {
 	int		err;
 
-	if (ft_strcmp(temp->content, "-") == 0)
+	if (ft_strcmp(argv[1], "-") == 0)
 	{
 		err = chdir(vars.old_pwd);
 		if (err == 0)
 			printf("%s\n", vars.old_pwd);
 	}
 	else
-		err = chdir(temp->content);
+		err = chdir(argv[1]);
 	if (err != 0)
-	{
-		write(STDERR_FILENO, "minishell: cd: ", 16);
-		write(STDERR_FILENO, temp->content, ft_strlen(temp->content));
-		perror(" ");
-		return (errno);
-	}
+		return (nonfatal_error(argv));
 	return (0);
 }
 
-static int	examine_input(t_vars *vars, t_token *temp, char **temp_pwd)
+static int	examine_input(t_vars *vars, char *argv[], char **temp_pwd)
 {
-	if (vars->old_pwd == NULL && ft_strcmp(temp->content, "-") == 0)
+	if (vars->old_pwd == NULL && ft_strcmp(argv[1], "-") == 0)
 	{
 		write(STDERR_FILENO, "minishell: cd: OLDPWD not set\n", 31);
 		errno = EPERM;
 		return (-1);
 	}
-	else if (ft_strcmp(temp->content, "-") != 0)
+	else if (ft_strcmp(argv[1], "-") != 0)
 	{
 		if (vars->old_pwd != NULL)
 			free(vars->old_pwd);
 		vars->old_pwd = ft_getenv("PWD", vars->environ);
 		change_env_oldpwd(vars);
 	}
-	else if (ft_strcmp(temp->content, "-") == 0)
+	else if (ft_strcmp(argv[1], "-") == 0)
 	{
 		temp_pwd[0] = ft_getenv("PWD", vars->environ);
 		return (1);
@@ -98,25 +104,20 @@ static int	examine_input(t_vars *vars, t_token *temp, char **temp_pwd)
 	return (0);
 }
 
-int	exec_cd(char **argv, t_vars *vars)
+int	exec_cd(char *argv[], t_vars *vars)
 {
 	int			check_dash;
 	char		*temp_pwd;
-	t_token		*temp;
 
-	if (vars->token_list->next != NULL)
-		temp = vars->token_list->next;
-	else
-		temp = vars->token_list;
-	check_dash = examine_input(vars, temp, &temp_pwd);
-	if (check_dash == -1)
-		return (errno);
-	if (change_homedir(temp, vars->environ) == true)
+	if (change_homedir(argv, vars->environ) == true)
 	{
 		change_env_pwd(vars);
 		return (0);
 	}
-	if (change_dir(*vars, temp) != 0)
+	check_dash = examine_input(vars, argv, &temp_pwd);
+	if (check_dash == -1)
+		return (errno);
+	if (change_dir(argv, *vars) != 0)
 		return (errno);
 	if (check_dash == 1)
 	{

@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 11:06:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/09 12:47:26 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/09 14:40:55 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,13 @@ static void	write_error(t_token *temp)
 	exit(255);
 }
 
-int	exec_exit(char **argv, t_vars *vars)
+int	exec_exit(char *argv[], t_vars *vars)
 {
 	int		i;
 	t_token	*temp;
 
 	i = 0;
+	argv = NULL;
 	temp = vars->token_list;
 	if (vars->token_list->next != NULL)
 		temp = temp->next;
