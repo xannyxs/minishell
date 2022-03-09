@@ -18,15 +18,16 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+// TODO: Unify this with the old one.
 static const t_function	g_function[] = {
-{"echo", &exec_echo},
-{"cd", &exec_cd},
-{"pwd", &exec_pwd},
-{"export", &exec_export},
-{"unset", &exec_unset},
-{"env", &exec_env},
-{"exit", &exec_exit},
-{0, NULL}
+{"echo", &exec_echo, 1},
+{"cd", &exec_cd, 0},
+{"pwd", &exec_pwd, 1},
+{"export", &exec_export, 0},
+{"unset", &exec_unset, 0},
+{"env", &exec_env, 1},
+{"exit", &exec_exit, 0},
+{0, NULL, 0}
 };
 
 static int	nonfatal_error(t_vars *vars)
