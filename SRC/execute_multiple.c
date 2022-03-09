@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 16:31:14 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/09 16:22:52 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/09 16:45:20 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	m_proc(int infd, int outfd, char **args, t_vars *vars)
 	if (execve(path, args, vars->environ) == -1)
 	{
 		perror(*args);
-		exit(127);
+		exit(126 + (errno == 2));
 	}
 }
 
@@ -113,6 +113,8 @@ pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 	return (pipe_next(pfds[0], tlst, vars));
 }
 
+// TODO: signal error returns
+// TODO: cat | ls
 int	execute_multiple(t_vars *vars)
 {
 	pid_t	waitpid;

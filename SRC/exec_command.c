@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 16:55:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/09 13:46:01 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/09 16:46:02 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 #include <sys/wait.h> /* wait */
 #include <sys/types.h>
 
-// TODO: is exit(127) correct?
 int	exec_command(char **argv, t_vars *vars)
 {
 	pid_t	pid;
@@ -32,9 +31,11 @@ int	exec_command(char **argv, t_vars *vars)
 		path = pathresolve_tryfind(*argv, vars->environ);
 		if (!path)
 			path = "";
-		execve(path, argv, vars->environ);
-		perror(*argv);
-		exit(127);
+		if (execve(path, argv, vars->environ) == -1)
+		{
+			perror(*argv);
+			exit(126 + (errno == 2));
+		}
 	}
 	else if (pid == -1)
 		fatal_perror("fork");
