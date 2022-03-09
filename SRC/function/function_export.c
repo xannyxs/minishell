@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/07 14:46:24 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/09 12:47:30 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	print_export(t_vars *vars)
 	return (0);
 }
 
-int	exec_export(t_vars *vars)
+int	exec_export(char **argv, t_vars *vars)
 {
 	char		*variable;
 	char		*content;

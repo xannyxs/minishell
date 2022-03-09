@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/08 16:52:51 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/09 12:47:19 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static int	examine_input(t_vars *vars, t_token *temp, char **temp_pwd)
 	return (0);
 }
 
-int	exec_cd(t_vars *vars)
+int	exec_cd(char **argv, t_vars *vars)
 {
 	int			check_dash;
 	char		*temp_pwd;

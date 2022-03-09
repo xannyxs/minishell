@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 16:48:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/07 12:48:12 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/09 12:47:49 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static int	check_env_vars(t_vars *vars, t_token *temp)
 	return (-1);
 }
 
-int	exec_unset(t_vars *vars)
+int	exec_unset(char **argv, t_vars *vars)
 {
 	int		ret;
 	t_token	*temp;

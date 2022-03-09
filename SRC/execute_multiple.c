@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 16:31:14 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/08 18:07:33 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/09 13:48:21 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,77 +20,16 @@
 #include <stdio.h> /* perror */
 #include <errno.h> /* ECHILD */
 
-static const t_function	g_function[] = {
-{"echo", &exec_echo, 1},
-{"cd", &exec_cd, 0},
-{"pwd", &exec_pwd, 1},
-{"export", &exec_export, 0},
-{"unset", &exec_unset, 0},
-{"env", &exec_env, 1},
-{"exit", &exec_exit, 0},
-{0, NULL, 0}
-};
-
-static int	is_pipe(t_token *tok)
-{
-	return (tok->token == T_PIPE);
-}
-
 /* runs a builtin if it encounters it. */
 static void	m_run_builtin(char **args, t_vars *vars)
 {
-	int	i;
+	t_function	tf;
 
-	i = 0;
-	while (g_function[i].key != NULL)
+	tf = get_function(*args);
+	if (tf.key != NULL)
 	{
-		if (ft_strcmp(g_function[i].key, *args) == 0)
-		{
-			exit(g_function[i].func(vars));
-		}
-		i++;
+		exit((*tf.func)(args, vars));
 	}
-}
-
-/* counts amount of elements until f(token) returns 1 */
-static size_t	count_upto(t_token *lst, int (*f)(t_token *))
-{
-	size_t	n;
-
-	n = 0;
-	while (lst)
-	{
-		if (f(lst))
-			break ;
-		n++;
-		lst = lst->next;
-	}
-	return (n);
-}
-
-static char	**create_argv(t_token **lst)
-{
-	size_t	size;
-	size_t	i;
-	char	**argv;
-
-	size = count_upto(*lst, &is_pipe);
-	argv = malloc((size + 1) * sizeof(char *));
-	if (!argv)
-		fatal_perror("malloc");
-	i = 0;
-	while (i < size)
-	{
-		argv[i] = (*lst)->content;
-		i++;
-		*lst = (*lst)->next;
-	}
-	if (*lst)
-	{
-		*lst = (*lst)->next;
-	}
-	argv[i] = NULL;
-	return (argv);
 }
 
 static void	m_proc(int infd, int outfd, char **args, t_vars *vars)
