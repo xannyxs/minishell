@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/09 14:40:55 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/10 12:31:44 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,34 +50,33 @@ int	exec_export(char *argv[], t_vars *vars)
 {
 	char		*variable;
 	char		*content;
-	t_token		*temp;
+	int			i;
 
-	argv = NULL;
-	temp = vars->token_list->next;
-	if (temp == NULL || temp->token == T_PIPE)
+	if (argv[1] == NULL)
 	{
 		print_export(vars);
 		return (0);
 	}
-	while (temp != NULL && temp->token != T_PIPE)
+	i = 1;
+	while (argv[i] != NULL)
 	{
-		content = ft_strchr(temp->content, '=');
+		content = ft_strchr(argv[1], '=');
 		if (content == NULL)
 		{
-			printf("bash: export: '%s': not a valid identifier\n", temp->content);
+			printf("bash: export: '%s': not a valid identifier\n", argv[1]);
 			vars->exit_code = 1;
 			return (EPERM);
 		}
 		content = ft_substr(content, 1, ft_strlen(content) - 1);
-		variable = ft_substr(temp->content, 0, ft_strequel(temp->content));
+		variable = ft_substr(argv[1], 0, ft_strequel(argv[1]));
 		if (content == NULL || variable == NULL)
 		{
-			printf("bash: export: '%s': not a valid identifier\n", temp->content);
+			printf("bash: export: '%s': not a valid identifier\n", argv[1]);
 			vars->exit_code = 1;
 			return (EPERM);
 		}
 		new_node(&vars->var_list, variable, content);
-		temp = temp->next;
+		i++;
 	}
 	return (0);
 }

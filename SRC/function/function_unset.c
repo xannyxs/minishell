@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 16:48:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/09 14:40:55 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/10 13:20:29 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,30 @@
 
 /*
 	UNSET:
-	Unsets a env variable.
+	Unsets an env variable or usr variable.
 
-	This function doesn't remove $
+	SEGFAULT usr_vars
 */
 
-static int	check_usr_vars(t_vars *vars, t_token *temp)
+static int	check_usr_vars(char *argv[], t_vars *vars)
 {
-	t_envlist *temp_env = vars->var_list, *prev;
+	t_envlist	*prev;
+	t_envlist	*temp_env;
 
-	if (temp_env != NULL && ft_strcmp(temp_env->variable, temp->content) == 0)
+	temp_env = vars->var_list;
+	if (temp_env != NULL && ft_strcmp(temp_env->variable, argv[1]) == 0)
 	{
+		printf("Option1:\n");
 		vars->var_list = temp_env->next;
 		free(temp_env->variable);
 		free(temp_env->content);
 		free(temp_env);
+		print_list(vars->var_list);
 		return (0);
 	}
-	while (temp_env != NULL && ft_strcmp(temp_env->variable, temp->content) == 0)
+	while (temp_env != NULL && ft_strcmp(temp_env->variable, argv[1]) == 0)
 	{
+		printf("Option2:\n");
 		print_list(vars->var_list);
 		prev = temp_env;
 		temp_env = temp_env->next;
@@ -47,20 +52,22 @@ static int	check_usr_vars(t_vars *vars, t_token *temp)
 	free(temp_env->variable);
 	free(temp_env->content);
 	free(temp_env);
+	printf("Option3:\n");
+	print_list(vars->var_list);
 	return (0);
 }
 
-static int	check_env_vars(t_vars *vars, t_token *temp)
+static int	check_env_vars(char *argv[], t_vars *vars)
 {
 	int		i;
 	char	*temp_var;
 
 	i = 0;
-	temp_var = ft_strjoin(temp->content, "=");
-	if (temp_var == NULL)
-		fatal_perror("malloc:");
 	while (vars->environ[i] != NULL)
 	{
+		temp_var = ft_strjoin(argv[1], "=");
+		if (temp_var == NULL)
+			fatal_perror("malloc:");
 		if (ft_strncmp(temp_var, vars->environ[i], \
 				ft_strlen(temp_var)) == 0)
 		{
@@ -71,27 +78,22 @@ static int	check_env_vars(t_vars *vars, t_token *temp)
 				i++;
 			}
 			free(temp_var);
-			free(vars->environ[i]);
 			vars->environ[i] = NULL;
-			return (1);
+			return (0);
 		}
 		i++;
 	}
-	free(temp_var);
 	return (-1);
 }
 
 int	exec_unset(char *argv[], t_vars *vars)
 {
 	int		ret;
-	t_token	*temp;
 
-	argv = NULL;
-	if (vars->token_list->next == NULL)
+	if (argv[1] == NULL)
 		return (0);
-	temp  = vars->token_list->next;
-	ret = check_env_vars(vars, temp);
+	ret = check_env_vars(argv, vars);
 	if (ret != 0)
-		check_usr_vars(vars, temp);
+		check_usr_vars(argv, vars);
 	return (0);
 }
