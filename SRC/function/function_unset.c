@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 16:48:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/10 13:20:29 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/10 16:00:02 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@
 	UNSET:
 	Unsets an env variable or usr variable.
 
+	First char of var = a-z A-Z or _
+	rest of var = a-z A-Z or _ or 0-9
+	"1hoi=fd"
+
+
+	export hoi
+	export hoi=
+
+	Moet ook envlist checken voor $-sign
+	Keys are unique and needs to be overwriten
 	SEGFAULT usr_vars
 */
 
@@ -28,21 +38,18 @@ static int	check_usr_vars(char *argv[], t_vars *vars)
 	t_envlist	*prev;
 	t_envlist	*temp_env;
 
+	prev = NULL;
 	temp_env = vars->var_list;
 	if (temp_env != NULL && ft_strcmp(temp_env->variable, argv[1]) == 0)
 	{
-		printf("Option1:\n");
 		vars->var_list = temp_env->next;
 		free(temp_env->variable);
 		free(temp_env->content);
 		free(temp_env);
-		print_list(vars->var_list);
 		return (0);
 	}
-	while (temp_env != NULL && ft_strcmp(temp_env->variable, argv[1]) == 0)
+	while (temp_env != NULL && ft_strcmp(temp_env->variable, argv[1]) != 0)
 	{
-		printf("Option2:\n");
-		print_list(vars->var_list);
 		prev = temp_env;
 		temp_env = temp_env->next;
 	}
@@ -52,8 +59,6 @@ static int	check_usr_vars(char *argv[], t_vars *vars)
 	free(temp_env->variable);
 	free(temp_env->content);
 	free(temp_env);
-	printf("Option3:\n");
-	print_list(vars->var_list);
 	return (0);
 }
 
