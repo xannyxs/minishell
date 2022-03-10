@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/02 18:13:21 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/04 12:07:08 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/09 17:59:20 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ int	lex_validate(t_token *lst)
 				return (0);
 			}
 		}
-		else if (lst->token == T_REDIRECT_FILE_TO_STDIN
-			|| lst->token == T_REDIRECT_STDOUT_TO_FILE
-			|| lst->token == T_REDIRECT_STDOUT_TO_FILE_APPEND
-			|| lst->token == T_HEREDOC)
+		else if (token_is_redirect(lst))
 		{
 			if (token_after(lst) != T_LITERAL)
 			{

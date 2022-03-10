@@ -6,13 +6,13 @@
 #    By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 14:31:21 by xvoorvaa      #+#    #+#                  #
-#    Updated: 2022/03/08 13:15:51 by jobvan-d      ########   odam.nl          #
+#    Updated: 2022/03/10 17:08:09 by jobvan-d      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	minishell
 CC				=	gcc
-CFLAGS			=	-Wall -Wextra -Werror
+CFLAGS			=	-Wall -Wextra -g3 -fsanitize=address
 OBJ_DIR			=	OBJ
 SRC_DIR			=	SRC
 INC_DIR			=	INC
@@ -60,9 +60,6 @@ $(OBJ_DIR):
 	@mkdir $@
 
 $(NAME): $(OBJECTS) $(LIBFT_A) $(PF_A)
-	@clear
-	@echo $(START)
-	@printf $(COMP_MESSAGE) $(SOURCES)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) -L$(LIBFT_DIR) -L$(PF_DIR) \
 		-lft -lftprintf -lreadline
 	@echo $(MESSAGE)

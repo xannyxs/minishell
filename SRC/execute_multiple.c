@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/10 14:52:18 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/10 22:28:02 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,61 +59,51 @@ static void	m_proc(int infd, int outfd, char **args, t_vars *vars)
 	}
 }
 
-// I hate this duplicate code
-static pid_t	final_proc(int readfd, char **argv, t_vars *vars,
-	t_token *old_tlst)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-	{
-		fatal_perror("fork");
-	}
-	else if (pid == 0)
-	{
-		vars->token_list = old_tlst;
-		m_proc(readfd, -1, argv, vars);
-	}
-	if (readfd != -1)
-		close(readfd);
-	free(argv);
-	return (pid);
-}
-
 // TODO: builtins
 // TODO: redir
 // TODO: perhaps create_argv in m_proc?
+// TODO: pipe reordering, perhaps with m_close which doesn't
+// 		do anything when -1
+// TODO: > yolo | cat
 /* runs the next command in the pipe list. Returns the pid of the final
  * command executed. */
 pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 {
 	int		pfds[2];
 	char	**argv;
+	int		outfdchanged;
 	pid_t	pid;
-	t_token	*old_tlst;
 
-	old_tlst = tlst;
-	argv = create_argv(&tlst);
-	if (tlst == NULL)
-	{
-		return (final_proc(readfd, argv, vars, old_tlst));
-	}
 	if (pipe(pfds) == -1)
 		fatal_perror("pipe");
+	outfdchanged = 0;
+	argv = create_argv_advanced(&tlst, &readfd, &pfds[1], &outfdchanged);
+	if (tlst == NULL && !outfdchanged)
+	{
+		close(pfds[1]);
+		pfds[1] = -1;
+	}
+	/*if (outfdchanged)
+	{
+		close(pfds[0]);
+		pfds[0] = -1;
+	}*/
 	pid = fork();
 	if (pid == -1)
 		fatal_perror("fork");
 	else if (pid == 0)
 	{
-		close(pfds[0]);
-		vars->token_list = old_tlst;
+		ft_close_fd(pfds[0]);
 		m_proc(readfd, pfds[1], argv, vars);
 	}
 	free(argv);
-	if (readfd != -1)
-		close(readfd);
-	close(pfds[1]);
+	ft_close_fd(readfd);
+	ft_close_fd(pfds[1]);
+	if (tlst == NULL)
+	{
+		ft_close_fd(pfds[0]);
+		return (pid);
+	}
 	return (pipe_next(pfds[0], tlst, vars));
 }
 

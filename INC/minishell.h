@@ -50,6 +50,14 @@ typedef struct s_vars
 	t_envlist		*var_list;
 }	t_vars;
 
+typedef struct pipe_vars
+{
+	int		*infd;
+	int		*outfd;
+	char	infd_is_pipe;
+	char	outfd_is_pipe;
+}	t_pipe_vars;
+
 /*
 	MINISHELL
 */
@@ -108,13 +116,17 @@ void	token_remove_from_list(t_token **tlst, t_token *to_remove);
 
 void	token_make_list_doubly_linked(t_token *lst);
 
-int		token_count_occurrences(t_token *lst, int (*f)(t_token *));
+int		token_count_occurrences(t_token *lst, int (*f)(const t_token *));
 
-t_token	*token_get_first_occurrence(t_token *lst, int (*f)(t_token *));
+t_token	*token_get_first_occurrence(t_token *lst, int (*f)(const t_token *));
 
-size_t	token_count_upto(t_token *lst, int (*f)(t_token *));
+size_t	token_count_upto(t_token *lst, int (*f)(const t_token *));
 
-int		token_is_pipe(t_token *tok);
+int		token_is_LITERAL(const t_token *tok);
+
+int		token_is_pipe(const t_token *tok);
+
+int		token_is_redirect(const t_token *tok);
 
 /*
 	LEXER
@@ -159,5 +171,12 @@ char	*ft_getenv(const char *name, char *environ[]);
 char	*pathresolve_tryfind(char *name, char **envp);
 
 int		execute_multiple(t_vars *vars);
+
+char	**create_argv_advanced(t_token **lst, int *infd, int *outfd,
+			int *outfdchanged);
+
+void	do_redirect(t_token **tlst, int *infd, int *outfd, int *outfdchanged);
+
+void	ft_close_fd(const int fd);
 
 #endif
