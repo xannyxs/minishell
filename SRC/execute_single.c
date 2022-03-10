@@ -3,14 +3,10 @@
 /*                                                        ::::::::            */
 /*   execute_single.c                                   :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
+/*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/23 16:55:19 by xvoorvaa      #+#    #+#                 */
-<<<<<<< HEAD:SRC/exec_command.c
-/*   Updated: 2022/03/09 14:40:55 by xander        ########   odam.nl         */
-=======
-/*   Updated: 2022/03/09 16:49:00 by jobvan-d      ########   odam.nl         */
->>>>>>> master:SRC/execute_single.c
+/*   Created: 2022/03/10 10:51:18 by xander        #+#    #+#                 */
+/*   Updated: 2022/03/10 10:51:20 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +19,7 @@
 #include <sys/wait.h> /* wait */
 #include <sys/types.h>
 
-<<<<<<< HEAD:SRC/exec_command.c
-// TODO: is exit(127) correct?
-int	exec_command(char *argv[], t_vars *vars)
-=======
 int	exec_command(char **argv, t_vars *vars)
->>>>>>> master:SRC/execute_single.c
 {
 	pid_t	pid;
 	char	*path;
