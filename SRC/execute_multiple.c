@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/10 10:50:30 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/10 14:52:18 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ static pid_t	final_proc(int readfd, char **argv, t_vars *vars,
 		vars->token_list = old_tlst;
 		m_proc(readfd, -1, argv, vars);
 	}
+	if (readfd != -1)
+		close(readfd);
 	free(argv);
 	return (pid);
 }
@@ -109,6 +111,8 @@ pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 		m_proc(readfd, pfds[1], argv, vars);
 	}
 	free(argv);
+	if (readfd != -1)
+		close(readfd);
 	close(pfds[1]);
 	return (pipe_next(pfds[0], tlst, vars));
 }
