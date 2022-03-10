@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 16:23:26 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/10 17:22:11 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/10 18:18:13 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	allocate_env(t_vars *vars)
 
 void	allocate_new_env(char *new_var, t_vars *vars)
 {
-	int	i;
-	char **new_environ;
+	int		i;
+	char	**new_environ;
 
 	i = 0;
 	while (vars->environ[i] != NULL)

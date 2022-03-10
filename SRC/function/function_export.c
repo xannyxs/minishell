@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/10 18:08:08 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/10 18:17:47 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ static int	check_chars(char *argv[], t_vars *vars, int i)
 		argv[i][j] == '_'))
 	{
 		j++;
-		if (!(ft_isalpha(argv[i][j]) == true || ft_isdigit(argv[i][j] == true || \
+		if (!(ft_isalpha(argv[i][j]) == true || \
+			ft_isdigit(argv[i][j] == true || \
 			argv[i][j] == '_') || argv[i][j] == '\0' || argv[i][j] == '='))
 		{		
 			ft_dprintf(STDERR_FILENO, \
