@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 11:06:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/09 14:40:55 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/09 17:41:39 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,32 +26,33 @@
 
 	LEAK FREE
 */
+static void	write_arg_error(void)
+{
+	write(STDERR_FILENO, "minishell: exit: too many arguments\n", 37);
+}
 
-static void	write_error(t_token *temp)
+static void	write_num_error(char *argv[])
 {
 	ft_dprintf(STDERR_FILENO,
 		"minishell: exit: %s: numeric argument required\n",
-		temp->content);
+		argv[1]);
 	exit(255);
 }
 
 int	exec_exit(char *argv[], t_vars *vars)
 {
-	int		i;
-	t_token	*temp;
+	int	i;
 
 	i = 0;
-	argv = NULL;
-	temp = vars->token_list;
-	if (vars->token_list->next != NULL)
-		temp = temp->next;
-	if (ft_strcmp(temp->content, "exit") == 0)
+	write(STDERR_FILENO, "exit\n", 5);
+	if (argv[1] == NULL)
 		exit (0);
-	while (ft_isdigit(temp->content[i]) == true)
+	while (ft_isdigit(argv[1][i]) == true)
 		i++;
-	if (ft_isdigit(temp->content[i]) == false && \
-		temp->content[i] != '\0')
-		write_error(temp);
-	vars->exit_code = ft_atoi(temp->content);
+	if (ft_isdigit(argv[1][i]) == false && argv[1][i] != '\0')
+		write_num_error(argv);
+	if (argv[2] != NULL)
+		write_arg_error();
+	vars->exit_code = ft_atoi(argv[1]);
 	exit(vars->exit_code);
 }

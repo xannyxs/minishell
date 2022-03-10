@@ -6,14 +6,14 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/18 11:55:37 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/09 14:40:55 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/09 17:17:15 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 
-#include <stdbool.h>
+#include <stdbool.h> /* TRUE OR FALSE */
 #include <unistd.h> /* STDOUT_FILENO */
 
 /*
@@ -21,48 +21,40 @@
 	Pretty easy. It just prints the line out to STDOUT.
 	We only need to use -n as flag, which doesn't place a newline at the end.
 
-	return 0 means I reached the end of the linked list.
-	return -1 is an error
-	return 1 means otherwise
-
 	LEAK FREE
 */
 
-static int	print_echo(t_token *temp)
+static void	print_echo(int i, char *argv[])
 {
-	while (temp != NULL)
+	while (argv[i] != NULL)
 	{
-		if (temp->token != T_LITERAL)
-			return (1);
-		ft_putstr_fd(temp->content, STDOUT_FILENO);
-		if (temp->next != NULL)
-			ft_putchar_fd(' ', STDOUT_FILENO);
-		temp = temp->next;
+		ft_putstr_fd(argv[i], STDOUT_FILENO);
+		i++;
+		if (argv[i] != NULL)
+			write(STDOUT_FILENO, " ", 1);
 	}
-	return (0);
 }
 
 int	exec_echo(char *argv[], t_vars *vars)
 {
-	int		ret;
-	int		is_flag;
-	t_token	*temp;
+	int	i;
+	int	is_flag;
 
+	i = 1;
 	is_flag = false;
-	argv = NULL;
-	temp = vars->token_list->next;
-	if (temp == NULL)
+	vars->exit_code = 0;
+	if (argv[1] == NULL)
 	{
 		ft_putchar_fd('\n', STDOUT_FILENO);
-		return (0);
+		return (vars->exit_code);
 	}
-	else if (ft_strcmp(temp->content, "-n") == 0)
+	else if (argv[1] != NULL && ft_strcmp(argv[1], "-n") == 0)
 	{
-		temp = temp->next;
 		is_flag = true;
+		i++;
 	}
-	ret = print_echo(temp);
+	print_echo(i, argv);
 	if (is_flag == false)
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	return (ret);
+	return (vars->exit_code);
 }
