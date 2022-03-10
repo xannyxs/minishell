@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/10 16:23:34 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/10 18:16:12 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 static void	init_base_vars(t_vars *vars)
 {
 	vars->token_list = NULL;
-	vars->var_list = NULL;
 	vars->old_pwd = NULL;
 	vars->pwd = NULL;
 }

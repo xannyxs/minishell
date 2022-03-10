@@ -21,13 +21,6 @@ enum e_token {
 	T_HEREDOC /* << */
 };
 
-typedef struct s_envlist
-{
-	char				*variable;
-	char				*content;
-	struct s_envlist	*next;
-}	t_envlist;
-
 /* So, standard this is a singly linked list. But when the list is
  * "finalized", it becomes as doubly linked one so it's easier to parse it.
  * Note that ALL token functions do not support doubly linked lists! */
@@ -47,7 +40,6 @@ typedef struct s_vars
 	char			*pwd;
 	char			**environ;
 	t_token			*token_list;
-	t_envlist		*var_list;
 }	t_vars;
 
 /*
@@ -57,6 +49,10 @@ typedef struct s_vars
 int		init_vars(const char *line, t_vars *vars);
 
 int		execute_line(t_vars *vars);
+
+void	allocate_env(t_vars *vars);
+
+void	allocate_new_env(char *new_var, t_vars *vars);
 
 /*
 	FUNCTIONS
@@ -85,10 +81,6 @@ int		exec_command(char *argv[], t_vars *vars);
 /*
 	LINKED LIST
 */
-
-void	new_node(t_envlist **head, char *variable, char *content);
-
-void	print_list(t_envlist *head);
 
 void	print_token(t_token *head);
 
