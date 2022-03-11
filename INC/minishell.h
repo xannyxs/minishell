@@ -11,9 +11,7 @@
 # define M_PS_REDIRECTION_FAILED (2)
 # define M_PS_EMPTY (4)
 
-// TODO: maybe after the literals have been expanded,
-// set to a more sane T_LITERAL so we don't have to if/else as much etc.
-// TODO: >> <<
+// After literals are expanded, every literal is considered a T_LITERAL.
 enum e_token {
 	T_UNKNOWN,
 	T_LITERAL,
@@ -170,5 +168,13 @@ int		execute_multiple(t_vars *vars);
 void	do_redirect(t_token **tlst, int *infd, int *outfd, int *status);
 
 void	ft_close_fd(const int fd);
+
+/*
+	create_argv
+*/
+char	**create_argv(t_token *lst);
+
+char	**create_argv_advanced(t_token **lst, int *infd, int *outfd,
+			int *status);
 
 #endif
