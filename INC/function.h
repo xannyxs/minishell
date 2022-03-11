@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:25:24 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/11 15:54:03 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/11 16:19:20 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,5 @@ typedef struct s_function
 /* returns a t_function entry if it's found, struct filled with zeroes
  * when not. */
 t_function	get_function(const char *name);
-
-char		**create_argv(t_token *lst);
-
-char		**create_argv_advanced(t_token **lst, int *infd, int *outfd,
-				int *status);
 
 #endif
