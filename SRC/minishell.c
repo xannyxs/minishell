@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/08 18:29:03 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/10 18:16:12 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,8 @@
 static void	init_base_vars(t_vars *vars)
 {
 	vars->token_list = NULL;
-	vars->var_list = NULL;
 	vars->old_pwd = NULL;
 	vars->pwd = NULL;
-}
-
-static void	allocate_env(t_vars *vars)
-{
-	int			i;
-	extern char	**environ;
-
-	i = 0;
-	while (environ[i] != NULL)
-		i++;
-	vars->environ = malloc((i + 1) * sizeof(char *));
-	if (vars->environ == NULL)
-		fatal_perror("malloc");
-	i = 0;
-	while (environ[i] != NULL)
-	{
-		vars->environ[i] = ft_strdup(environ[i]);
-		if (vars->environ[i] == NULL)
-			fatal_perror("malloc");
-		i++;
-	}
-	vars->environ[i] = NULL;
 }
 
 // TODO: norm

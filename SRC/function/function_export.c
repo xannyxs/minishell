@@ -6,78 +6,97 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/09 14:40:55 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/10 18:17:47 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
+#include "ft_printf.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <unistd.h>
 
-static int	ft_strequel(const char *str)
+/*
+	First char of var = a-z A-Z or _
+	rest of var = a-z A-Z or _ or 0-9
+	"1hoi=fd"
+
+	export hoi
+	export hoi=
+
+	Moet ook envlist checken voor $-sign
+	Keys are unique and needs to be overwriten
+*/
+
+static int	check_chars(char *argv[], t_vars *vars, int i)
 {
-	int	len;
+	int	j;
 
-	len = 0;
-	while (str[len] != '=' && str[len] != '\0')
-		len++;
-	return (len);
+	j = 0;
+	if (!(ft_isalpha(argv[i][0]) == true || argv[i][0] == '_'))
+	{
+		ft_dprintf(STDERR_FILENO, \
+		"minishell: export: '%s': not a valid identifier\n", argv[i]);
+		vars->exit_code = 1;
+		return (-1);
+	}
+	while (ft_isalpha(argv[i][j]) == true || ft_isdigit(argv[i][j] == true || \
+		argv[i][j] == '_'))
+	{
+		j++;
+		if (!(ft_isalpha(argv[i][j]) == true || \
+			ft_isdigit(argv[i][j] == true || \
+			argv[i][j] == '_') || argv[i][j] == '\0' || argv[i][j] == '='))
+		{		
+			ft_dprintf(STDERR_FILENO, \
+			"minishell: export: '%s': not a valid identifier\n", argv[i]);
+			vars->exit_code = 1;
+			return (-1);
+		}
+	}
+	return (0);
 }
 
 static int	print_export(t_vars *vars)
 {
-	int			i;
-	t_envlist	*temp;
+	int	i;
 
 	i = 0;
-	temp = vars->var_list;
 	while (vars->environ[i] != NULL)
 	{
 		printf("declare -x %s\n", vars->environ[i]);
 		i++;
-	}
-	while (temp != NULL)
-	{
-		printf("declare -x %s=\"%s\"\n", temp->variable, temp->content);
-		temp = temp->next;
 	}
 	return (0);
 }
 
 int	exec_export(char *argv[], t_vars *vars)
 {
-	char		*variable;
-	char		*content;
-	t_token		*temp;
+	int		i;
+	int		ret;
+	char	*temp;
 
-	argv = NULL;
-	temp = vars->token_list->next;
-	if (temp == NULL || temp->token == T_PIPE)
+	if (argv[1] == NULL)
 	{
 		print_export(vars);
 		return (0);
 	}
-	while (temp != NULL && temp->token != T_PIPE)
+	i = 1;
+	while (argv[i] != NULL)
 	{
-		content = ft_strchr(temp->content, '=');
-		if (content == NULL)
+		ret = check_chars(argv, vars, i);
+		if (ret == 0)
 		{
-			printf("bash: export: '%s': not a valid identifier\n", temp->content);
-			vars->exit_code = 1;
-			return (EPERM);
+			temp = ft_strdup(argv[i]);
+			if (temp == NULL)
+				fatal_perror("malloc");
+			allocate_new_env(temp, vars);
 		}
-		content = ft_substr(content, 1, ft_strlen(content) - 1);
-		variable = ft_substr(temp->content, 0, ft_strequel(temp->content));
-		if (content == NULL || variable == NULL)
-		{
-			printf("bash: export: '%s': not a valid identifier\n", temp->content);
-			vars->exit_code = 1;
-			return (EPERM);
-		}
-		new_node(&vars->var_list, variable, content);
-		temp = temp->next;
+		i++;
 	}
+	vars->exit_code = 0;
 	return (0);
 }
