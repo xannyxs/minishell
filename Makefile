@@ -6,7 +6,7 @@
 #    By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 14:31:21 by xvoorvaa      #+#    #+#                  #
-#    Updated: 2022/03/11 16:03:13 by jobvan-d      ########   odam.nl          #
+#    Updated: 2022/03/11 16:30:52 by jobvan-d      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,7 +83,7 @@ $(PF_DIR)/$(OBJ_DIR):
 clean:
 	@echo "\n"
 	@echo $(OBJECTS)
-	@rm -f $(OBJECTS)
+	@rm -f $(OBJ_DIR)/*.o
 	@printf $(REM_MESSAGE)
 	@echo "\n"
 
