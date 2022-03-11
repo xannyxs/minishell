@@ -6,6 +6,11 @@
 
 # define T_DEFAULT_TOKEN (T_LITERAL)
 
+/* create_argv_advanced statuses */
+# define M_PS_REDIRECTED (1)
+# define M_PS_REDIRECTION_FAILED (2)
+# define M_PS_EMPTY (4)
+
 // TODO: maybe after the literals have been expanded,
 // set to a more sane T_LITERAL so we don't have to if/else as much etc.
 // TODO: >> <<
@@ -120,13 +125,11 @@ int		token_count_occurrences(t_token *lst, int (*f)(const t_token *));
 
 t_token	*token_get_first_occurrence(t_token *lst, int (*f)(const t_token *));
 
-size_t	token_count_upto(t_token *lst, int (*f)(const t_token *));
-
-int		token_is_LITERAL(const t_token *tok);
-
-int		token_is_pipe(const t_token *tok);
+int		token_is_literal(const t_token *tok);
 
 int		token_is_redirect(const t_token *tok);
+
+size_t	token_lst_size(t_token *lst);
 
 /*
 	LEXER
@@ -172,10 +175,7 @@ char	*pathresolve_tryfind(char *name, char **envp);
 
 int		execute_multiple(t_vars *vars);
 
-char	**create_argv_advanced(t_token **lst, int *infd, int *outfd,
-			int *outfdchanged);
-
-void	do_redirect(t_token **tlst, int *infd, int *outfd, int *outfdchanged);
+void	do_redirect(t_token **tlst, int *infd, int *outfd, int *status);
 
 void	ft_close_fd(const int fd);
 

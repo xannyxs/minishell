@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/09 12:42:49 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/10 22:15:56 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/11 15:59:43 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,25 @@
 
 /* creates a null-terminated argument string array.
  * should be freed. However, not the strings inside of them, as they are
- * borrowed from the token list. */
-// TODO: Works only for simple commands without redirections.
+ * borrowed from the token list.
+ * Works only for simple commands without pipes or redirections. */
 // TODO: not sure if this is the correct file to put this.
-char	**create_argv(t_token **lst)
+char	**create_argv(t_token *lst)
 {
 	size_t	size;
 	size_t	i;
 	char	**argv;
 
-	size = token_count_upto(*lst, &token_is_pipe);
+	size = token_lst_size(lst);
 	argv = malloc((size + 1) * sizeof(char *));
 	if (!argv)
 		fatal_perror("malloc");
 	i = 0;
 	while (i < size)
 	{
-		argv[i] = (*lst)->content;
+		argv[i] = lst->content;
 		i++;
-		*lst = (*lst)->next;
-	}
-	if (*lst)
-	{
-		*lst = (*lst)->next;
+		lst = lst->next;
 	}
 	argv[i] = NULL;
 	return (argv);
@@ -66,9 +62,14 @@ static size_t	create_argv_advanced_count(t_token *lst)
 	return (n);
 }
 
-// TODO: something < file | cat should work.
+/* creates a null-terminated string array of arguments(i.e. argv).
+ * it increments the token list so that the next command starts after a
+ * pipe. status is negative on failure; status is OR'd with M_PS_EMPTY
+ * for when there is nothing to execute, or M_PS_REDIRECTION_FAILED when
+ * a redirection is performed but failed. M_PS_REDIRECTED is set when
+ * an redirection(succesfull or not) was performed. See also create_argv. */
 char	**create_argv_advanced(t_token **lst, int *infd, int *outfd,
-	int *outfdchanged)
+	int *status)
 {
 	size_t	size;
 	size_t	i;
@@ -83,7 +84,7 @@ char	**create_argv_advanced(t_token **lst, int *infd, int *outfd,
 	{
 		if (token_is_redirect(*lst))
 		{
-			do_redirect(lst, infd, outfd, outfdchanged);
+			do_redirect(lst, infd, outfd, status);
 			continue ;
 		}
 		argv[i] = (*lst)->content;
@@ -91,8 +92,11 @@ char	**create_argv_advanced(t_token **lst, int *infd, int *outfd,
 		i++;
 	}
 	if (*lst)
-	{
 		*lst = (*lst)->next;
+	if (size == 0)
+	{
+		*status |= -1;
+		*status |= M_PS_EMPTY;
 	}
 	argv[i] = NULL;
 	return (argv);
