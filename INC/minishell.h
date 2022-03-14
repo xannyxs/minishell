@@ -193,6 +193,8 @@ char	**create_argv_advanced(t_token **lst, int *infd, int *outfd,
 	UTILS
 */
 
+void	allocate_env(t_vars *vars);
+
 int		ft_strequel(const char *str);
 
 #endif

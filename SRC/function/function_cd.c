@@ -6,12 +6,13 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/09 16:47:06 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/14 20:35:01 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
+#include "ft_printf.h"
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -30,8 +31,7 @@
 
 static int	nonfatal_error(char *argv[])
 {
-	write(STDERR_FILENO, "minishell: cd: ", 16);
-	write(STDERR_FILENO, argv[1], ft_strlen(argv[1]));
+	ft_dprintf(STDERR_FILENO, "minishell: cd: %s", argv[1]);
 	perror(" ");
 	return (errno);
 }

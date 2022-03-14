@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/08 18:29:03 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/14 21:18:06 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,6 @@ static void	init_base_vars(t_vars *vars)
 	vars->var_list = NULL;
 	vars->old_pwd = NULL;
 	vars->pwd = NULL;
-}
-
-static void	allocate_env(t_vars *vars)
-{
-	int			i;
-	extern char	**environ;
-
-	i = 0;
-	while (environ[i] != NULL)
-		i++;
-	vars->environ = malloc((i + 1) * sizeof(char *));
-	if (vars->environ == NULL)
-		fatal_perror("malloc");
-	i = 0;
-	while (environ[i] != NULL)
-	{
-		vars->environ[i] = ft_strdup(environ[i]);
-		if (vars->environ[i] == NULL)
-			fatal_perror("malloc");
-		i++;
-	}
-	vars->environ[i] = NULL;
 }
 
 // TODO: norm
@@ -82,7 +60,7 @@ int	main(void)
 				vars.exit_code = execute_line(&vars);
 				token_free_list(&vars.token_list);
 			}
-			//system("leaks minishell");
+			// system("leaks minishell");
 		}
 	}
 	return (0);

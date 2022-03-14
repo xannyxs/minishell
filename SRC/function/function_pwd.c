@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:17:10 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/09 14:50:35 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/14 20:45:42 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	find_env_oldpwd(t_vars *vars)
 
 int	change_env_oldpwd(t_vars *vars)
 {
-	int		i;
+	int	i;
 
 	i = find_env_oldpwd(vars);
 	if (i < 0)

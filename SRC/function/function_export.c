@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/14 17:06:52 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/14 20:57:54 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,37 @@
 	First char of var = a-z A-Z or _
 	rest of var = a-z A-Z or _ or 0-9
 	"1hoi=fd" <-- Should not work
+
+	Related with execute_single.c
+	Functions in variables needs to be executed as well
+	For example:
+	export ls="ls -l"
+	$ls - Prints out as if it is "ls -l"
 */
+
+static void	print_sys_env(t_vars vars, int i)
+{
+	char	**split_env;
+
+	split_env = ft_split(vars.environ[i], '=');
+	if (split_env == NULL)
+		fatal_perror("malloc");
+	if (split_env[1] == NULL)
+		printf("declare -x %s=\"\"\n", split_env[0]);
+	else
+		printf("declare -x %s=\"%s\"\n", split_env[0], split_env[1]);
+	ft_free_str_arr(split_env);
+}
+
+static void	print_usr_env(t_envlist *temp)
+{
+	if (temp->content != NULL)
+		printf("declare -x %s=\"%s\"\n", temp->variable, temp->content);
+	else if (temp->content == NULL)
+		printf("declare -x %s\n", temp->variable);
+	else
+		printf("declare -x %s=\"\"\n", temp->variable);
+}
 
 static int	print_export(t_vars *vars)
 {
@@ -34,17 +64,12 @@ static int	print_export(t_vars *vars)
 	temp = vars->var_list;
 	while (vars->environ[i] != NULL)
 	{
-		printf("declare -x %s\n", vars->environ[i]);
+		print_sys_env(*vars, i);
 		i++;
 	}
 	while (temp != NULL)
 	{
-		if (temp->content != NULL)
-			printf("declare -x %s=\"%s\"\n", temp->variable, temp->content);
-		else if (temp->content == NULL)
-			printf("declare -x %s\n", temp->variable);
-		else
-			printf("declare -x %s=\"\"\n", temp->variable);
+		print_usr_env(temp);
 		temp = temp->next;
 	}
 	return (0);

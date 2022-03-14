@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/08 18:16:27 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/14 21:20:45 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,6 @@
 
 #include <stdlib.h> /* free */
 #include <stdbool.h>
-
-/*
-	LET OP HET VOLGENDE:
-	- Single quote: Neemt het letterlijk, voorbeeld: "echo '$PATH'" - Output: $PATH
-	- Dubble quote: Doet normaal
-	- Dollar Sign: Kijkt of het een variable is.
-	- ENV
-	- "<< >>" is different from "< >"
-	- Be careful with minus (-)
-*/
 
 static void	expand_vars(t_vars *vars)
 {

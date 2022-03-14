@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 11:06:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/09 17:41:39 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/14 18:49:57 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,6 @@
 
 	LEAK FREE
 */
-static void	write_arg_error(void)
-{
-	write(STDERR_FILENO, "minishell: exit: too many arguments\n", 37);
-}
 
 static void	write_num_error(char *argv[])
 {
@@ -37,6 +33,11 @@ static void	write_num_error(char *argv[])
 		"minishell: exit: %s: numeric argument required\n",
 		argv[1]);
 	exit(255);
+}
+
+static void	write_arg_error(void)
+{
+	write(STDERR_FILENO, "minishell: exit: too many arguments\n", 37);
 }
 
 int	exec_exit(char *argv[], t_vars *vars)
