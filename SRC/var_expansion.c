@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 14:36:18 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/07 15:25:44 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/14 18:13:35 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 #include "libft.h" /* ft_str*, ft_uitoa */
 
 #include <stdlib.h> /* free */
+#include <stdbool.h>
+#include <stdio.h>
 
 /* looks up a variable. kind of specialized function, hence it's weird. */
 static char	*var_lookup(const char *var, const t_vars *vars, size_t len)
 {
-	char	*value;
-	char	**envp;
+	char		*value;
+	char		**envp;
+	t_envlist	*temp;
 
 	if (*var == '?')
 	{
@@ -30,6 +33,7 @@ static char	*var_lookup(const char *var, const t_vars *vars, size_t len)
 	}
 	value = NULL;
 	envp = vars->environ;
+	temp = vars->var_list;
 	while (*envp != NULL)
 	{
 		if (ft_strncmp(var, *envp, len) == 0 && (*envp)[len] == '=')
@@ -40,6 +44,17 @@ static char	*var_lookup(const char *var, const t_vars *vars, size_t len)
 			break ;
 		}
 		envp++;
+	}
+	while (*envp == NULL && vars->var_list->variable != NULL)
+	{	
+		if (ft_strcmp(var, temp->variable) == 0)
+		{
+			value = ft_strdup(temp->content);
+			if (!value)
+				fatal_perror("malloc");
+			break ;
+		}
+		temp = temp->next;
 	}
 	return (value);
 }
@@ -135,7 +150,7 @@ void	expand_token(t_token *el, const t_vars *vars)
 
 	cstr = el->content;
 	new_content = NULL;
-	while (1)
+	while (true)
 	{
 		i = (size_t)ft_strchr(cstr, '$');
 		if (i == 0)
@@ -147,7 +162,5 @@ void	expand_token(t_token *el, const t_vars *vars)
 			fatal_perror("malloc");
 	}
 	if (new_content)
-	{
 		token_expand_finish(el, cstr, new_content);
-	}
 }
