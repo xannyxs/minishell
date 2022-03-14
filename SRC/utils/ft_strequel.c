@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   function_unset.c                                   :+:    :+:            */
+/*   ft_strequel.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/22 16:48:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/14 17:43:04 by xvoorvaa      ########   odam.nl         */
+/*   Created: 2022/03/14 17:05:28 by xvoorvaa      #+#    #+#                 */
+/*   Updated: 2022/03/14 17:05:42 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "libft.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-
-/*
-	UNSET:
-	Unsets an env variable or usr variable.
-
-	Moet ook envlist checken voor $-sign
-	Keys are unique and needs to be overwriten
-	SEGFAULT usr_vars
-*/
-
-int	exec_unset(char *argv[], t_vars *vars)
+int	ft_strequel(const char *str)
 {
-	printf("Ignore me :D, %s - %s\n", argv[0], vars->environ[0]);
-	return (0);
+	int	len;
+
+	len = 0;
+	while (str[len] != '=' && str[len] != '\0')
+		len++;
+	return (len);
 }
