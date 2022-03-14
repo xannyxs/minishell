@@ -21,6 +21,13 @@ enum e_token {
 	T_HEREDOC /* << */
 };
 
+typedef struct s_envlist
+{
+	char				*variable;
+	char				*content;
+	struct s_envlist	*next;
+}	t_envlist;
+
 /* So, standard this is a singly linked list. But when the list is
  * "finalized", it becomes as doubly linked one so it's easier to parse it.
  * Note that ALL token functions do not support doubly linked lists! */
@@ -40,6 +47,7 @@ typedef struct s_vars
 	char			*pwd;
 	char			**environ;
 	t_token			*token_list;
+	t_envlist		*var_list;
 }	t_vars;
 
 /*
