@@ -58,10 +58,6 @@ int		init_vars(const char *line, t_vars *vars);
 
 int		execute_line(t_vars *vars);
 
-void	allocate_env(t_vars *vars);
-
-void	allocate_new_env(char *new_var, t_vars *vars);
-
 /*
 	FUNCTIONS
 */
@@ -93,6 +89,10 @@ int		exec_command(char *argv[], t_vars *vars);
 /*
 	LINKED LIST
 */
+
+void	new_node(t_envlist **head, char *variable, char *content);
+
+void	print_list(t_envlist *head);
 
 void	print_token(t_token *head);
 

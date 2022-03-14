@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 16:48:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/14 17:44:30 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/14 16:58:46 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 /*
 	UNSET:
 	Unsets an env variable or usr variable.
+
 	Moet ook envlist checken voor $-sign
 	Keys are unique and needs to be overwriten
 	SEGFAULT usr_vars

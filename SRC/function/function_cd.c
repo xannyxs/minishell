@@ -6,18 +6,16 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/10 14:07:29 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/09 16:47:06 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h" /* ft_str* */
-#include "ft_printf.h"
+#include "libft.h"
 
-#include <unistd.h> /* chdir */
-#include <stdlib.h> /* free */
-#include <string.h> /* strerror */
-#include <sys/errno.h> /* errno */
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <stdbool.h>
 
 /*
@@ -32,8 +30,9 @@
 
 static int	nonfatal_error(char *argv[])
 {
-	ft_dprintf(STDERR_FILENO, "minishell: cd: %s: %s\n", argv[1],
-		strerror(errno));
+	write(STDERR_FILENO, "minishell: cd: ", 16);
+	write(STDERR_FILENO, argv[1], ft_strlen(argv[1]));
+	perror(" ");
 	return (errno);
 }
 
@@ -53,7 +52,7 @@ static int	change_homedir(char *argv[], char *environ[])
 		home = ft_getenv("HOME", environ);
 		if (home == NULL)
 		{
-			ft_dprintf(STDERR_FILENO, "minishell: cd: HOME not set\n");
+			write(STDERR_FILENO, "minishell: cd: HOME not set\n", 29);
 			return (EPERM);
 		}
 		err = chdir(home);
@@ -73,7 +72,7 @@ static int	change_dir(char *argv[], t_vars vars)
 	{
 		err = chdir(vars.old_pwd);
 		if (err == 0)
-			ft_printf("%s\n", vars.old_pwd);
+			printf("%s\n", vars.old_pwd);
 	}
 	else
 		err = chdir(argv[1]);
@@ -86,7 +85,7 @@ static int	examine_input(t_vars *vars, char *argv[], char **temp_pwd)
 {
 	if (vars->old_pwd == NULL && ft_strcmp(argv[1], "-") == 0)
 	{
-		ft_dprintf(STDERR_FILENO, "minishell: cd: OLDPWD not set\n");
+		write(STDERR_FILENO, "minishell: cd: OLDPWD not set\n", 31);
 		errno = EPERM;
 		return (-1);
 	}

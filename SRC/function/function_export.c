@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/14 17:43:25 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/14 17:06:52 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@
 
 static int	print_export(t_vars *vars)
 {
-	int	i;
+	int			i;
+	t_envlist	*temp;
 
 	i = 0;
+	temp = vars->var_list;
 	while (vars->environ[i] != NULL)
 	{
 		printf("declare -x %s\n", vars->environ[i]);
@@ -86,6 +88,5 @@ int	exec_export(char *argv[], t_vars *vars)
 			new_node(&vars->var_list, variable, content);
 		i++;
 	}
-	vars->exit_code = 0;
 	return (0);
 }

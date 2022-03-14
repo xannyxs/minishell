@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 11:06:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/10 13:58:19 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/09 17:41:39 by xander        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 */
 static void	write_arg_error(void)
 {
-	ft_dprintf(STDERR_FILENO, "minishell: exit: too many arguments\n");
+	write(STDERR_FILENO, "minishell: exit: too many arguments\n", 37);
 }
 
 static void	write_num_error(char *argv[])
@@ -44,7 +44,7 @@ int	exec_exit(char *argv[], t_vars *vars)
 	int	i;
 
 	i = 0;
-	ft_dprintf(STDERR_FILENO, "exit\n");
+	write(STDERR_FILENO, "exit\n", 5);
 	if (argv[1] == NULL)
 		exit (0);
 	while (ft_isdigit(argv[1][i]) == true)
