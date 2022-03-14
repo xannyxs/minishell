@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/03/03 16:31:14 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/10 11:44:12 by xander        ########   odam.nl         */
+/*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
+/*   Updated: 2022/03/14 18:44:26 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,57 +59,44 @@ static void	m_proc(int infd, int outfd, char **args, t_vars *vars)
 	}
 }
 
-// I hate this duplicate code
-static pid_t	final_proc(int readfd, char **argv, t_vars *vars,
-	t_token *old_tlst)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-	{
-		fatal_perror("fork");
-	}
-	else if (pid == 0)
-	{
-		vars->token_list = old_tlst;
-		m_proc(readfd, -1, argv, vars);
-	}
-	free(argv);
-	return (pid);
-}
-
-// TODO: builtins
-// TODO: redir
-// TODO: perhaps create_argv in m_proc?
+// TODO: norm
 /* runs the next command in the pipe list. Returns the pid of the final
  * command executed. */
 pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 {
 	int		pfds[2];
 	char	**argv;
+	int		pstatus;
 	pid_t	pid;
-	t_token	*old_tlst;
 
-	old_tlst = tlst;
-	argv = create_argv(&tlst);
-	if (tlst == NULL)
-	{
-		return (final_proc(readfd, argv, vars, old_tlst));
-	}
 	if (pipe(pfds) == -1)
 		fatal_perror("pipe");
-	pid = fork();
-	if (pid == -1)
-		fatal_perror("fork");
-	else if (pid == 0)
+	pstatus = 0;
+	argv = create_argv_advanced(&tlst, &readfd, &pfds[1], &pstatus);
+	if (pstatus < 0 || (tlst == NULL && !(pstatus & M_PS_REDIRECTED)))
 	{
-		close(pfds[0]);
-		vars->token_list = old_tlst;
-		m_proc(readfd, pfds[1], argv, vars);
+		close(pfds[1]);
+		pfds[1] = -1;
+	}
+	if (pstatus >= 0)
+	{
+		pid = fork();
+		if (pid == -1)
+			fatal_perror("fork");
+		else if (pid == 0)
+		{
+			close(pfds[0]);
+			m_proc(readfd, pfds[1], argv, vars);
+		}
 	}
 	free(argv);
-	close(pfds[1]);
+	ft_close_fd(readfd);
+	ft_close_fd(pfds[1]);
+	if (tlst == NULL)
+	{
+		close(pfds[0]);
+		return (pid);
+	}
 	return (pipe_next(pfds[0], tlst, vars));
 }
 

@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/28 18:30:25 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/08 13:13:39 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/11 16:21:13 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	lex_set_quote_token_and_loop(t_token *cur, const char *line,
 		if (line[*i] == 0)
 		{
 			ft_dprintf(2, "minishell: syntax error: quote %c at column %u \
-did not close\n", quote_char,	orig_i);
+did not close\n", quote_char, orig_i);
 			return (-1);
 		}
 		(*i)++;

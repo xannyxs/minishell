@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:44:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/09 13:47:58 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/11 14:17:26 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,9 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-static int	is_pipe_present(t_token *lst)
+static int	is_not_literal(const t_token *tok)
 {
-	while (lst)
-	{
-		if (lst->token == T_PIPE)
-		{
-			return (1);
-		}
-		lst = lst->next;
-	}
-	return (0);
+	return (tok->token != T_LITERAL);
 }
 
 //TODO: Error handeling
@@ -36,10 +28,8 @@ static int	execute_single_cmd(t_vars *vars)
 {
 	t_function	tf;
 	char		**argv;
-	t_token		*tlst;
 
-	tlst = vars->token_list;
-	argv = create_argv(&tlst);
+	argv = create_argv(vars->token_list);
 	tf = get_function(*argv);
 	if (tf.key != NULL)
 	{
@@ -57,7 +47,8 @@ static int	execute_single_cmd(t_vars *vars)
 // TODO: unify?
 int	execute_line(t_vars *vars)
 {
-	if (is_pipe_present(vars->token_list))
+	if (token_get_first_occurrence(vars->token_list,
+			&is_not_literal) != NULL)
 		return (execute_multiple(vars));
 	else
 		return (execute_single_cmd(vars));

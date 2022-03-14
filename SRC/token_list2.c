@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 13:22:17 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/04 12:39:19 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/10 14:23:58 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	token_make_list_doubly_linked(t_token *lst)
 
 /* loops over the list, calls function f with the current token, and adds the
  * result to sum, returns the sum. */
-int	token_count_occurrences(t_token *lst, int (*f)(t_token *))
+int	token_count_occurrences(t_token *lst, int (*f)(const t_token *))
 {
 	int	sum;
 
@@ -87,7 +87,7 @@ int	token_count_occurrences(t_token *lst, int (*f)(t_token *))
 
 /* loops over the list, calls function f with the current token,
  * returns the first one it sees. Else it returns NULL. */
-t_token	*token_get_first_occurrence(t_token *lst, int (*f)(t_token *))
+t_token	*token_get_first_occurrence(t_token *lst, int (*f)(const t_token *))
 {
 	while (lst)
 	{

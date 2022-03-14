@@ -6,9 +6,12 @@
 
 # define T_DEFAULT_TOKEN (T_LITERAL)
 
-// TODO: maybe after the literals have been expanded,
-// set to a more sane T_LITERAL so we don't have to if/else as much etc.
-// TODO: >> <<
+/* create_argv_advanced statuses */
+# define M_PS_REDIRECTED (1)
+# define M_PS_REDIRECTION_FAILED (2)
+# define M_PS_EMPTY (4)
+
+// After literals are expanded, every literal is considered a T_LITERAL.
 enum e_token {
 	T_UNKNOWN,
 	T_LITERAL,
@@ -49,6 +52,14 @@ typedef struct s_vars
 	t_token			*token_list;
 	t_envlist		*var_list;
 }	t_vars;
+
+typedef struct pipe_vars
+{
+	int		*infd;
+	int		*outfd;
+	char	infd_is_pipe;
+	char	outfd_is_pipe;
+}	t_pipe_vars;
 
 /*
 	MINISHELL
@@ -112,13 +123,15 @@ void	token_remove_from_list(t_token **tlst, t_token *to_remove);
 
 void	token_make_list_doubly_linked(t_token *lst);
 
-int		token_count_occurrences(t_token *lst, int (*f)(t_token *));
+int		token_count_occurrences(t_token *lst, int (*f)(const t_token *));
 
-t_token	*token_get_first_occurrence(t_token *lst, int (*f)(t_token *));
+t_token	*token_get_first_occurrence(t_token *lst, int (*f)(const t_token *));
 
-size_t	token_count_upto(t_token *lst, int (*f)(t_token *));
+int		token_is_literal(const t_token *tok);
 
-int		token_is_pipe(t_token *tok);
+int		token_is_redirect(const t_token *tok);
+
+size_t	token_lst_size(t_token *lst);
 
 /*
 	LEXER
@@ -163,6 +176,18 @@ char	*ft_getenv(const char *name, char *environ[]);
 char	*pathresolve_tryfind(char *name, char **envp);
 
 int		execute_multiple(t_vars *vars);
+
+void	do_redirect(t_token **tlst, int *infd, int *outfd, int *status);
+
+void	ft_close_fd(const int fd);
+
+/*
+	create_argv
+*/
+char	**create_argv(t_token *lst);
+
+char	**create_argv_advanced(t_token **lst, int *infd, int *outfd,
+			int *status);
 
 /*
 	UTILS
