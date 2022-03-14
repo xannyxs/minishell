@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 16:48:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/10 16:00:02 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/14 16:58:46 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,6 @@
 /*
 	UNSET:
 	Unsets an env variable or usr variable.
-
-	First char of var = a-z A-Z or _
-	rest of var = a-z A-Z or _ or 0-9
-	"1hoi=fd"
-
-
-	export hoi
-	export hoi=
 
 	Moet ook envlist checken voor $-sign
 	Keys are unique and needs to be overwriten

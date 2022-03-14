@@ -74,6 +74,10 @@ int		exec_pwd(char *argv[], t_vars *vars);
 
 int		exec_export(char *argv[], t_vars *vars);
 
+void	replace_dup_env(t_vars *vars, char *variable, char *content);
+
+int		check_dup_env(t_vars vars, char *variable);
+
 int		exec_unset(char *argv[], t_vars *vars);
 
 int		exec_env(char *argv[], t_vars *vars);
@@ -159,5 +163,11 @@ char	*ft_getenv(const char *name, char *environ[]);
 char	*pathresolve_tryfind(char *name, char **envp);
 
 int		execute_multiple(t_vars *vars);
+
+/*
+	UTILS
+*/
+
+int		ft_strequel(const char *str);
 
 #endif
