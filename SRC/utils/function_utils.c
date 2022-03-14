@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/09 12:42:49 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/09 13:26:31 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/14 14:23:50 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,7 @@ t_function	get_function(const char *name)
 	while (funcs[i].key != NULL)
 	{
 		if (ft_strcmp(funcs[i].key, name) == 0)
-		{
 			return (funcs[i]);
-		}
 		i++;
 	}
 	return (funcs[i]);

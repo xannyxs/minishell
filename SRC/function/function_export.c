@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/10 18:17:47 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/14 15:31:33 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,6 @@
 #include <unistd.h>
 
 /*
-	First char of var = a-z A-Z or _
-	rest of var = a-z A-Z or _ or 0-9
-	"1hoi=fd"
-
 	export hoi
 	export hoi=
 
@@ -31,6 +27,12 @@
 	Keys are unique and needs to be overwriten
 */
 
+/*
+	First check is the first char being checked
+	if it is an underscore or a character in the alphabet
+
+	Second check is alphabet, underscore and numbers
+*/
 static int	check_chars(char *argv[], t_vars *vars, int i)
 {
 	int	j;
@@ -90,9 +92,7 @@ int	exec_export(char *argv[], t_vars *vars)
 		ret = check_chars(argv, vars, i);
 		if (ret == 0)
 		{
-			temp = ft_strdup(argv[i]);
-			if (temp == NULL)
-				fatal_perror("malloc");
+			temp = add_quote(argv[i]);
 			allocate_new_env(temp, vars);
 		}
 		i++;
