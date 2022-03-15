@@ -10,8 +10,8 @@
 # define M_PS_REDIRECTED (1)
 # define M_PS_REDIRECTION_FAILED (2)
 # define M_PS_EMPTY (4)
-// # define SUCCESS 0
-// # define ERROR 1
+# define SUCCESS 0
+# define ERROR 1
 
 // After literals are expanded, every literal is considered a T_LITERAL.
 enum e_token {
@@ -200,5 +200,7 @@ char	**create_argv_advanced(t_token **lst, int *infd, int *outfd,
 void	allocate_env(t_vars *vars);
 
 int		ft_strequel(const char *str);
+
+int		ft_getargc(char *argv[]);
 
 #endif

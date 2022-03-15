@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/14 20:35:01 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/15 16:41:44 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,31 +36,34 @@ static int	nonfatal_error(char *argv[])
 	return (errno);
 }
 
-static int	change_homedir(char *argv[], char *environ[])
+static int	change_homedir(char *argv[], char *environ[], t_vars *vars)
 {
 	int		err;
 	int		is_home;
 	char	*home;
 
 	is_home = false;
+	home = ft_getenv("HOME", environ);
 	if (ft_strcmp(argv[0], "cd") == 0 && argv[1] == NULL)
 		is_home = true;
-	else if (argv[1] != NULL && ft_strcmp(argv[1], "~") == 0)
+	else if (argv[1] != NULL && ft_strcmp(argv[1], home) == 0)
 			is_home = true;
 	if (is_home == true)
 	{
-		home = ft_getenv("HOME", environ);
 		if (home == NULL)
 		{
 			write(STDERR_FILENO, "minishell: cd: HOME not set\n", 29);
-			return (EPERM);
+			vars->exit_code = 1;
+			return (false);
 		}
+		change_env_oldpwd(vars);
 		err = chdir(home);
 		free(home);
 		if (err != 0)
 			return (nonfatal_error(argv));
 		return (true);
 	}
+	free(home);
 	return (false);
 }
 
@@ -109,7 +112,7 @@ int	exec_cd(char *argv[], t_vars *vars)
 	int			check_dash;
 	char		*temp_pwd;
 
-	if (change_homedir(argv, vars->environ) == true)
+	if (change_homedir(argv, vars->environ, vars) == true)
 	{
 		change_env_pwd(vars);
 		return (0);

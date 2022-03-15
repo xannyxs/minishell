@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:17:10 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/14 20:45:42 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/15 17:11:51 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,12 @@ int	change_env_pwd(t_vars *vars)
 	if (i < 0)
 		return (-1);
 	temp = getcwd(NULL, 1);
+	if (temp == NULL)
+	{
+		perror("getcwd");
+		vars->exit_code = errno;
+		return (vars->exit_code);
+	}
 	free(vars->environ[i]);
 	vars->environ[i] = ft_strjoin("PWD=", temp);
 	free(temp);
@@ -92,6 +98,8 @@ int	exec_pwd(char *argv[], t_vars *vars)
 		if (vars->pwd != NULL)
 			free(vars->pwd);
 		vars->pwd = getcwd(NULL, 1);
+		if (vars->pwd == NULL)
+			vars->pwd = ft_getenv("PWD", vars->environ);
 		printf("%s\n", vars->pwd);
 	}
 	return (0);

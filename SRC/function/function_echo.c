@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/18 11:55:37 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/09 17:17:15 by xander        ########   odam.nl         */
+/*   Updated: 2022/03/15 17:52:42 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 
 #include <stdbool.h> /* TRUE OR FALSE */
+#include <stdio.h>
 #include <unistd.h> /* STDOUT_FILENO */
 
 /*
@@ -23,6 +24,33 @@
 
 	LEAK FREE
 */
+
+static int	skip_flags(char *argv[], int i)
+{
+	int	j;
+
+	j = 1;
+	while (argv[i] != NULL)
+	{
+		if (argv[i][0] == '-')
+		{
+			while (argv[i][j] == 'n' && argv[i][j] != '\0')
+				j++;
+			if (argv[i][j] != 'n' && argv[i][j] != '\0')
+				return (i);
+			else if (argv[i][j] == '\0')
+			{
+				j = 1;
+				i++;
+			}
+			else
+				return (i);
+		}
+		else
+			return (i);
+	}
+	return (i);
+}
 
 static void	print_echo(int i, char *argv[])
 {
@@ -51,7 +79,7 @@ int	exec_echo(char *argv[], t_vars *vars)
 	else if (argv[1] != NULL && ft_strcmp(argv[1], "-n") == 0)
 	{
 		is_flag = true;
-		i++;
+		i = skip_flags(argv, i);
 	}
 	print_echo(i, argv);
 	if (is_flag == false)
