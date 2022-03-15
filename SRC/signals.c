@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 14:05:01 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/15 14:11:49 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/15 14:47:50 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include <unistd.h>
 #include <signal.h>
-#include <stdio.h>
+#include <stdio.h> /* NEEDED FOR READLINE LIB */
 #include <readline/readline.h>
 
 /*
