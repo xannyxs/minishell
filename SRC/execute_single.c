@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 16:55:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/14 20:29:17 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/15 14:12:15 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ int	exec_command(char **argv, t_vars *vars)
 		fatal_perror("fork");
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-	{
 		vars->exit_code = WEXITSTATUS(status);
-	}
 	return (vars->exit_code);
 }

@@ -6,7 +6,7 @@
 #    By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 14:31:21 by xvoorvaa      #+#    #+#                  #
-#    Updated: 2022/03/11 16:31:53 by jobvan-d      ########   odam.nl          #
+#    Updated: 2022/03/15 14:10:17 by xvoorvaa      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@ SRC_DIR			=	SRC
 INC_DIR			=	INC
 LIBFT_DIR		=	libft
 PF_DIR			=	ft_printf
+BREW_INC_DIR	=	~/.brew/opt/readline/include
+BREW_LIB_DIR	=	~/.brew/opt/readline/lib
 LIBFT_H			=	$(LIBFT_DIR)/libft.h
 LIBFT_A			=	$(LIBFT_DIR)/libft.a
 
@@ -54,7 +56,8 @@ all:	$(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS) | $(OBJ_DIR)
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -c $< -o $@ -I$(INC_DIR) -I$(LIBFT_DIR) -I$(PF_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@ -I$(INC_DIR) -I$(LIBFT_DIR) -I$(PF_DIR) \
+		-I $(BREW_INC_DIR)
 
 $(OBJ_DIR):
 	@mkdir $@
@@ -64,7 +67,7 @@ $(NAME): $(OBJECTS) $(LIBFT_A) $(PF_A)
 	@echo $(START)
 	@printf $(COMP_MESSAGE) $(SOURCES)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) -L$(LIBFT_DIR) -L$(PF_DIR) \
-		-lft -lftprintf -lreadline
+		-lft -lftprintf -lreadline -L $(BREW_LIB_DIR)
 	@echo $(MESSAGE)
 
 $(LIBFT_A): $(LIBFT_H)

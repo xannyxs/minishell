@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/14 21:18:06 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/15 14:30:50 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,13 @@ int	main(void)
 
 	init_base_vars(&vars);
 	allocate_env(&vars);
+	signals();
 	while (true)
 	{
 		line = readline("\e[1;36mminishell \e[0;32m$> \e[0m");
 		add_history(line);
 		if (!line)
-		{
-			// TODO: exit code
-			exit(errno);
-		}
+			exit(vars.exit_code);
 		else if (*line != 0)
 		{
 			err = init_vars(line, &vars);

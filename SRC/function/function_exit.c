@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 11:06:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/14 18:49:57 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/15 14:30:21 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	exec_exit(char *argv[], t_vars *vars)
 	i = 0;
 	write(STDERR_FILENO, "exit\n", 5);
 	if (argv[1] == NULL)
-		exit (0);
+		exit (vars->exit_code);
 	while (ft_isdigit(argv[1][i]) == true)
 		i++;
 	if (ft_isdigit(argv[1][i]) == false && argv[1][i] != '\0')

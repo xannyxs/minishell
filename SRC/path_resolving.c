@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 14:10:19 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/04 12:31:56 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/15 14:12:05 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,12 +124,8 @@ char	*pathresolve_tryfind(char *name, char **envp)
 	char	*ret;
 
 	if (ft_strchr(name, '/') == NULL)
-	{
 		ret = tryfind(name, envp);
-	}
 	else
-	{
 		ret = name;
-	}
 	return (ret);
 }

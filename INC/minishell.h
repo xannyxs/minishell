@@ -10,6 +10,8 @@
 # define M_PS_REDIRECTED (1)
 # define M_PS_REDIRECTION_FAILED (2)
 # define M_PS_EMPTY (4)
+# define SUCCESS 0
+# define ERROR 1
 
 // After literals are expanded, every literal is considered a T_LITERAL.
 enum e_token {
@@ -68,6 +70,8 @@ typedef struct pipe_vars
 int		init_vars(const char *line, t_vars *vars);
 
 int		execute_line(t_vars *vars);
+
+void	signals(void);
 
 /*
 	FUNCTIONS
