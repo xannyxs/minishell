@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 14:05:01 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/15 14:47:50 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/19 16:53:58 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <signal.h>
 #include <stdio.h> /* NEEDED FOR READLINE LIB */
 #include <readline/readline.h>
+#include <termios.h>
 
 /*
 	The function "Signal()" will change some settings
@@ -35,6 +36,11 @@ static void	sighandler(int sig)
 
 void	signals(void)
 {
+	struct termios	raw;
+
+	tcgetattr(STDIN_FILENO, &raw);
+	raw.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 	signal(SIGINT, sighandler);
 	signal(SIGQUIT, SIG_IGN);
 }

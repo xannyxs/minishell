@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/14 21:20:45 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/19 14:17:30 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <stdlib.h> /* free */
 #include <stdbool.h>
+#include <stdio.h>
 
 static void	expand_vars(t_vars *vars)
 {
@@ -89,9 +90,7 @@ static int	parse(t_vars *vars)
 	while (cur)
 	{
 		if (!try_merge(cur))
-		{
 			cur = cur->next;
-		}
 	}
 	token_make_list_doubly_linked(vars->token_list);
 	return (1);

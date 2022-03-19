@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 14:36:18 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/15 15:14:45 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/19 14:18:47 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,9 @@ static void	token_expand_finish(t_token *el, char *cstr, char *new_content)
 	el->content = new_content;
 }
 
-// TODO: check leaks
+// TODO:	Check leaks
+//			Fix segfault: export $var
+//			Fix ~ <- it is not perfect
 void	expand_token(t_token *el, const t_vars *vars)
 {
 	size_t	i;

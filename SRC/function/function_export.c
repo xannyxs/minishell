@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/14 20:57:54 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/19 15:18:49 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,18 @@ static int	print_export(t_vars *vars)
 	return (0);
 }
 
-static int	allocate_var(char *argv[], char **content, char **variable)
+static void	allocate_var(char *argv, char **content, char **variable)
 {
-	*content = ft_strchr(argv[1], '=');
+	*content = ft_strchr(argv, '=');
 	if (*content != NULL)
 	{
 		*content = ft_substr(*content, 1, ft_strlen(*content) - 1);
 		if (*content == NULL)
 			fatal_perror("malloc");
 	}
-	*variable = ft_substr(argv[1], 0, ft_strequel(argv[1]));
+	*variable = ft_substr(argv, 0, ft_strequel(argv));
 	if (*variable == NULL)
 		fatal_perror("malloc");
-	return (0);
 }
 
 int	exec_export(char *argv[], t_vars *vars)
@@ -101,16 +100,20 @@ int	exec_export(char *argv[], t_vars *vars)
 	i = 1;
 	while (argv[i] != NULL)
 	{
-		vars->exit_code = allocate_var(argv, &content, &variable);
-		if (vars->exit_code != 0)
-			return (vars->exit_code);
-		if (check_dup_env(*vars, variable) == true)
+		if (ft_strlen(argv[i]) > 0)
 		{
-			replace_dup_env(vars, variable, content);
-			free(variable);
+			allocate_var(argv[i], &content, &variable);
+			if (check_dup_env(*vars, variable) == true)
+			{
+				replace_dup_env(vars, variable, content);
+				free(variable);
+			}
+			else
+				new_node(&vars->var_list, variable, content);
 		}
 		else
-			new_node(&vars->var_list, variable, content);
+			ft_dprintf(STDERR_FILENO, \
+			"minishell: export: %s: not a valid identifier\n", argv[i]);
 		i++;
 	}
 	return (0);

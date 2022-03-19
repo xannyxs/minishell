@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 12:23:00 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/02 14:21:53 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/19 14:00:44 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include <stdlib.h> /* free */
 #include <stdbool.h>
+#include <stdio.h>
 
 /* I know it's kind of ugly to essentially do the same if statement twice
  * (see is_token_char_present in lexer_util.c), but it seems to me the 
@@ -81,9 +82,7 @@ int	lex(t_token **tlst, const char *line)
 
 	cur = token_new(NULL, T_DEFAULT_TOKEN);
 	if (!cur)
-	{
 		fatal_perror("malloc");
-	}
 	cur->separated_from_previous = true;
 	token_li_push_back(tlst, cur);
 	i = 0;

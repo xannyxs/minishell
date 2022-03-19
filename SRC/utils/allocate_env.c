@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/14 21:18:01 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/14 21:21:48 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/19 17:47:00 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,23 @@
 #include "libft.h"
 
 #include <stdlib.h> /* Malloc */
+#include <stdio.h>
+
+static char	*increment_shlvl(char *environ)
+{
+	int		layer_shell;
+	char	*shlvl;
+
+	shlvl = ft_strchr(environ, '=') + 1;
+	layer_shell = ft_atoi(shlvl) + 1;
+	shlvl = ft_itoa(layer_shell);
+	return (shlvl);
+}
 
 /*
 	Mallocs the env of the last terminal.
 	If it sees OLDPWD. It will make it empty.
+	If it sees SHLVL. It will increment one more time.
 */
 void	allocate_env(t_vars *vars)
 {
@@ -35,6 +48,8 @@ void	allocate_env(t_vars *vars)
 	{
 		if (ft_strncmp(environ[i], "OLDPWD", 6) == 0)
 			vars->environ[i] = ft_strdup("OLDPWD=");
+		else if (ft_strncmp(environ[i], "SHLVL", 5) == 0)
+			vars->environ[i] = ft_strjoin("SHLVL=", increment_shlvl(environ[i]));
 		else
 			vars->environ[i] = ft_strdup(environ[i]);
 		if (vars->environ[i] == NULL)
