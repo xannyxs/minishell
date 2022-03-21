@@ -149,8 +149,6 @@ size_t	token_lst_size(t_token *lst);
 */
 int		lex(t_token **tlst, const char *line);
 
-void	expand_token(t_token *el, const t_vars *vars);
-
 void	lex_finish_word(t_token **cur, const char *line, size_t *start_index,
 			size_t end_index);
 
@@ -199,6 +197,15 @@ char	**create_argv(t_token *lst);
 
 char	**create_argv_advanced(t_token **lst, int *infd, int *outfd,
 			int *status);
+
+/*
+	var expansion
+*/
+void	expand_token(t_token *el, const t_vars *vars);
+
+char	*ve_get_part(size_t i, char **cstr, const t_vars *vars);
+
+char	*ve_strfjoin(char *a, char *b);
 
 /*
 	UTILS
