@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 14:36:18 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/21 14:52:45 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/21 15:34:59 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static char	*var_lookup(const char *var, const t_vars *vars, size_t len)
 	}
 	while (*envp == NULL && temp != NULL)
 	{	
-		if (ft_strcmp(var, temp->variable) == 0)
+		if (ft_strncmp(var, temp->variable, len) == 0
+				&& temp->variable[len] == '\0')
 		{
 			value = ft_strdup(temp->content);
 			if (!value)
@@ -143,7 +144,6 @@ static void	token_expand_finish(t_token *el, char *cstr, char *new_content)
 }
 
 // TODO:	Check leaks
-//			Fix: export $var
 //			Fix ~ <- it is not perfect
 void	expand_token(t_token *el, const t_vars *vars)
 {
@@ -155,11 +155,9 @@ void	expand_token(t_token *el, const t_vars *vars)
 	new_content = NULL;
 	while (true)
 	{
-		if (ft_strchr(cstr, '$') != NULL)
+		i = (size_t)ft_strchr(cstr, '$');
+		if (i > 0)
 		{
-			i = (size_t)ft_strchr(cstr, '$');
-			if (i == 0)
-				break ;
 			i -= (size_t)cstr;
 			new_content = m_strfjoin(new_content,
 					get_part(i, &cstr, vars));
@@ -169,9 +167,9 @@ void	expand_token(t_token *el, const t_vars *vars)
 		// Needs to be fixed. Trying to change ~ to HOME
 		else if (ft_strchr(cstr, '~') != NULL)
 		{
-			free(new_content);
 			cstr[0] = '\0';
-			new_content = ft_getenv("HOME", vars->environ);
+			new_content = m_strfjoin(new_content,
+				ft_getenv("HOME", vars->environ));
 		}
 		break ;
 	}
