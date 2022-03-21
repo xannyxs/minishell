@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 11:06:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/21 16:35:58 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/21 17:48:01 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,5 @@ int	exec_exit(char *argv[], t_vars *vars)
 		ft_dprintf(STDERR_FILENO, "exit\n");
 		exit(vars->exit_code);
 	}
+	return (vars->exit_code);
 }
