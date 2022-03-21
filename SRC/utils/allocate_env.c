@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/14 21:18:01 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/19 17:47:00 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/21 14:30:07 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	allocate_env(t_vars *vars)
 	i = 0;
 	while (environ[i] != NULL)
 	{
-		if (ft_strncmp(environ[i], "OLDPWD", 6) == 0)
+		if (ft_strncmp(environ[i], "OLDPWD=", 7) == 0)
 			vars->environ[i] = ft_strdup("OLDPWD=");
-		else if (ft_strncmp(environ[i], "SHLVL", 5) == 0)
+		else if (ft_strncmp(environ[i], "SHLVL=", 6) == 0)
 			vars->environ[i] = ft_strjoin("SHLVL=", increment_shlvl(environ[i]));
 		else
 			vars->environ[i] = ft_strdup(environ[i]);
