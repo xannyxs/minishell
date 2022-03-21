@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/21 18:14:00 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/21 21:30:03 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,26 @@
 	LEAK FREE
 */
 
-static int	nonfatal_error(char *argv[])
+static int	nonfatal_error(t_vars *vars, char *argv[])
 {
 	ft_dprintf(STDERR_FILENO, "minishell: cd: %s", argv[1]);
 	perror(" ");
-	return (errno);
+	vars->exit_code = errno;
+	return (-1);
 }
 
 static int	change_homedir(char *argv[], char *environ[], t_vars *vars)
 {
 	int		err;
-	int		is_home;
 	char	*home;
 
-	is_home = false;
 	home = ft_getenv("HOME", environ);
-	if (ft_strcmp(argv[0], "cd") == 0 && argv[1] == NULL)
-		is_home = true;
-	else if (argv[1] != NULL && ft_strcmp(argv[1], home) == 0)
-			is_home = true;
-	if (is_home == true)
+	if ((argv[1] != NULL && ft_strcmp(argv[1], home) == 0) || \
+		(ft_strcmp(argv[0], "cd") == 0 && argv[1] == NULL))
 	{
 		if (home == NULL)
 		{
-			write(STDERR_FILENO, "minishell: cd: HOME not set\n", 29);
+			ft_dprintf(STDERR_FILENO, "minishell: cd: HOME not set\n");
 			vars->exit_code = 1;
 			return (-1);
 		}
@@ -60,7 +56,7 @@ static int	change_homedir(char *argv[], char *environ[], t_vars *vars)
 		err = chdir(home);
 		free(home);
 		if (err != 0)
-			return (nonfatal_error(argv));
+			return (nonfatal_error(vars, argv));
 		return (true);
 	}
 	free(home);
@@ -80,7 +76,7 @@ static int	change_dir(char *argv[], t_vars vars)
 	else
 		err = chdir(argv[1]);
 	if (err != 0)
-		return (nonfatal_error(argv));
+		return (nonfatal_error(&vars, argv));
 	return (0);
 }
 
@@ -88,7 +84,7 @@ static int	examine_input(t_vars *vars, char *argv[], char **temp_pwd)
 {
 	if (vars->old_pwd == NULL && ft_strcmp(argv[1], "-") == 0)
 	{
-		write(STDERR_FILENO, "minishell: cd: OLDPWD not set\n", 31);
+		ft_dprintf(STDERR_FILENO, "minishell: cd: OLDPWD not set\n");
 		errno = EPERM;
 		return (-1);
 	}
@@ -115,10 +111,7 @@ int	exec_cd(char *argv[], t_vars *vars)
 
 	ret = change_homedir(argv, vars->environ, vars);
 	if (ret == true)
-	{
-		change_env_pwd(vars);
-		return (0);
-	}
+		return (change_env_pwd(vars));
 	else if (ret == -1)
 		return (1);
 	check_dash = examine_input(vars, argv, &temp_pwd);
