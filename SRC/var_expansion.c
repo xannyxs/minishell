@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 14:36:18 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/21 18:05:43 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/21 18:40:42 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,114 +17,20 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-// TODO: norm
-/* looks up a variable. kind of specialized function, hence it's weird. */
-static char	*var_lookup(const char *var, const t_vars *vars, size_t len)
+/* expands the tilde at the beginning of the word. Assumes there is a ~. */
+static void	expand_tilde(t_token *el, const t_vars *vars)
 {
-	char		*value;
-	char		**envp;
-	t_envlist	*temp;
+	char	*new;
+	char	*home;
 
-	if (*var == '?')
-	{
-		value = ft_uitoa(vars->exit_code);
-		if (!value)
-			fatal_perror("malloc");
-		return (value);
-	}
-	value = NULL;
-	envp = vars->environ;
-	temp = vars->var_list;
-	while (*envp != NULL)
-	{
-		if (ft_strncmp(var, *envp, len) == 0 && (*envp)[len] == '=')
-		{
-			value = ft_strdup(*envp + len + 1);
-			if (!value)
-				fatal_perror("malloc");
-			break ;
-		}
-		envp++;
-	}
-	while (*envp == NULL && temp != NULL)
-	{	
-		if (ft_strncmp(var, temp->variable, len) == 0
-				&& temp->variable[len] == '\0')
-		{
-			value = ft_strdup(temp->content);
-			if (!value)
-				fatal_perror("malloc");
-			break ;
-		}
-		temp = temp->next;
-	}
-	return (value);
-}
-
-static size_t	count_var_length(const char *str)
-{
-	size_t	i;
-
-	i = 1;
-	if (str[i] == '?')
-	{
-		i++;
-		return (i);
-	}
-	while ((str[i] >= 'a' && str[i] <= 'z')
-		|| (str[i] >= 'A' && str[i] <= 'Z')
-		|| (str[i] >= '0' && str[i] <= '9')
-		|| (str[i] == '_')
-	)
-	{
-		i++;
-	}
-	return (i);
-}
-
-/* returns a and b joined, and frees both. Returns NULL on malloc fail. */
-static char	*m_strfjoin(char *a, char *b)
-{
-	char	*tmp;
-
-	if (a == NULL)
-	{
-		tmp = ft_strdup(b);
-	}
-	else
-	{
-		tmp = ft_strjoin(a, b);
-		free(a);
-	}
-	free(b);
-	return (tmp);
-}
-
-static char	*get_part(size_t i, char **cstr, const t_vars *vars)
-{
-	size_t	var_length;
-	char	*val;
-	char	*tmp;
-
-	var_length = count_var_length(*cstr + i);
-	if (var_length == 1)
-		i++;
-	tmp = ft_strndup_unsafe(*cstr, i);
-	if (!tmp)
+	home = ft_getenv("HOME", vars->environ);
+	if (!home)
+		home = "";
+	new = ft_strjoin(home, el->content + 1);
+	if (!new)
 		fatal_perror("malloc");
-	*cstr += i;
-	if (var_length > 1)
-	{
-		val = var_lookup(*cstr + 1, vars, var_length - 1);
-		if (val)
-		{
-			tmp = m_strfjoin(tmp, val);
-			if (!tmp)
-				fatal_perror("malloc");
-		}
-		*cstr += var_length;
-	}
-	return (tmp);
+	free(el->content);
+	el->content = new;
 }
 
 static void	token_expand_finish(t_token *el, char *cstr, char *new_content)
@@ -141,22 +47,6 @@ static void	token_expand_finish(t_token *el, char *cstr, char *new_content)
 	}
 	free(el->content);
 	el->content = new_content;
-}
-
-// expands the tilde at the beginning of the word.
-static void	expand_tilde(t_token *el, const t_vars *vars)
-{
-	char	*new;
-	char	*home;
-
-	home = ft_getenv("HOME", vars->environ);
-	if (!home)
-		home = "";
-	new = ft_strjoin(home, el->content + 1);
-	if (!new)
-		fatal_perror("malloc");
-	free(el->content);
-	el->content = new;
 }
 
 // TODO:	Check leaks
@@ -176,8 +66,7 @@ void	expand_token(t_token *el, const t_vars *vars)
 		if (i == 0)
 			break ;
 		i -= (size_t)cstr;
-		new_content = m_strfjoin(new_content,
-				get_part(i, &cstr, vars));
+		new_content = ve_strfjoin(new_content, ve_get_part(i, &cstr, vars));
 		if (!new_content)
 			fatal_perror("malloc");
 	}
