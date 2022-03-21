@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 14:36:18 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/19 14:18:47 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/21 14:52:45 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+// TODO: norm
 /* looks up a variable. kind of specialized function, hence it's weird. */
 static char	*var_lookup(const char *var, const t_vars *vars, size_t len)
 {
@@ -45,7 +46,7 @@ static char	*var_lookup(const char *var, const t_vars *vars, size_t len)
 		}
 		envp++;
 	}
-	while (*envp == NULL && vars->var_list->variable != NULL)
+	while (*envp == NULL && temp != NULL)
 	{	
 		if (ft_strcmp(var, temp->variable) == 0)
 		{
@@ -142,7 +143,7 @@ static void	token_expand_finish(t_token *el, char *cstr, char *new_content)
 }
 
 // TODO:	Check leaks
-//			Fix segfault: export $var
+//			Fix: export $var
 //			Fix ~ <- it is not perfect
 void	expand_token(t_token *el, const t_vars *vars)
 {
