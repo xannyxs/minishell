@@ -13,7 +13,10 @@
 # define SUCCESS 0
 # define ERROR 1
 
-// After literals are expanded, every literal is considered a T_LITERAL.
+/* Global */
+int	exit_sig;
+
+/* After literals are expanded, every literal is considered a T_LITERAL. */
 enum e_token {
 	T_UNKNOWN,
 	T_LITERAL,
@@ -92,6 +95,10 @@ int		exec_export(char *argv[], t_vars *vars);
 void	replace_dup_env(t_vars *vars, char *variable, char *content);
 
 int		check_dup_env(t_vars vars, char *variable);
+
+void	print_usr_env(t_envlist *temp);
+
+void	print_sys_env(t_vars vars, int i);
 
 int		exec_unset(char *argv[], t_vars *vars);
 

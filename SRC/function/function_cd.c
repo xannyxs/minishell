@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/15 16:41:44 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/21 18:14:00 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	change_homedir(char *argv[], char *environ[], t_vars *vars)
 		{
 			write(STDERR_FILENO, "minishell: cd: HOME not set\n", 29);
 			vars->exit_code = 1;
-			return (false);
+			return (-1);
 		}
 		change_env_oldpwd(vars);
 		err = chdir(home);
@@ -109,14 +109,18 @@ static int	examine_input(t_vars *vars, char *argv[], char **temp_pwd)
 
 int	exec_cd(char *argv[], t_vars *vars)
 {
+	int			ret;
 	int			check_dash;
 	char		*temp_pwd;
 
-	if (change_homedir(argv, vars->environ, vars) == true)
+	ret = change_homedir(argv, vars->environ, vars);
+	if (ret == true)
 	{
 		change_env_pwd(vars);
 		return (0);
 	}
+	else if (ret == -1)
+		return (1);
 	check_dash = examine_input(vars, argv, &temp_pwd);
 	if (check_dash == -1)
 		return (errno);

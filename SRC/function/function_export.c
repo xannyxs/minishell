@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/19 15:18:49 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/21 20:06:36 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdbool.h>
@@ -31,28 +30,10 @@
 	$ls - Prints out as if it is "ls -l"
 */
 
-static void	print_sys_env(t_vars vars, int i)
+static void	print_error(char *argv)
 {
-	char	**split_env;
-
-	split_env = ft_split(vars.environ[i], '=');
-	if (split_env == NULL)
-		fatal_perror("malloc");
-	if (split_env[1] == NULL)
-		printf("declare -x %s=\"\"\n", split_env[0]);
-	else
-		printf("declare -x %s=\"%s\"\n", split_env[0], split_env[1]);
-	ft_free_str_arr(split_env);
-}
-
-static void	print_usr_env(t_envlist *temp)
-{
-	if (temp->content != NULL)
-		printf("declare -x %s=\"%s\"\n", temp->variable, temp->content);
-	else if (temp->content == NULL)
-		printf("declare -x %s\n", temp->variable);
-	else
-		printf("declare -x %s=\"\"\n", temp->variable);
+	ft_dprintf(STDERR_FILENO, \
+		"minishell: export: %s: not a valid identifier\n", argv);
 }
 
 static int	print_export(t_vars *vars)
@@ -89,6 +70,22 @@ static void	allocate_var(char *argv, char **content, char **variable)
 		fatal_perror("malloc");
 }
 
+static int	ft_valued_export_chars(char *argv)
+{
+	int	i;
+
+	if (ft_isalpha(argv[0]) == false && argv[0] != '_')
+		return (false);
+	i = 0;
+	while (argv[i] != '\0')
+	{
+		if (ft_isalnum(argv[i]) == false && argv[i] != '_' && argv[i] != '=')
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 int	exec_export(char *argv[], t_vars *vars)
 {
 	int			i;
@@ -100,7 +97,7 @@ int	exec_export(char *argv[], t_vars *vars)
 	i = 1;
 	while (argv[i] != NULL)
 	{
-		if (ft_strlen(argv[i]) > 0)
+		if (ft_strlen(argv[i]) > 0 && ft_valued_export_chars(argv[i]) == true)
 		{
 			allocate_var(argv[i], &content, &variable);
 			if (check_dup_env(*vars, variable) == true)
@@ -112,8 +109,7 @@ int	exec_export(char *argv[], t_vars *vars)
 				new_node(&vars->var_list, variable, content);
 		}
 		else
-			ft_dprintf(STDERR_FILENO, \
-			"minishell: export: %s: not a valid identifier\n", argv[i]);
+			print_error(argv[i]);
 		i++;
 	}
 	return (0);
