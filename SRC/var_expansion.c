@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 14:36:18 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/21 17:53:04 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/21 18:05:43 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,8 +147,12 @@ static void	token_expand_finish(t_token *el, char *cstr, char *new_content)
 static void	expand_tilde(t_token *el, const t_vars *vars)
 {
 	char	*new;
+	char	*home;
 
-	new = ft_strjoin(ft_getenv("HOME", vars->environ), el->content + 1);
+	home = ft_getenv("HOME", vars->environ);
+	if (!home)
+		home = "";
+	new = ft_strjoin(home, el->content + 1);
 	if (!new)
 		fatal_perror("malloc");
 	free(el->content);
