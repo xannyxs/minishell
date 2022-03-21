@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 16:48:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/14 16:58:46 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/21 20:59:21 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ static int	check_env_vars(char *argv[], t_vars *vars)
 	char	*temp_var;
 
 	i = 0;
+	temp_var = ft_strjoin(argv[1], "=");
 	while (vars->environ[i] != NULL)
 	{
-		temp_var = ft_strjoin(argv[1], "=");
 		if (temp_var == NULL)
 			fatal_perror("malloc:");
 		if (ft_strncmp(temp_var, vars->environ[i], \
@@ -80,6 +80,7 @@ static int	check_env_vars(char *argv[], t_vars *vars)
 		}
 		i++;
 	}
+	free(temp_var);
 	return (-1);
 }
 

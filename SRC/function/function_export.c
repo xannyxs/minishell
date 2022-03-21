@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/21 20:06:36 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/21 20:25:30 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ static int	ft_valued_export_chars(char *argv)
 	if (ft_isalpha(argv[0]) == false && argv[0] != '_')
 		return (false);
 	i = 0;
-	while (argv[i] != '\0')
+	while (argv[i] != '\0' && argv[i] != '=')
 	{
-		if (ft_isalnum(argv[i]) == false && argv[i] != '_' && argv[i] != '=')
+		if (ft_isalnum(argv[i]) == false && argv[i] != '_')
 			return (false);
 		i++;
 	}

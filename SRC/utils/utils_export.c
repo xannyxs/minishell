@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/14 17:04:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/21 20:06:44 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/21 20:48:55 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,15 @@ void	print_usr_env(t_envlist *temp)
 
 int	check_dup_env(t_vars vars, char *variable)
 {
+	int	i;
+
+	i = 0;
+	while (vars.environ[i] != NULL)
+	{
+		if (ft_strncmp(vars.environ[i], variable, ft_strlen(variable)) == 0)
+			return (true);
+		i++;
+	}
 	while (vars.var_list != NULL)
 	{
 		if (ft_strcmp(vars.var_list->variable, variable) == 0)
@@ -52,17 +61,37 @@ int	check_dup_env(t_vars vars, char *variable)
 	return (false);
 }
 
+static void	replace_sys_env(char **environ, char *variable, char *content)
+{
+	char	*temp;
+
+	free(*environ);
+	temp = ft_strjoin(variable, "=");
+	*environ = ft_strjoin(temp, content);
+	free(temp);
+	free(content);
+}
+
 void	replace_dup_env(t_vars *vars, char *variable, char *content)
 {
+	int			i;
 	t_envlist	*temp;
 
+	i = 0;
 	temp = vars->var_list;
+	while (vars->environ[i] != NULL)
+	{
+		if (ft_strncmp(vars->environ[i], variable, ft_strlen(variable)) == 0)
+			replace_sys_env(&vars->environ[i], variable, content);
+		i++;
+	}
 	while (temp != NULL)
 	{
 		if (ft_strcmp(temp->variable, variable) == 0)
 		{
 			free(temp->content);
 			temp->content = content;
+			return ;
 		}
 		temp = temp->next;
 	}
