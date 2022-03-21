@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 14:36:18 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/21 15:34:59 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/21 17:53:04 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,35 +143,39 @@ static void	token_expand_finish(t_token *el, char *cstr, char *new_content)
 	el->content = new_content;
 }
 
+// expands the tilde at the beginning of the word.
+static void	expand_tilde(t_token *el, const t_vars *vars)
+{
+	char	*new;
+
+	new = ft_strjoin(ft_getenv("HOME", vars->environ), el->content + 1);
+	if (!new)
+		fatal_perror("malloc");
+	free(el->content);
+	el->content = new;
+}
+
 // TODO:	Check leaks
-//			Fix ~ <- it is not perfect
 void	expand_token(t_token *el, const t_vars *vars)
 {
 	size_t	i;
 	char	*new_content;
 	char	*cstr;
 
+	if (*el->content == '~')
+		expand_tilde(el, vars);
 	cstr = el->content;
 	new_content = NULL;
 	while (true)
 	{
 		i = (size_t)ft_strchr(cstr, '$');
-		if (i > 0)
-		{
-			i -= (size_t)cstr;
-			new_content = m_strfjoin(new_content,
-					get_part(i, &cstr, vars));
-			if (!new_content)
-				fatal_perror("malloc");
-		}
-		// Needs to be fixed. Trying to change ~ to HOME
-		else if (ft_strchr(cstr, '~') != NULL)
-		{
-			cstr[0] = '\0';
-			new_content = m_strfjoin(new_content,
-				ft_getenv("HOME", vars->environ));
-		}
-		break ;
+		if (i == 0)
+			break ;
+		i -= (size_t)cstr;
+		new_content = m_strfjoin(new_content,
+				get_part(i, &cstr, vars));
+		if (!new_content)
+			fatal_perror("malloc");
 	}
 	if (new_content)
 		token_expand_finish(el, cstr, new_content);
