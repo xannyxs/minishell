@@ -6,16 +6,15 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 14:05:01 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/21 20:20:16 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/22 21:37:59 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "ft_printf.h"
 
 #include <unistd.h>
 #include <signal.h>
-#include <stdio.h> /* NEEDED FOR READLINE LIB */
-#include <readline/readline.h>
 #include <termios.h>
 
 /*
@@ -25,15 +24,27 @@
 	signal(SIGQUIT, SIG_IGN) will ignore CTRL + |.
 */
 
-static void	sighandler(int sig)
+void	deactivate_signals(void)
 {
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	(void) sig;
+	struct termios	raw;
+
+	tcgetattr(STDIN_FILENO, &raw);
+	raw.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
+	signal(SIGINT, sighandler_pipes);
+	signal(SIGQUIT, sighandler_pipes_quit);
 }
 
+void	signals_child(void)
+{
+	struct termios	raw;
+
+	tcgetattr(STDIN_FILENO, &raw);
+	raw.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
+	signal(SIGINT, sighandler_pipes);
+	signal(SIGQUIT, sighandler_default);
+}
 void	signals(void)
 {
 	struct termios	raw;
@@ -41,6 +52,6 @@ void	signals(void)
 	tcgetattr(STDIN_FILENO, &raw);
 	raw.c_lflag &= ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
-	signal(SIGINT, sighandler);
+	signal(SIGINT, sighandler_default);
 	signal(SIGQUIT, SIG_IGN);
 }

@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/21 21:30:03 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/22 21:53:14 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int	examine_input(t_vars *vars, char *argv[], char **temp_pwd)
 	if (vars->old_pwd == NULL && ft_strcmp(argv[1], "-") == 0)
 	{
 		ft_dprintf(STDERR_FILENO, "minishell: cd: OLDPWD not set\n");
-		errno = EPERM;
+		errno = ERROR;
 		return (-1);
 	}
 	else if (ft_strcmp(argv[1], "-") != 0)

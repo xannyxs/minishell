@@ -74,8 +74,6 @@ int		init_vars(const char *line, t_vars *vars);
 
 int		execute_line(t_vars *vars);
 
-void	signals(void);
-
 /*
 	FUNCTIONS
 */
@@ -216,5 +214,21 @@ void	allocate_env(t_vars *vars);
 int		ft_strequel(const char *str);
 
 int		ft_getargc(char *argv[]);
+
+/*
+	SIGNALS
+*/
+
+void	sighandler_default(int sig);
+
+void	sighandler_pipes(int sig);
+
+void	sighandler_pipes_quit(int sig);
+
+void	signals(void);
+
+void	signals_child(void);
+
+void	deactivate_signals(void);
 
 #endif

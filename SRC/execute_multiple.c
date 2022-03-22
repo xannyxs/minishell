@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/14 18:44:26 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/22 20:46:39 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <sys/wait.h> /* wait */
 #include <stdio.h> /* perror */
 #include <errno.h> /* ECHILD */
+#include <stdbool.h>
 
 /* runs a builtin if it encounters it. */
 static void	m_run_builtin(char **args, t_vars *vars)
@@ -85,6 +86,7 @@ pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 			fatal_perror("fork");
 		else if (pid == 0)
 		{
+			signals_child();
 			close(pfds[0]);
 			m_proc(readfd, pfds[1], argv, vars);
 		}
@@ -104,24 +106,25 @@ pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 // TODO: cat | ls
 int	execute_multiple(t_vars *vars)
 {
-	pid_t	waitpid;
+	pid_t	waitchild;
 	pid_t	final_pid;
 	int		status;
 
+	deactivate_signals();
 	final_pid = pipe_next(-1, vars->token_list, vars);
-	while (1)
+	while (true)
 	{
-		waitpid = wait(&status);
-		if (waitpid == -1)
+		waitchild = wait(&status);
+		if (waitchild == -1)
 		{
 			if (errno != ECHILD)
 				fatal_perror("wait");
 			break ;
 		}
-		else if (WIFEXITED(status) && waitpid == final_pid)
-		{
-			vars->exit_code = WEXITSTATUS(status);
-		}
+		waitpid(waitchild, &status, 0);
+		if (status)
+			vars->exit_code = status + 128;
 	}
+	signals();
 	return (vars->exit_code);
 }
