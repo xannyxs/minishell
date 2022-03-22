@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 16:48:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/21 20:59:21 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/22 13:42:08 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,28 +54,33 @@ static int	check_usr_vars(char *argv[], t_vars *vars)
 	return (0);
 }
 
-static int	check_env_vars(char *argv[], t_vars *vars)
+static void	moves_lines_up(t_vars *vars, char *temp_var, int i)
+{
+	free(vars->environ[i]);
+	while (vars->environ[i + 1] != NULL)
+	{
+		vars->environ[i] = vars->environ[i + 1];
+		i++;
+	}
+	free(temp_var);
+	vars->environ[i] = NULL;
+}
+
+static int	check_sys_vars(char *argv[], t_vars *vars)
 {
 	int		i;
 	char	*temp_var;
 
 	i = 0;
 	temp_var = ft_strjoin(argv[1], "=");
+	if (temp_var == NULL)
+		fatal_perror("malloc:");
 	while (vars->environ[i] != NULL)
 	{
-		if (temp_var == NULL)
-			fatal_perror("malloc:");
 		if (ft_strncmp(temp_var, vars->environ[i], \
 				ft_strlen(temp_var)) == 0)
 		{
-			free(vars->environ[i]);
-			while (vars->environ[i + 1] != NULL)
-			{
-				vars->environ[i] = vars->environ[i + 1];
-				i++;
-			}
-			free(temp_var);
-			vars->environ[i] = NULL;
+			moves_lines_up(vars, temp_var, i);
 			return (0);
 		}
 		i++;
@@ -90,7 +95,7 @@ int	exec_unset(char *argv[], t_vars *vars)
 
 	if (argv[1] == NULL)
 		return (0);
-	ret = check_env_vars(argv, vars);
+	ret = check_sys_vars(argv, vars);
 	if (ret != 0)
 		check_usr_vars(argv, vars);
 	return (0);

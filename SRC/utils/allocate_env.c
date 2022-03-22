@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/14 21:18:01 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/21 20:19:57 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/22 13:33:37 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,18 @@ static char	*increment_shlvl(char *environ)
 	return (shlvl);
 }
 
+static void	malloc_env(t_vars *vars, char **environ)
+{
+	int	i;
+
+	i = 0;
+	while (environ[i] != NULL)
+		i++;
+	vars->environ = malloc((i + 1) * sizeof(char *));
+	if (vars->environ == NULL)
+		fatal_perror("malloc");
+}
+
 /*
 	Mallocs the env of the last terminal.
 	If it sees OLDPWD. It will make it empty.
@@ -35,22 +47,21 @@ static char	*increment_shlvl(char *environ)
 void	allocate_env(t_vars *vars)
 {
 	int			i;
+	char		*temp;
 	extern char	**environ;
 
-	i = 0;
-	while (environ[i] != NULL)
-		i++;
-	vars->environ = malloc((i + 1) * sizeof(char *));
-	if (vars->environ == NULL)
-		fatal_perror("malloc");
+	malloc_env(vars, environ);
 	i = 0;
 	while (environ[i] != NULL)
 	{
 		if (ft_strncmp(environ[i], "OLDPWD=", 7) == 0)
 			vars->environ[i] = ft_strdup("OLDPWD=");
 		else if (ft_strncmp(environ[i], "SHLVL=", 6) == 0)
-			vars->environ[i] = ft_strjoin("SHLVL=", \
-				increment_shlvl(environ[i]));
+		{
+			temp = increment_shlvl(environ[i]);
+			vars->environ[i] = ft_strjoin("SHLVL=", temp);
+			free(temp);
+		}
 		else
 			vars->environ[i] = ft_strdup(environ[i]);
 		if (vars->environ[i] == NULL)
