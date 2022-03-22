@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/14 21:18:01 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/22 13:33:37 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/22 14:51:42 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	malloc_env(t_vars *vars, char **environ)
 		i++;
 	vars->environ = malloc((i + 1) * sizeof(char *));
 	if (vars->environ == NULL)
-		fatal_perror("malloc");
+		malloc_fail();
 }
 
 /*
@@ -65,7 +65,7 @@ void	allocate_env(t_vars *vars)
 		else
 			vars->environ[i] = ft_strdup(environ[i]);
 		if (vars->environ[i] == NULL)
-			fatal_perror("malloc");
+			malloc_fail();
 		i++;
 	}
 	vars->environ[i] = NULL;

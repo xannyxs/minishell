@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 12:23:00 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/19 14:00:44 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/22 14:51:42 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	lex(t_token **tlst, const char *line)
 
 	cur = token_new(NULL, T_DEFAULT_TOKEN);
 	if (!cur)
-		fatal_perror("malloc");
+		malloc_fail();
 	cur->separated_from_previous = true;
 	token_li_push_back(tlst, cur);
 	i = 0;

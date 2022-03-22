@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/08 14:35:25 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/21 17:57:47 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/22 14:51:42 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_getenv(const char *name, char *environ[])
 			env = ft_substr(environ[i], namelen + 1, \
 				ft_strlen(environ[i]) - namelen - 1);
 			if (env == NULL)
-				fatal_perror("malloc");
+				malloc_fail();
 			return (env);
 		}
 		i++;

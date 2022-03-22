@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 18:23:51 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/22 14:19:51 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/22 14:51:42 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	m_var_lookup_uservar(t_envlist *lst,
 		{
 			*value = ft_strdup(lst->content);
 			if (!*value)
-				fatal_perror("malloc");
+				malloc_fail();
 			break ;
 		}
 		lst = lst->next;
@@ -44,7 +44,7 @@ static char	*var_lookup(const char *var, const t_vars *vars, size_t len)
 	{
 		value = ft_uitoa(vars->exit_code);
 		if (!value)
-			fatal_perror("malloc");
+			malloc_fail();
 		return (value);
 	}
 	value = NULL;
@@ -55,7 +55,7 @@ static char	*var_lookup(const char *var, const t_vars *vars, size_t len)
 		{
 			value = ft_strdup(*envp + len + 1);
 			if (!value)
-				fatal_perror("malloc");
+				malloc_fail();
 			return (value);
 		}
 		envp++;
@@ -117,7 +117,7 @@ char	*ve_get_part(size_t i, char **cstr, const t_vars *vars)
 		i++;
 	tmp = ft_strndup_unsafe(*cstr, i);
 	if (!tmp)
-		fatal_perror("malloc");
+		malloc_fail();
 	*cstr += i;
 	if (var_length > 1)
 	{
@@ -126,7 +126,7 @@ char	*ve_get_part(size_t i, char **cstr, const t_vars *vars)
 		{
 			tmp = ve_strfjoin(tmp, val);
 			if (!tmp)
-				fatal_perror("malloc");
+				malloc_fail();
 		}
 		*cstr += var_length;
 	}
