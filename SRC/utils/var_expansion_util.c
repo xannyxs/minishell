@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 18:23:51 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/21 18:40:03 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/22 14:19:51 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,9 @@ char	*ve_strfjoin(char *a, char *b)
  * Returns everything prior to the variable plus the variable itself. */
 char	*ve_get_part(size_t i, char **cstr, const t_vars *vars)
 {
-	size_t	var_length;
 	char	*val;
 	char	*tmp;
+	size_t	var_length;
 
 	var_length = count_var_length(*cstr + i);
 	if (var_length == 1)
