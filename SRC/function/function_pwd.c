@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:17:10 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/15 17:11:51 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/22 17:23:50 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,29 @@
 	or "pwd: too many arguments".
 */
 
+static void	add_oldpwd(t_vars *vars)
+{
+	int		i;
+	char	**temp_env;
+	
+	i = 0;
+	temp_env = vars->environ;
+	while (temp_env[i] != NULL)
+		i++;
+	vars->environ = malloc((i + 2) * sizeof(char *));
+	if (vars->environ == NULL)
+		fatal_perror("malloc");
+	i = 0;
+	while (temp_env[i] != NULL)
+	{
+		vars->environ[i] = temp_env[i];
+		i++;
+	}
+	vars->environ[i] = "OLDPWD=";
+	vars->environ[i + 1] = NULL;
+	free(temp_env);
+}
+
 static int	find_env_oldpwd(t_vars *vars)
 {
 	int	i;
@@ -33,7 +56,7 @@ static int	find_env_oldpwd(t_vars *vars)
 	i = 0;
 	while (vars->environ[i] != NULL)
 	{
-		if (ft_strncmp(vars->environ[i], "OLDPWD", 6) == 0)
+		if (ft_strncmp(vars->environ[i], "OLDPWD=", 7) == 0)
 			return (i);
 		i++;
 	}
@@ -46,8 +69,12 @@ int	change_env_oldpwd(t_vars *vars)
 
 	i = find_env_oldpwd(vars);
 	if (i < 0)
-		return (-1);
-	free(vars->environ[i]);
+	{
+		add_oldpwd(vars);
+		i = find_env_oldpwd(vars);
+	}
+	else
+		free(vars->environ[i]);
 	if (vars->old_pwd == NULL)
 		vars->old_pwd = getcwd(NULL, 1);
 	vars->environ[i] = ft_strjoin("OLDPWD=", vars->old_pwd);

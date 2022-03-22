@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/21 17:45:19 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/22 17:25:54 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	init_base_vars(t_vars *vars)
 	vars->var_list = NULL;
 	vars->old_pwd = NULL;
 	vars->pwd = NULL;
+	vars->exit_code = 0;
 }
 
 // TODO: norm
@@ -58,7 +59,6 @@ int	main(void)
 				vars.exit_code = execute_line(&vars);
 				token_free_list(&vars.token_list);
 			}
-			// system("leaks minishell");
 		}
 	}
 	return (0);
