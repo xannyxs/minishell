@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 16:15:22 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/22 14:20:46 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/22 14:51:42 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
+// TODO: remove on final build!
 void	print_list(t_envlist *head)
 {
 	printf("\n");
@@ -36,7 +37,7 @@ void	new_node(t_envlist **head, char *variable, char *content)
 
 	new_node = ft_calloc(sizeof(t_envlist), 1);
 	if (!new_node)
-		fatal_perror("malloc");
+		malloc_fail();
 	last_node = *head;
 	new_node->variable = variable;
 	new_node->content = content;

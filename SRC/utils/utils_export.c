@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/14 17:04:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/21 21:10:25 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/22 14:51:42 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_sys_env(t_vars vars, int i)
 
 	split_env = ft_split(vars.environ[i], '=');
 	if (split_env == NULL)
-		fatal_perror("malloc");
+		malloc_fail();
 	if (split_env[1] == NULL)
 		printf("declare -x %s=\"\"\n", split_env[0]);
 	else
@@ -68,10 +68,10 @@ static void	replace_sys_env(char **environ, char *variable, char *content)
 	free(*environ);
 	temp = ft_strjoin(variable, "=");
 	if (temp == NULL)
-		fatal_perror("malloc");
+		malloc_fail();
 	*environ = ft_strjoin(temp, content);
 	if (*environ == NULL)
-		fatal_perror("malloc");
+		malloc_fail();
 	free(temp);
 	free(content);
 }

@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:17:10 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/22 17:23:50 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/22 22:39:15 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	change_env_oldpwd(t_vars *vars)
 		vars->old_pwd = getcwd(NULL, 1);
 	vars->environ[i] = ft_strjoin("OLDPWD=", vars->old_pwd);
 	if (vars->environ[i] == NULL)
-		fatal_perror("malloc");
+		malloc_fail();
 	return (0);
 }
 

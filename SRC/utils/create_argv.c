@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/11 16:15:34 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/11 16:16:49 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/22 14:51:42 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	**create_argv(t_token *lst)
 	size = token_lst_size(lst);
 	argv = malloc((size + 1) * sizeof(char *));
 	if (!argv)
-		fatal_perror("malloc");
+		malloc_fail();
 	i = 0;
 	while (i < size)
 	{
@@ -88,7 +88,7 @@ char	**create_argv_advanced(t_token **lst, int *infd, int *outfd,
 	size = create_argv_advanced_count(*lst);
 	argv = malloc((size + 1) * sizeof(char *));
 	if (!argv)
-		fatal_perror("malloc");
+		malloc_fail();
 	i = 0;
 	while (*lst && (*lst)->token != T_PIPE)
 	{

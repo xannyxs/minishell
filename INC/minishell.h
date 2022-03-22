@@ -166,6 +166,8 @@ int		lex_validate(t_token *lst);
 
 void	fatal_perror(const char *msg);
 
+void	malloc_fail();
+
 /*
 	ACCESS
 */

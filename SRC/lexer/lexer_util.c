@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/28 18:30:25 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/11 16:21:13 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/22 14:51:42 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	lex_word_copy(t_token *cur, const char *line, size_t start_index,
 	cur->content = ft_strndup_unsafe(line + i, len);
 	if (!cur->content)
 	{
-		fatal_perror("malloc");
+		malloc_fail();
 	}
 }
 
@@ -53,7 +53,7 @@ void	lex_finish_word(t_token **cur, const char *line,
 	new_node = token_new(NULL, T_DEFAULT_TOKEN);
 	if (!new_node)
 	{
-		fatal_perror("malloc");
+		malloc_fail();
 	}
 	(*cur)->next = new_node;
 	*cur = (*cur)->next;

@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 14:36:18 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/21 18:40:42 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/22 14:51:42 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	expand_tilde(t_token *el, const t_vars *vars)
 		home = "";
 	new = ft_strjoin(home, el->content + 1);
 	if (!new)
-		fatal_perror("malloc");
+		malloc_fail();
 	free(el->content);
 	el->content = new;
 }
@@ -42,7 +42,7 @@ static void	token_expand_finish(t_token *el, char *cstr, char *new_content)
 		tmp = ft_strjoin(new_content, cstr);
 		free(new_content);
 		if (!tmp)
-			fatal_perror("malloc");
+			malloc_fail();
 		new_content = tmp;
 	}
 	free(el->content);
@@ -68,7 +68,7 @@ void	expand_token(t_token *el, const t_vars *vars)
 		i -= (size_t)cstr;
 		new_content = ve_strfjoin(new_content, ve_get_part(i, &cstr, vars));
 		if (!new_content)
-			fatal_perror("malloc");
+			malloc_fail();
 	}
 	if (new_content)
 		token_expand_finish(el, cstr, new_content);

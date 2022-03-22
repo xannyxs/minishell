@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/21 20:25:30 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/22 14:51:42 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ static void	allocate_var(char *argv, char **content, char **variable)
 	{
 		*content = ft_substr(*content, 1, ft_strlen(*content) - 1);
 		if (*content == NULL)
-			fatal_perror("malloc");
+			malloc_fail();
 	}
 	*variable = ft_substr(argv, 0, ft_strequel(argv));
 	if (*variable == NULL)
-		fatal_perror("malloc");
+		malloc_fail();
 }
 
 static int	ft_valued_export_chars(char *argv)
