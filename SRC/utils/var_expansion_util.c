@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 18:23:51 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/22 14:51:42 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/23 17:49:55 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,12 @@ static void	m_var_lookup_uservar(t_envlist *lst,
 		if (ft_strncmp(var, lst->variable, len) == 0
 			&& lst->variable[len] == '\0')
 		{
-			*value = ft_strdup(lst->content);
-			if (!*value)
-				malloc_fail();
+			if (lst->content != NULL)
+			{
+				*value = ft_strdup(lst->content);
+				if (!*value)
+					malloc_fail();
+			}
 			break ;
 		}
 		lst = lst->next;

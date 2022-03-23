@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/22 20:46:39 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/23 14:14:36 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 		fatal_perror("pipe");
 	pstatus = 0;
 	argv = create_argv_advanced(&tlst, &readfd, &pfds[1], &pstatus);
+	vars->exit_code = errno;
 	if (pstatus < 0 || (tlst == NULL && !(pstatus & M_PS_REDIRECTED)))
 	{
 		close(pfds[1]);

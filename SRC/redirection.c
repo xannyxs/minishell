@@ -6,28 +6,30 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 13:13:02 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/11 13:58:25 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/23 14:20:33 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "ft_printf.h"
 
 #include <fcntl.h> /* open */
 #include <stdio.h> /* perror */
-
-// TODO: add "minishell: " to error
+#include <unistd.h> /* STD */
 
 static void	m_check_error(t_token *tok, int fd, int *status)
 {
 	*status |= M_PS_REDIRECTED;
 	if (fd == -1)
 	{
+		ft_dprintf(STDERR_FILENO, "minishell: ");
 		perror(tok->next->content);
 		*status |= -1;
 		*status |= M_PS_REDIRECTION_FAILED;
 	}
 }
 
+/* Open changes ERRNO to 2 if it fails. Bash makes it 1, but we will keep it 2 :) */
 static void	redir_in(t_token *tok, int *infd, int *status)
 {
 	ft_close_fd(*infd);

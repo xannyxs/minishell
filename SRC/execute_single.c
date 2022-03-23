@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 16:55:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/22 20:36:40 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/23 13:39:18 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	exec_command(char **argv, t_vars *vars)
 			path = "";
 		if (execve(path, argv, vars->environ) == -1)
 		{
-			printf("ERRNO: %d\n", errno);
 			perror(*argv);
 			exit(126 + (errno == 2));
 		}

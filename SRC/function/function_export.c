@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/22 14:51:42 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/23 15:26:17 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,19 @@ static int	print_export(t_vars *vars)
 
 static void	allocate_var(char *argv, char **content, char **variable)
 {
-	*content = ft_strchr(argv, '=');
+	int	start;
+	int	len_word;
+
+	start = 0;
+	len_word = 0;
+	*content = ft_strchr(argv, '=') + 1;
 	if (*content != NULL)
 	{
-		*content = ft_substr(*content, 1, ft_strlen(*content) - 1);
+		while (content[0][start] == ' ' && content[0][start] != '\0')
+			start++;
+		while (content[0][start + len_word] != ' ' && content[0][start + len_word] != '\0')
+			len_word++;
+		*content = ft_substr(*content, start, len_word);
 		if (*content == NULL)
 			malloc_fail();
 	}
