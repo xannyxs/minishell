@@ -219,6 +219,8 @@ int		ft_strequel(const char *str);
 
 int		ft_getargc(char *argv[]);
 
+char	*remove_spaces(char *str);
+
 /*
 	SIGNALS
 */
