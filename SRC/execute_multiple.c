@@ -6,11 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/03/22 20:46:39 by xvoorvaa      ########   odam.nl         */
-=======
-/*   Updated: 2022/03/23 13:47:03 by jobvan-d      ########   odam.nl         */
->>>>>>> here_doc hopefully! (TODO: signaling)
+/*   Updated: 2022/03/23 13:55:50 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
