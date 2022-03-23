@@ -6,23 +6,21 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 13:13:02 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/23 14:20:33 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/23 17:51:56 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "ft_printf.h"
+#include "libft.h" /* ft_putstr_fd */
 
 #include <fcntl.h> /* open */
 #include <stdio.h> /* perror */
-#include <unistd.h> /* STD */
 
 static void	m_check_error(t_token *tok, int fd, int *status)
 {
-	*status |= M_PS_REDIRECTED;
 	if (fd == -1)
 	{
-		ft_dprintf(STDERR_FILENO, "minishell: ");
+		ft_putstr_fd("minishell: ", 2);
 		perror(tok->next->content);
 		*status |= -1;
 		*status |= M_PS_REDIRECTION_FAILED;
@@ -48,10 +46,11 @@ static void	redir_out(t_token *tok, int *outfd, int *status)
 	else
 		opts |= O_TRUNC;
 	*outfd = open(tok->next->content, opts, 0664);
+	*status |= M_PS_REDIRECTED_STDOUT;
 	m_check_error(tok, *outfd, status);
 }
 
-// TODO: here_doc
+/* no need to check if token is HEREDOC, because that is implied */
 void	do_redirect(t_token **tlst, int *infd, int *outfd, int *status)
 {
 	t_token	*tok;
@@ -67,6 +66,10 @@ void	do_redirect(t_token **tlst, int *infd, int *outfd, int *status)
 			|| tok->token == T_REDIRECT_STDOUT_TO_FILE_APPEND)
 		{
 			redir_out(tok, outfd, status);
+		}
+		else
+		{
+			redir_heredoc(tok, infd);
 		}
 	}
 	*tlst = tok->next->next;

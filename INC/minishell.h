@@ -7,7 +7,7 @@
 # define T_DEFAULT_TOKEN (T_LITERAL)
 
 /* create_argv_advanced statuses */
-# define M_PS_REDIRECTED (1)
+# define M_PS_REDIRECTED_STDOUT (1)
 # define M_PS_REDIRECTION_FAILED (2)
 # define M_PS_EMPTY (4)
 # define SUCCESS 0
@@ -187,6 +187,8 @@ char	*pathresolve_tryfind(char *name, char **envp);
 int		execute_multiple(t_vars *vars);
 
 void	do_redirect(t_token **tlst, int *infd, int *outfd, int *status);
+
+void	redir_heredoc(t_token *tok, int *infd);
 
 void	ft_close_fd(const int fd);
 
