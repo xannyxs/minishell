@@ -6,7 +6,11 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2022/03/22 20:46:39 by xvoorvaa      ########   odam.nl         */
+=======
+/*   Updated: 2022/03/23 13:47:03 by jobvan-d      ########   odam.nl         */
+>>>>>>> here_doc hopefully! (TODO: signaling)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +21,7 @@
 #include <unistd.h> /* execve, dup, close etc. */
 #include <stdlib.h> /* malloc */
 #include <sys/wait.h> /* wait */
+#include <sys/types.h>
 #include <stdio.h> /* perror */
 #include <errno.h> /* ECHILD */
 #include <stdbool.h>
@@ -74,7 +79,7 @@ pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 		fatal_perror("pipe");
 	pstatus = 0;
 	argv = create_argv_advanced(&tlst, &readfd, &pfds[1], &pstatus);
-	if (pstatus < 0 || (tlst == NULL && !(pstatus & M_PS_REDIRECTED)))
+	if (pstatus < 0 || (tlst == NULL && !(pstatus & M_PS_REDIRECTED_STDOUT)))
 	{
 		close(pfds[1]);
 		pfds[1] = -1;
