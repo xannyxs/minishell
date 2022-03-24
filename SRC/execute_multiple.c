@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/23 17:52:11 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/24 19:15:28 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,14 @@ static void	m_proc(int infd, int outfd, char **args, t_vars *vars)
 		close(STDIN_FILENO);
 		if (dup(infd) == -1)
 			fatal_perror("dup(infd)");
+		close(infd);
 	}
 	if (outfd != -1)
 	{
 		close(STDOUT_FILENO);
 		if (dup(outfd) == -1)
 			fatal_perror("dup(outfd)");
+		close(outfd);
 	}
 	m_run_builtin(args, vars);
 	path = pathresolve_tryfind(*args, vars->environ);
