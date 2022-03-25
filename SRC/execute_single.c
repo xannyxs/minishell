@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 16:55:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/23 13:39:18 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/25 15:02:05 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 #include <sys/wait.h> /* wait */
 #include <sys/types.h>
-#include <termios.h>
+#include <stdbool.h>
 
 /*
 	The ft_split in this function is for the function export.
@@ -27,9 +27,9 @@
 */
 int	exec_command(char **argv, t_vars *vars)
 {
+	int		status;
 	pid_t	pid;
 	char	*path;
-	int		status;
 
 	pid = fork();
 	if (pid == 0)
@@ -50,8 +50,10 @@ int	exec_command(char **argv, t_vars *vars)
 		fatal_perror("fork");
 	deactivate_signals();
 	waitpid(pid, &status, 0);
-	if (status)
-		vars->exit_code = 128 + status;
+	if (WIFEXITED(status) == true)
+		vars->exit_code = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status) == true)
+		vars->exit_code = WTERMSIG(status) + 128;
 	signals();
 	return (vars->exit_code);
 }

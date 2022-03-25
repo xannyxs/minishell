@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/24 19:15:28 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/25 14:18:15 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,13 @@ int	execute_multiple(t_vars *vars)
 				fatal_perror("wait");
 			break ;
 		}
-		waitpid(waitchild, &status, 0);
-		if (status)
-			vars->exit_code = status + 128;
+		if (final_pid == waitchild)
+		{
+			if (WIFEXITED(status) == true)
+				vars->exit_code = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status) == true)
+				vars->exit_code = WTERMSIG(status) + 128;
+		}
 	}
 	signals();
 	return (vars->exit_code);
