@@ -6,10 +6,14 @@
 
 # define T_DEFAULT_TOKEN (T_LITERAL)
 
-/* create_argv_advanced statuses */
+/* create_argv_advanced statuses. note that these are all individual
+ * bits, so they can be OR'ed. -1 is also OR'ed on fail. */
 # define M_PS_REDIRECTED_STDOUT (1)
-# define M_PS_REDIRECTION_FAILED (2)
-# define M_PS_EMPTY (4)
+# define M_PS_REDIRECTED_STDIN (2)
+# define M_PS_REDIRECTION_FAILED (4)
+# define M_PS_EMPTY (8)
+
+/* TODO: what is this for? */
 # define SUCCESS 0
 # define ERROR 1
 
@@ -101,8 +105,6 @@ int		exec_env(char *argv[], t_vars *vars);
 
 int		exec_exit(char *argv[], t_vars *vars);
 
-int		exec_command(char *argv[], t_vars *vars);
-
 /*
 	LINKED LIST
 */
@@ -185,15 +187,13 @@ int		execute_multiple(t_vars *vars);
 
 void	do_redirect(t_token **tlst, int *infd, int *outfd, int *status);
 
-void	redir_heredoc(t_token *tok, int *infd);
+void	redir_heredoc(t_token *tok, int *infd, int *status);
 
 void	ft_close_fd(const int fd);
 
 /*
 	create_argv
 */
-char	**create_argv(t_token *lst);
-
 char	**create_argv_advanced(t_token **lst, int *infd, int *outfd,
 			int *status);
 
@@ -219,6 +219,14 @@ int		ft_getargc(char *argv[]);
 char	*remove_spaces(char *str);
 
 int		ft_valued_chars(char *argv);
+
+/*
+	main thread redirection and restoring
+ */
+
+void	rr_restore_redirs(int *fds, int *old_fds, int status);
+
+void	rr_check_redirections(t_vars *vars, int *old_fds);
 
 /*
 	SIGNALS

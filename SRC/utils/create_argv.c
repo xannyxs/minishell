@@ -6,39 +6,13 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/11 16:15:34 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/22 14:51:42 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/25 19:11:07 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 #include <stdlib.h> /* malloc */
-
-/* creates a null-terminated argument string array.
- * should be freed. However, not the strings inside of them, as they are
- * borrowed from the token list.
- * Works only for simple commands without pipes or redirections. */
-// TODO: not sure if this is the correct file to put this.
-char	**create_argv(t_token *lst)
-{
-	size_t	size;
-	size_t	i;
-	char	**argv;
-
-	size = token_lst_size(lst);
-	argv = malloc((size + 1) * sizeof(char *));
-	if (!argv)
-		malloc_fail();
-	i = 0;
-	while (i < size)
-	{
-		argv[i] = lst->content;
-		i++;
-		lst = lst->next;
-	}
-	argv[i] = NULL;
-	return (argv);
-}
 
 static size_t	create_argv_advanced_count(t_token *lst)
 {
@@ -77,7 +51,9 @@ static void	create_argv_adv_cleanup(t_token **lst, size_t size, int *status)
  * pipe. status is negative on failure; status is OR'd with M_PS_EMPTY
  * for when there is nothing to execute, or M_PS_REDIRECTION_FAILED when
  * a redirection is performed but failed. M_PS_REDIRECTED is set when
- * an redirection(succesfull or not) was performed. See also create_argv. */
+ * an redirection(succesfull or not) was performed.
+ * WARNING: return value must be freed, however * NOT * its contents,
+ * as these are borrowed from the token list. */
 char	**create_argv_advanced(t_token **lst, int *infd, int *outfd,
 	int *status)
 {

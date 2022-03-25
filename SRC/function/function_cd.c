@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/22 21:53:14 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/25 15:30:19 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	change_dir(char *argv[], t_vars vars)
 	{
 		err = chdir(vars.old_pwd);
 		if (err == 0)
-			printf("%s\n", vars.old_pwd);
+			ft_printf("%s\n", vars.old_pwd);
 	}
 	else
 		err = chdir(argv[1]);

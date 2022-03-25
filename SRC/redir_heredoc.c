@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/22 14:59:23 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/25 18:31:23 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/25 20:10:05 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 #include "libft.h" /* ft_strncmp */
 #include "get_next_line.h"
 
-#include <unistd.h> /* pipe, fork, STDIN_FILENO */
+#include <unistd.h> /* pipe, fork, write, STDIN_FILENO */
 #include <stdlib.h> /* exit */
 #include <stdbool.h>
 
 #include <sys/wait.h> /* wait */
 #include <sys/types.h>
 
+// TODO: is forking for heredoc really necessary?
 static void	child(const char *limiter, const int writefd)
 {
 	char	*line;
@@ -52,7 +53,7 @@ static void	child(const char *limiter, const int writefd)
 
 // TODO: signaling
 // TODO: should heredoc fail be handled?
-void	redir_heredoc(t_token *tok, int *infd)
+void	redir_heredoc(t_token *tok, int *infd, int *status)
 {
 	int		pfds[2];
 	pid_t	pid;
@@ -74,6 +75,7 @@ void	redir_heredoc(t_token *tok, int *infd)
 	deactivate_signals();
 	close(pfds[1]);
 	*infd = pfds[0];
+	*status |= M_PS_REDIRECTED_STDIN;
 	waitpid(pid, NULL, 0);
 	signals();
 }
