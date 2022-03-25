@@ -6,9 +6,11 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/23 20:40:29 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/23 20:40:42 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/25 13:41:02 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stdbool.h>
 
 char *remove_spaces(char *str)
 {
@@ -29,12 +31,12 @@ char *remove_spaces(char *str)
 			{
 				str[count] = str[i];
 				count++;
-				hadspace = 1;
+				hadspace = true;
 			}
 		}
 		else
 		{
-			hadspace = 0;
+			hadspace = false;
 			str[count] = str[i];
 			count++;
 		}
