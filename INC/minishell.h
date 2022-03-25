@@ -13,9 +13,6 @@
 # define SUCCESS 0
 # define ERROR 1
 
-/* Global */
-int	exit_sig;
-
 /* After literals are expanded, every literal is considered a T_LITERAL. */
 enum e_token {
 	T_UNKNOWN,
@@ -220,6 +217,8 @@ int		ft_strequel(const char *str);
 int		ft_getargc(char *argv[]);
 
 char	*remove_spaces(char *str);
+
+int		ft_valued_chars(char *argv);
 
 /*
 	SIGNALS

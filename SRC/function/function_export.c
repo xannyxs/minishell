@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/23 21:11:35 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/25 19:39:35 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,22 +70,6 @@ static void	allocate_var(char *argv, char **content, char **variable)
 		malloc_fail();
 }
 
-static int	ft_valued_export_chars(char *argv)
-{
-	int	i;
-
-	if (ft_isalpha(argv[0]) == false && argv[0] != '_')
-		return (false);
-	i = 0;
-	while (argv[i] != '\0' && argv[i] != '=')
-	{
-		if (ft_isalnum(argv[i]) == false && argv[i] != '_')
-			return (false);
-		i++;
-	}
-	return (true);
-}
-
 int	exec_export(char *argv[], t_vars *vars)
 {
 	int			i;
@@ -97,7 +81,7 @@ int	exec_export(char *argv[], t_vars *vars)
 	i = 1;
 	while (argv[i] != NULL)
 	{
-		if (ft_strlen(argv[i]) > 0 && ft_valued_export_chars(argv[i]) == true)
+		if (ft_strlen(argv[i]) > 0 && ft_valued_chars(argv[i]) == true)
 		{
 			allocate_var(argv[i], &content, &variable);
 			if (check_dup_env(*vars, variable) == true)

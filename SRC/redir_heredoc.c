@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/22 14:59:23 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/23 13:49:41 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/25 18:31:23 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 #include <unistd.h> /* pipe, fork, STDIN_FILENO */
 #include <stdlib.h> /* exit */
+#include <stdbool.h>
 
 #include <sys/wait.h> /* wait */
 #include <sys/types.h>
@@ -27,7 +28,7 @@ static void	child(const char *limiter, const int writefd)
 	ssize_t	r;
 
 	lim_len = ft_strlen(limiter);
-	while (1)
+	while (true)
 	{
 		ft_putstr_fd("> ", STDOUT_FILENO);
 		line = get_next_line(STDIN_FILENO, &r);
@@ -64,12 +65,15 @@ void	redir_heredoc(t_token *tok, int *infd)
 		fatal_perror("fork");
 	else if (pid == 0)
 	{
+		signals();
 		close(pfds[0]);
 		child(tok->next->content, pfds[1]);
 		close(pfds[1]);
 		exit(0);
 	}
+	deactivate_signals();
 	close(pfds[1]);
 	*infd = pfds[0];
 	waitpid(pid, NULL, 0);
+	signals();
 }
