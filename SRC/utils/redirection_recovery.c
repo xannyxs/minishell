@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/25 17:19:50 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/25 19:24:17 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/25 19:37:18 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,9 @@
 /* restores stdin/stdout if redirections were made. */
 void	rr_restore_redirs(int *fds, int *old_fds, int status)
 {
-	if (old_fds[0] != -1)
+	if (status & M_PS_REDIRECTED_STDIN)
 	{
-		if (status & M_PS_REDIRECTED_STDIN)
-		{
-			if (fds[0] != -1)
-				close(0);
-		}
+		ft_close_fd(fds[0]);
 	}
 	if (old_fds[1] != -1)
 	{
