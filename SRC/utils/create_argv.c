@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/11 16:15:34 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/22 14:51:42 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/24 21:24:25 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,3 +105,4 @@ char	**create_argv_advanced(t_token **lst, int *infd, int *outfd,
 	create_argv_adv_cleanup(lst, size, status);
 	return (argv);
 }
+

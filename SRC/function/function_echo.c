@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/18 11:55:37 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/15 17:52:42 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/25 15:29:42 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	print_echo(int i, char *argv[])
 		ft_putstr_fd(argv[i], STDOUT_FILENO);
 		i++;
 		if (argv[i] != NULL)
-			write(STDOUT_FILENO, " ", 1);
+			ft_putchar_fd(' ', STDOUT_FILENO);
 	}
 }
 

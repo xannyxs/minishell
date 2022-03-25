@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 13:13:02 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/23 17:51:56 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/25 17:52:57 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void	redir_in(t_token *tok, int *infd, int *status)
 {
 	ft_close_fd(*infd);
 	*infd = open(tok->next->content, O_RDONLY);
+	*status |= M_PS_REDIRECTED_STDIN;
 	m_check_error(tok, *infd, status);
 }
 
@@ -40,6 +41,7 @@ static void	redir_out(t_token *tok, int *outfd, int *status)
 	int	opts;
 
 	ft_close_fd(*outfd);
+	// ft_dprintf(2, "jeff\n");
 	opts = O_CREAT | O_WRONLY;
 	if (tok->token == T_REDIRECT_STDOUT_TO_FILE_APPEND)
 		opts |= O_APPEND;
@@ -50,12 +52,14 @@ static void	redir_out(t_token *tok, int *outfd, int *status)
 	m_check_error(tok, *outfd, status);
 }
 
-/* no need to check if token is HEREDOC, because that is implied */
+/* no need to check if token is HEREDOC, because that ißs implied */
 void	do_redirect(t_token **tlst, int *infd, int *outfd, int *status)
 {
 	t_token	*tok;
 
 	tok = *tlst;
+	// ft_dprintf(2, "jeff\n");
+	//((t_token *)0)->content;
 	if ((*status & M_PS_REDIRECTION_FAILED) == 0)
 	{
 		if (tok->token == T_REDIRECT_FILE_TO_STDIN)
@@ -69,7 +73,7 @@ void	do_redirect(t_token **tlst, int *infd, int *outfd, int *status)
 		}
 		else
 		{
-			redir_heredoc(tok, infd);
+			redir_heredoc(tok, infd, status);
 		}
 	}
 	*tlst = tok->next->next;

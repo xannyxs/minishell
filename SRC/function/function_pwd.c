@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:17:10 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/22 22:39:15 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/25 15:31:10 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int	exec_pwd(char *argv[], t_vars *vars)
 		vars->pwd = getcwd(NULL, 1);
 		if (vars->pwd == NULL)
 			vars->pwd = ft_getenv("PWD", vars->environ);
-		printf("%s\n", vars->pwd);
+		ft_printf("%s\n", vars->pwd);
 	}
 	return (0);
 }

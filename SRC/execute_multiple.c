@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/24 19:15:28 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/24 21:42:59 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 }
 
 // TODO: signal error returns
-// TODO: cat | ls
 int	execute_multiple(t_vars *vars)
 {
 	pid_t	waitchild;
