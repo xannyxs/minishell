@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:17:10 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/25 15:31:10 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/25 19:11:42 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	add_oldpwd(t_vars *vars)
 {
 	int		i;
 	char	**temp_env;
-	
+
 	i = 0;
 	temp_env = vars->environ;
 	while (temp_env[i] != NULL)

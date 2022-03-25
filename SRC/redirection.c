@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 13:13:02 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/25 17:52:57 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/25 19:13:07 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static void	m_check_error(t_token *tok, int fd, int *status)
 	}
 }
 
-/* Open changes ERRNO to 2 if it fails. Bash makes it 1, but we will keep it 2 :) */
+/* Open changes ERRNO to 2 if it fails.
+ * Bash makes it 1, but we will keep it 2 :) */
 static void	redir_in(t_token *tok, int *infd, int *status)
 {
 	ft_close_fd(*infd);
@@ -41,7 +42,6 @@ static void	redir_out(t_token *tok, int *outfd, int *status)
 	int	opts;
 
 	ft_close_fd(*outfd);
-	// ft_dprintf(2, "jeff\n");
 	opts = O_CREAT | O_WRONLY;
 	if (tok->token == T_REDIRECT_STDOUT_TO_FILE_APPEND)
 		opts |= O_APPEND;
@@ -58,8 +58,6 @@ void	do_redirect(t_token **tlst, int *infd, int *outfd, int *status)
 	t_token	*tok;
 
 	tok = *tlst;
-	// ft_dprintf(2, "jeff\n");
-	//((t_token *)0)->content;
 	if ((*status & M_PS_REDIRECTION_FAILED) == 0)
 	{
 		if (tok->token == T_REDIRECT_FILE_TO_STDIN)

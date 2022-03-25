@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:44:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/25 17:35:15 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/25 18:46:57 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,45 +17,9 @@
 
 #include <stdlib.h>
 
-
-#include <unistd.h>
-
-
 static int	is_pipe(const t_token *tok)
 {
 	return (tok->token == T_PIPE);
-}
-
-/* checks if there are redirections in this simple(no pipe) command.
- * if there are, it creates a backup file descriptor for restoration.
- * in theory, we don't have to */
-void	rr_check_redirections(t_vars *vars, int *old_fds)
-{
-	t_token	*lst;
-
-	old_fds[0] = -1;
-	old_fds[1] = -1;
-	lst = vars->token_list;
-	while (lst)
-	{
-		if (lst->token == T_HEREDOC
-			|| lst->token == T_REDIRECT_FILE_TO_STDIN)
-		{
-			old_fds[0] = dup(0);
-			if (old_fds[0] == -1)
-				fatal_perror("stdin backup dup");
-			lst = lst->next;
-		}
-		else if (lst->token == T_REDIRECT_STDOUT_TO_FILE
-			|| lst->token == T_REDIRECT_STDOUT_TO_FILE_APPEND)
-		{
-			old_fds[1] = dup(1);
-			if (old_fds[1] == -1)
-				fatal_perror("stdout backup dup");
-			lst = lst->next;
-		}
-		lst = lst->next;
-	}
 }
 
 /* For simple commands(no piping), returns the t_function entry for
@@ -79,33 +43,6 @@ static t_function	get_builtin(t_token *tlst)
 	return (empty);
 }
 
-/* restores stdin/stdout if redirections were made. */
-void	rr_restore_redirs(int *fds, int *old_fds, int status)
-{
-	if (old_fds[0] != -1)
-	{
-		if (status & M_PS_REDIRECTED_STDIN)
-		{
-			if (fds[0] != -1)
-				close(0);
-			if (dup(old_fds[0]) == -1)
-				fatal_perror("dup stdin restore redir");
-		}
-		close(old_fds[0]);
-	}
-	if (old_fds[1] != -1)
-	{
-		if (status & M_PS_REDIRECTED_STDOUT)
-		{
-			if (fds[1] != -1)
-				close(1);
-			if (dup(old_fds[1]) == -1)
-				fatal_perror("dup stdout restore redir");
-		}
-		close(old_fds[1]);
-	}
-}
-
 static int	m_run_builtin(t_vars *vars, t_token *tlst, t_function tf)
 {
 	char	**argv;
@@ -113,8 +50,9 @@ static int	m_run_builtin(t_vars *vars, t_token *tlst, t_function tf)
 	int		old_fds[2];
 	int		status;
 
-	fds[0] = 0;
+	fds[0] = -1;
 	fds[1] = 1;
+	status = 0;
 	rr_check_redirections(vars, old_fds);
 	argv = create_argv_advanced(&tlst, fds, fds + 1, &status);
 	vars->exit_code = (*tf.func)(argv, vars);

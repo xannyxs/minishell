@@ -197,8 +197,6 @@ void	ft_close_fd(const int fd);
 /*
 	create_argv
 */
-char	**create_argv(t_token *lst);
-
 char	**create_argv_advanced(t_token **lst, int *infd, int *outfd,
 			int *status);
 
@@ -222,6 +220,15 @@ int		ft_strequel(const char *str);
 int		ft_getargc(char *argv[]);
 
 char	*remove_spaces(char *str);
+
+
+/*
+	main thread redirection and restoring
+ */
+
+void	rr_restore_redirs(int *fds, int *old_fds, int status);
+
+void	rr_check_redirections(t_vars *vars, int *old_fds);
 
 /*
 	SIGNALS
