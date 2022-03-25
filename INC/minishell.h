@@ -13,7 +13,6 @@
 # define M_PS_REDIRECTION_FAILED (4)
 # define M_PS_EMPTY (8)
 
-/* TODO: what is this for? */
 # define SUCCESS 0
 # define ERROR 1
 
