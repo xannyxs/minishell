@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/11 16:15:34 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/25 19:11:07 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/28 13:21:55 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ char	**create_argv_advanced(t_token **lst, int *infd, int *outfd,
 	size_t	i;
 	char	**argv;
 
+	*status = 0;
 	size = create_argv_advanced_count(*lst);
 	argv = malloc((size + 1) * sizeof(char *));
 	if (!argv)

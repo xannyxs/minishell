@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:44:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/25 18:46:57 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/28 13:21:48 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static int	m_run_builtin(t_vars *vars, t_token *tlst, t_function tf)
 
 	fds[0] = -1;
 	fds[1] = 1;
-	status = 0;
 	rr_check_redirections(vars, old_fds);
 	argv = create_argv_advanced(&tlst, fds, fds + 1, &status);
 	vars->exit_code = (*tf.func)(argv, vars);
