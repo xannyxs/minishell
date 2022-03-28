@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:17:10 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/25 19:11:42 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/28 13:31:00 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	change_env_oldpwd(t_vars *vars)
 	else
 		free(vars->environ[i]);
 	if (vars->old_pwd == NULL)
-		vars->old_pwd = getcwd(NULL, 1);
+		vars->old_pwd = getcwd(NULL, 0);
 	vars->environ[i] = ft_strjoin("OLDPWD=", vars->old_pwd);
 	if (vars->environ[i] == NULL)
 		malloc_fail();
@@ -105,7 +105,7 @@ int	change_env_pwd(t_vars *vars)
 	i = find_env_pwd(vars);
 	if (i < 0)
 		return (-1);
-	temp = getcwd(NULL, 1);
+	temp = getcwd(NULL, 0);
 	if (temp == NULL)
 	{
 		perror("getcwd");
@@ -124,7 +124,7 @@ int	exec_pwd(char *argv[], t_vars *vars)
 	{
 		if (vars->pwd != NULL)
 			free(vars->pwd);
-		vars->pwd = getcwd(NULL, 1);
+		vars->pwd = getcwd(NULL, 0);
 		if (vars->pwd == NULL)
 			vars->pwd = ft_getenv("PWD", vars->environ);
 		ft_printf("%s\n", vars->pwd);
