@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/28 14:25:15 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/28 14:39:53 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+/* expands the variables, removes the empty literals. */
 static void	expand_vars(t_vars *vars)
 {
 	t_token	**tracer;
-	t_token	*tmp;
+	t_token	*to_remove;
 
 	tracer = &vars->token_list;
 	while (*tracer != NULL)
@@ -31,9 +32,14 @@ static void	expand_vars(t_vars *vars)
 			expand_token(*tracer, vars);
 			if ((*tracer)->token == T_LITERAL && *((*tracer)->content) == 0)
 			{
-				tmp = *tracer;
+				to_remove = *tracer;
 				*tracer = (*tracer)->next;
-				token_free(tmp);
+				if (*tracer)
+				{
+					(*tracer)->separated_from_previous
+						= to_remove->separated_from_previous;
+				}
+				token_free(to_remove);
 				continue ;
 			}
 		}
