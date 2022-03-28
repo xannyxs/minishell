@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 14:05:01 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/22 21:37:59 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/28 15:15:40 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,18 @@
 	signal(SIGQUIT, SIG_IGN) will ignore CTRL + |.
 */
 
-void	deactivate_signals(void)
+void	deactivate_signals_heredoc(void)
+{
+	struct termios	raw;
+
+	tcgetattr(STDIN_FILENO, &raw);
+	raw.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	deactivate_signals_pipes(void)
 {
 	struct termios	raw;
 
@@ -35,7 +46,7 @@ void	deactivate_signals(void)
 	signal(SIGQUIT, sighandler_pipes_quit);
 }
 
-void	signals_child(void)
+void	signals_pipe(void)
 {
 	struct termios	raw;
 
@@ -45,7 +56,19 @@ void	signals_child(void)
 	signal(SIGINT, sighandler_pipes);
 	signal(SIGQUIT, sighandler_default);
 }
-void	signals(void)
+
+void	signals_heredoc(void)
+{
+	struct termios	raw;
+
+	tcgetattr(STDIN_FILENO, &raw);
+	raw.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
+	signal(SIGINT, sighandler_heredoc);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	signals_default(void)
 {
 	struct termios	raw;
 

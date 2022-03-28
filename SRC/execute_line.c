@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:44:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/28 13:21:48 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/28 18:10:13 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	is_pipe(const t_token *tok)
  * the built in. If it's not found, it's filled with zeroes. */
 static t_function	get_builtin(t_token *tlst)
 {
-	const t_function	empty = { 0, NULL, 0 };
+	const t_function	empty = {0, NULL, 0};
 
 	while (tlst)
 	{

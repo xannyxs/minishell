@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 13:13:02 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/25 19:13:07 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/28 17:37:46 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	redir_out(t_token *tok, int *outfd, int *status)
 	m_check_error(tok, *outfd, status);
 }
 
-/* no need to check if token is HEREDOC, because that ißs implied */
+/* no need to check if token is HEREDOC, because that is implied */
 void	do_redirect(t_token **tlst, int *infd, int *outfd, int *status)
 {
 	t_token	*tok;

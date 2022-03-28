@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/22 17:25:54 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/28 15:17:28 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(void)
 
 	init_base_vars(&vars);
 	allocate_env(&vars);
-	signals();
+	signals_default();
 	while (true)
 	{
 		line = readline("\e[1;36mminishell \e[0;32m$> \e[0m");

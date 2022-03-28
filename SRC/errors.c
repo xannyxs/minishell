@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 13:38:41 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/22 14:52:00 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/28 18:10:40 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	fatal_perror(const char *msg)
 	exit(errno);
 }
 
-void	malloc_fail()
+void	malloc_fail(void)
 {
 	fatal_perror("malloc");
 }

@@ -6,14 +6,23 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/22 20:47:34 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/28 13:14:28 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/28 17:53:48 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 #include <stdio.h>
+#include <unistd.h>
 #include <readline/readline.h>
+#include <stdlib.h>
+
+void	sighandler_heredoc(int sig)
+{
+	write(STDOUT_FILENO, "\n", 1);
+	exit(1);
+	(void) sig;
+}
 
 void	sighandler_pipes_quit(int sig)
 {

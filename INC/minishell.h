@@ -12,6 +12,7 @@
 # define M_PS_REDIRECTED_STDIN (2)
 # define M_PS_REDIRECTION_FAILED (4)
 # define M_PS_EMPTY (8)
+# define M_PS_HEREDOC_SIGINT (16)
 
 # define SUCCESS 0
 # define ERROR 1
@@ -85,6 +86,10 @@ int		exec_cd(char *argv[], t_vars *vars);
 int		change_env_pwd(t_vars *vars);
 
 int		change_env_oldpwd(t_vars *vars);
+
+void	add_oldpwd(t_vars *vars);
+
+int		find_env_oldpwd(t_vars *vars);
 
 int		exec_pwd(char *argv[], t_vars *vars);
 
@@ -164,7 +169,7 @@ int		lex_validate(t_token *lst);
 
 void	fatal_perror(const char *msg);
 
-void	malloc_fail();
+void	malloc_fail(void);
 
 /*
 	ACCESS
@@ -233,14 +238,20 @@ void	rr_check_redirections(t_vars *vars, int *old_fds);
 
 void	sighandler_default(int sig);
 
+void	sighandler_heredoc(int sig);
+
 void	sighandler_pipes(int sig);
 
 void	sighandler_pipes_quit(int sig);
 
-void	signals(void);
+void	signals_default(void);
 
-void	signals_child(void);
+void	signals_pipe(void);
 
-void	deactivate_signals(void);
+void	signals_heredoc(void);
+
+void	deactivate_signals_pipes(void);
+
+void	deactivate_signals_heredoc(void);
 
 #endif

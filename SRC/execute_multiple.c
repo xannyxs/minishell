@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/28 13:21:39 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/28 18:01:36 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 	if (pipe(pfds) == -1)
 		fatal_perror("pipe");
 	argv = create_argv_advanced(&tlst, &readfd, &pfds[1], &pstatus);
+	if (pstatus & M_PS_HEREDOC_SIGINT)
+		vars->exit_code = ERROR;
 	if (pstatus < 0 || (tlst == NULL && !(pstatus & M_PS_REDIRECTED_STDOUT)))
 	{
 		close(pfds[1]);
@@ -88,7 +90,7 @@ pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 			fatal_perror("fork");
 		else if (pid == 0)
 		{
-			signals_child();
+			signals_pipe();
 			close(pfds[0]);
 			m_proc(readfd, pfds[1], argv, vars);
 		}
@@ -111,9 +113,10 @@ int	execute_multiple(t_vars *vars)
 	pid_t	final_pid;
 	int		status;
 
-	deactivate_signals();
+	deactivate_signals_pipes();
 	final_pid = pipe_next(-1, vars->token_list, vars);
-	vars->exit_code = errno;
+	if (errno != 0)
+		vars->exit_code = errno;
 	while (true)
 	{
 		waitchild = wait(&status);
@@ -131,6 +134,6 @@ int	execute_multiple(t_vars *vars)
 				vars->exit_code = WTERMSIG(status) + 128;
 		}
 	}
-	signals();
+	signals_default();
 	return (vars->exit_code);
 }
