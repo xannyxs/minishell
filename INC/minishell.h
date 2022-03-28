@@ -131,8 +131,6 @@ void	token_free(t_token *token);
 
 void	token_free_list(t_token **lst);
 
-void	token_remove_from_list(t_token **tlst, t_token *to_remove);
-
 void	token_make_list_doubly_linked(t_token *lst);
 
 int		token_count_occurrences(t_token *lst, int (*f)(const t_token *));

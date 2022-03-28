@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/22 14:51:42 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/28 14:39:53 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,33 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+/* expands the variables, removes the empty literals. */
 static void	expand_vars(t_vars *vars)
 {
-	t_token	*cur;
-	t_token	*next;
+	t_token	**tracer;
+	t_token	*to_remove;
 
-	cur = vars->token_list;
-	while (cur)
+	tracer = &vars->token_list;
+	while (*tracer != NULL)
 	{
-		if (cur->token == T_LITERAL || cur->token == T_LITERAL_QUOTED)
+		if ((*tracer)->token == T_LITERAL
+			|| (*tracer)->token == T_LITERAL_QUOTED)
 		{
-			expand_token(cur, vars);
-			if (cur->token == T_LITERAL && *cur->content == 0)
+			expand_token(*tracer, vars);
+			if ((*tracer)->token == T_LITERAL && *((*tracer)->content) == 0)
 			{
-				next = cur->next;
-				token_remove_from_list(&vars->token_list, cur);
-				cur = next;
+				to_remove = *tracer;
+				*tracer = (*tracer)->next;
+				if (*tracer)
+				{
+					(*tracer)->separated_from_previous
+						= to_remove->separated_from_previous;
+				}
+				token_free(to_remove);
 				continue ;
 			}
 		}
-		cur = cur->next;
+		tracer = &((*tracer)->next);
 	}
 }
 
