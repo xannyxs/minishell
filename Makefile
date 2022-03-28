@@ -6,7 +6,7 @@
 #    By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 14:31:21 by xvoorvaa      #+#    #+#                  #
-#    Updated: 2022/03/27 14:35:46 by jobvan-d      ########   odam.nl          #
+#    Updated: 2022/03/28 13:14:11 by jobvan-d      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ all:	$(NAME)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS) | $(OBJ_DIR)
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@ -I$(INC_DIR) -I$(LIBFT_DIR) -I$(PF_DIR) \
-		-I$(BREW_INC_DIR)
+		-I $(BREW_INC_DIR)
 
 $(OBJ_DIR):
 	@mkdir $@
@@ -67,7 +67,7 @@ $(NAME): $(OBJECTS) $(LIBFT_A) $(PF_A)
 	@echo $(START)
 	@printf $(COMP_MESSAGE) $(SOURCES)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) -L$(LIBFT_DIR) -L$(PF_DIR) \
-		-L$(BREW_LIB_DIR) -lreadline -lftprintf -lft
+		-L $(BREW_LIB_DIR) -lreadline -lftprintf -lft
 	@echo $(MESSAGE)
 
 $(LIBFT_A): $(LIBFT_H)
