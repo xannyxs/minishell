@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/25 19:39:35 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 14:20:40 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdbool.h>
 
 /*
 	First char of var = a-z A-Z or _

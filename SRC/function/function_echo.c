@@ -6,17 +6,14 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/18 11:55:37 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/28 19:20:04 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 14:20:49 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 
-#include <stdbool.h> /* TRUE OR FALSE */
-#include <stdio.h>
 #include <unistd.h> /* STDOUT_FILENO */
-#include <stdlib.h>
 
 /*
 	ECHO FUNC:
@@ -51,7 +48,7 @@ static int	skip_flags(char *argv[], int i)
 	return (i);
 }
 
-static int	ft_isquoted(char *argv[])
+static bool	ft_isquoted(char *argv[])
 {
 	int	i;
 	int	j;

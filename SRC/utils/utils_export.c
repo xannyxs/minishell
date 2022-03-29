@@ -6,14 +6,13 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/14 17:04:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/22 14:51:42 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/29 14:20:02 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 
-#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -41,7 +40,7 @@ void	print_usr_env(t_envlist *temp)
 		printf("declare -x %s=\"\"\n", temp->variable);
 }
 
-int	check_dup_env(t_vars vars, char *variable)
+bool	check_dup_env(t_vars vars, char *variable)
 {
 	int	i;
 

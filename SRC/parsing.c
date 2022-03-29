@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/28 14:39:53 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/29 14:20:19 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "libft.h" /* ft_strjoin */
 
 #include <stdlib.h> /* free */
-#include <stdbool.h>
 #include <stdio.h>
 
 /* expands the variables, removes the empty literals. */
@@ -49,7 +48,7 @@ static void	expand_vars(t_vars *vars)
 
 /* checks if the current and next token needs merging.
  * returns true if it has done a merge, else false. */
-static int	try_merge(t_token *lst)
+static bool	try_merge(t_token *lst)
 {
 	t_token	*next;
 	char	*new_content;
@@ -62,9 +61,7 @@ static int	try_merge(t_token *lst)
 		new_content = ft_strjoin(lst->content, next->content);
 		free(lst->content);
 		if (!new_content)
-		{
 			malloc_fail();
-		}
 		token_free(next);
 		lst->content = new_content;
 		return (true);

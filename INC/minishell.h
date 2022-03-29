@@ -3,6 +3,7 @@
 
 # include <errno.h>
 # include <stddef.h> /* size_t */
+# include <stdbool.h>
 
 # define T_DEFAULT_TOKEN (T_LITERAL)
 
@@ -97,7 +98,7 @@ int		exec_export(char *argv[], t_vars *vars);
 
 void	replace_dup_env(t_vars *vars, char *variable, char *content);
 
-int		check_dup_env(t_vars vars, char *variable);
+bool	check_dup_env(t_vars vars, char *variable);
 
 void	print_usr_env(t_envlist *temp);
 

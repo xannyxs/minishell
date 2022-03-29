@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 18:23:51 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/23 17:49:55 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 14:20:00 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "libft.h" /* ft_str*, ft_uitoa */
 
 #include <stdlib.h> /* free */
-#include <stdbool.h>
 
 /* inner part of var lookup, does lookup in user vars */
 static void	m_var_lookup_uservar(t_envlist *lst,
