@@ -6,7 +6,7 @@
 #    By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 14:31:21 by xvoorvaa      #+#    #+#                  #
-#    Updated: 2022/03/28 13:14:11 by jobvan-d      ########   odam.nl          #
+#    Updated: 2022/03/29 16:04:20 by xvoorvaa      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,11 +63,11 @@ $(OBJ_DIR):
 	@mkdir $@
 
 $(NAME): $(OBJECTS) $(LIBFT_A) $(PF_A)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) -L$(LIBFT_DIR) -L$(PF_DIR) \
+		-L $(BREW_LIB_DIR) -lreadline -lftprintf -lft
 	@clear
 	@echo $(START)
 	@printf $(COMP_MESSAGE) $(SOURCES)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) -L$(LIBFT_DIR) -L$(PF_DIR) \
-		-L $(BREW_LIB_DIR) -lreadline -lftprintf -lft
 	@echo $(MESSAGE)
 
 $(LIBFT_A): $(LIBFT_H)
