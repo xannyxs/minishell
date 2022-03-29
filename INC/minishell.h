@@ -104,6 +104,10 @@ void	print_usr_env(t_envlist *temp);
 
 void	print_sys_env(t_vars vars, int i);
 
+void	order_sys_env(t_vars vars);
+
+void	order_usr_env(t_envlist *usr_lst);
+
 int		exec_unset(char *argv[], t_vars *vars);
 
 int		exec_env(char *argv[], t_vars *vars);
