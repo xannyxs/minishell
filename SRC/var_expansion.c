@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 14:36:18 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/29 14:19:57 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:44:20 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "libft.h" /* ft_str*, ft_uitoa */
 
 #include <stdlib.h> /* free */
-#include <stdio.h>
 
 /* expands the tilde at the beginning of the word. Assumes there is a ~. */
 static void	expand_tilde(t_token *el, const t_vars *vars)

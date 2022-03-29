@@ -6,17 +6,17 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/29 14:20:54 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:47:02 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
-#include "ft_printf.h"
+#include "libft.h" /* Strcmp */
+#include "ft_printf.h" /* ft_dprintf */
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include <unistd.h> /* STD & write */
+#include <stdlib.h> /* Free & malloc */
+#include <stdio.h> /* Perror */
 
 /*
 	STEPS OF MY CD:

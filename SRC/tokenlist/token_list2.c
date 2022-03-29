@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 13:22:17 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/28 14:26:43 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:55:58 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,13 @@ t_token	*token_get_first_occurrence(t_token *lst, int (*f)(const t_token *))
 		lst = lst->next;
 	}
 	return (lst);
+}
+
+/* returns 1 if token is a type of redirect. */
+int	token_is_redirect(const t_token *tok)
+{
+	return (tok->token == T_REDIRECT_FILE_TO_STDIN
+		|| tok->token == T_REDIRECT_STDOUT_TO_FILE
+		|| tok->token == T_REDIRECT_STDOUT_TO_FILE_APPEND
+		|| tok->token == T_HEREDOC);
 }

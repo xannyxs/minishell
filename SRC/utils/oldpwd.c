@@ -6,15 +6,15 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/28 18:11:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/28 18:13:06 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:57:41 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
+#include "libft.h" /* ft_strcmp */
 
-#include <stdlib.h>
-#include <unistd.h>
+#include <stdlib.h> /* Free & malloc */
+#include <unistd.h> /* Getcwd */
 
 void	add_oldpwd(t_vars *vars)
 {

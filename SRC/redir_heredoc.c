@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/22 14:59:23 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/29 14:20:15 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:45:26 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 #include <stdlib.h> /* exit */
 
 #include <sys/wait.h> /* wait */
-#include <sys/types.h>
 
 // TODO: is forking for heredoc really necessary?
 static void	child(const char *limiter, const int writefd)
@@ -51,7 +50,6 @@ static void	child(const char *limiter, const int writefd)
 		free(line);
 }
 
-// TODO: signaling
 // TODO: should heredoc fail be handled?
 void	redir_heredoc(t_token *tok, int *infd, int *status)
 {

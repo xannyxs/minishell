@@ -6,25 +6,16 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 11:06:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/29 14:20:45 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:49:24 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
-#include "ft_printf.h"
+#include "libft.h" /* ft_isdigit */
+#include "ft_printf.h" /* ft_dprintf */
 
-#include <stdlib.h>
-#include <unistd.h>
-
-/*
-	FUNCTION EXIT:
-	Pretty easy: You type in "exit" and it will exit the shell.
-	You can put a number after the exit and
-	it will signal the exit status for the next time.
-
-	LEAK FREE
-*/
+#include <stdlib.h> /* Exit */
+#include <unistd.h> /* STD */
 
 static void	write_num_error(const char *arg)
 {
@@ -33,6 +24,12 @@ static void	write_num_error(const char *arg)
 	exit(255);
 }
 
+/*
+	FUNCTION EXIT:
+	You type in "exit" and it will exit the shell.
+	You can put a number after the exit.
+	It will output the exit status
+*/
 int	exec_exit(char *argv[], t_vars *vars)
 {
 	int	i;

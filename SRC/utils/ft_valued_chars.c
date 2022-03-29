@@ -6,13 +6,13 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/25 19:39:37 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/29 14:19:24 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:57:02 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-#include <stdbool.h>
+#include <stdbool.h> /* Bool */
 
 bool	ft_valued_chars(char *argv)
 {

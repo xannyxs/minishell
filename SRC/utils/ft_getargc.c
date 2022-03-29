@@ -6,11 +6,11 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 17:54:59 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/15 17:55:58 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:56:43 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <stddef.h> /* NULL */
 
 int	ft_getargc(char *argv[])
 {

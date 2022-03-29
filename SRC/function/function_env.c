@@ -6,15 +6,14 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 22:18:38 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/25 15:29:13 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:47:38 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
-#include "ft_printf.h"
+#include "ft_printf.h" /* ft_dprintf */
 
-#include <unistd.h>
+#include <unistd.h> /* STDs */
 
 static int	error_handeling(t_vars *vars, char *argv)
 {

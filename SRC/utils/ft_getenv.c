@@ -6,12 +6,12 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/08 14:35:25 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/22 14:51:42 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:56:54 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
+#include "libft.h" /* Several functions */
 
 char	*ft_getenv(const char *name, char *environ[])
 {

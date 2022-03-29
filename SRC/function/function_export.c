@@ -6,29 +6,16 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/29 15:22:58 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:50:21 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
-#include "ft_printf.h"
+#include "libft.h" /* Several functions */
+#include "ft_printf.h" /* ft_dprintf */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-
-/*
-	First char of var = a-z A-Z or _
-	rest of var = a-z A-Z or _ or 0-9
-	"1hoi=fd" <-- Should not work
-
-	Related with execute_single.c
-	Functions in variables needs to be executed as well
-	For example:
-	export ls="ls -l"
-	$ls - Prints out as if it is "ls -l"
-*/
+#include <stdlib.h> /* free */
+#include <unistd.h> /* STD */
 
 static void	print_error(char *argv)
 {

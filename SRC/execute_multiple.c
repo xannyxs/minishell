@@ -6,20 +6,17 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/29 14:19:48 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 16:02:32 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "function.h"
-#include "libft.h"
 
 #include <unistd.h> /* execve, dup, close etc. */
 #include <stdlib.h> /* malloc */
 #include <sys/wait.h> /* wait */
-#include <sys/types.h>
 #include <stdio.h> /* perror */
-#include <errno.h> /* ECHILD */
 
 /* runs a builtin if it encounters it. */
 static void	m_run_builtin(char **args, t_vars *vars)
@@ -105,7 +102,6 @@ pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 	return (pipe_next(pfds[0], tlst, vars));
 }
 
-// TODO: signal error returns
 int	execute_multiple(t_vars *vars)
 {
 	pid_t	waitchild;

@@ -6,24 +6,20 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:17:10 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/28 18:11:29 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:54:22 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
-#include "ft_printf.h"
+#include "libft.h" /* ft_strcmp */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
+#include <stdlib.h> /* Free */
+#include <stdio.h> /* printf */
+#include <unistd.h> /* getcwd */
 
 /*
 	PWD: Print Working Directory
 	It prints the directory you are in right now.
-	There are some small edgecasses.
-	If you use ANY flag. It should print: "pwd: bad option: *FLAG*"
-	or "pwd: too many arguments".
 */
 
 static int	find_env_pwd(t_vars *vars)
@@ -70,7 +66,7 @@ int	exec_pwd(char *argv[], t_vars *vars)
 		vars->pwd = getcwd(NULL, 0);
 		if (vars->pwd == NULL)
 			vars->pwd = ft_getenv("PWD", vars->environ);
-		ft_printf("%s\n", vars->pwd);
+		printf("%s\n", vars->pwd);
 	}
 	return (0);
 }

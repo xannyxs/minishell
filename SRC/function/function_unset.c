@@ -6,17 +6,16 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 16:48:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/29 14:20:27 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:55:07 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
-#include "ft_printf.h"
+#include "libft.h" /* strcmp */
+#include "ft_printf.h" /* ft_dprintf */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include <stdlib.h> /* Free */
+#include <unistd.h> /* STD */
 
 /*
 	UNSET:

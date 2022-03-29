@@ -6,16 +6,15 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 14:05:01 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/28 15:15:40 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:45:06 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "ft_printf.h"
 
-#include <unistd.h>
-#include <signal.h>
-#include <termios.h>
+#include <unistd.h> /* STDs */
+#include <signal.h> /* signals */
+#include <termios.h> /* tcsetattr */
 
 /*
 	The function "Signal()" will change some settings

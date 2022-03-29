@@ -6,15 +6,15 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/14 17:04:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/29 14:20:02 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:59:59 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
+#include "libft.h" /* strcmp */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include <stdlib.h> /* free * malloc */
+#include <stdio.h> /* Printf */
 
 void	print_sys_env(t_vars vars, int i)
 {

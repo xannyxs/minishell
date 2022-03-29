@@ -6,16 +6,14 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/22 20:47:34 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/28 17:53:48 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:59:15 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-
-#include <stdio.h>
-#include <unistd.h>
-#include <readline/readline.h>
-#include <stdlib.h>
+#include <stdio.h> /* rl_ extra lib */
+#include <unistd.h> /* Write */
+#include <readline/readline.h> /* rl_ functions */
+#include <stdlib.h> /* exit */
 
 void	sighandler_heredoc(int sig)
 {
@@ -26,19 +24,19 @@ void	sighandler_heredoc(int sig)
 
 void	sighandler_pipes_quit(int sig)
 {
-	ft_printf("Quit: 3\n");
+	printf("Quit: 3\n");
 	(void) sig;
 }
 
 void	sighandler_pipes(int sig)
 {
-	ft_printf("\n");
+	printf("\n");
 	(void) sig;
 }
 
 void	sighandler_default(int sig)
 {
-	ft_printf("\n");
+	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
