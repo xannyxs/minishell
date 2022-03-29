@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/18 11:55:37 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/29 16:09:34 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/29 16:28:41 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,24 +67,17 @@ static void	print_echo(int i, char *argv[])
 int	exec_echo(char *argv[], t_vars *vars)
 {
 	int	i;
-	int	is_flag;
 
 	i = 1;
-	is_flag = false;
 	vars->exit_code = 0;
 	if (argv[1] == NULL)
 	{
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		return (vars->exit_code);
 	}
-	else if (ft_strncmp(argv[1], "-n", 2) == 0)
-	{
-		i = skip_n_flags(argv, i);
-		if (i > 1)
-			is_flag = true;
-	}
+	i = skip_n_flags(argv, i);
 	print_echo(i, argv);
-	if (is_flag == false)
+	if (i == 1)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (vars->exit_code);
 }
