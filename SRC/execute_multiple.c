@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/28 18:01:36 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 14:19:48 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include <sys/types.h>
 #include <stdio.h> /* perror */
 #include <errno.h> /* ECHILD */
-#include <stdbool.h>
 
 /* runs a builtin if it encounters it. */
 static void	m_run_builtin(char **args, t_vars *vars)

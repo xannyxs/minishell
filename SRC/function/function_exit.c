@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 11:06:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/21 17:48:01 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/29 14:20:45 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "ft_printf.h"
 
 #include <stdlib.h>
-#include <stdbool.h>
 #include <unistd.h>
 
 /*

@@ -6,17 +6,14 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/18 11:55:37 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/29 14:37:10 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/29 16:09:34 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 
-#include <stdbool.h> /* TRUE OR FALSE */
-#include <stdio.h>
 #include <unistd.h> /* STDOUT_FILENO */
-#include <stdlib.h>
 
 /*
 	ECHO FUNC:

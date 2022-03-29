@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/22 14:59:23 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/28 18:08:41 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 14:20:15 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 #include <unistd.h> /* pipe, fork, write, STDIN_FILENO */
 #include <stdlib.h> /* exit */
-#include <stdbool.h>
 
 #include <sys/wait.h> /* wait */
 #include <sys/types.h>

@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/25 19:39:35 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:22:58 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdbool.h>
+#include <stdio.h>
 
 /*
 	First char of var = a-z A-Z or _
@@ -38,21 +38,11 @@ static void	print_error(char *argv)
 
 static int	print_export(t_vars *vars)
 {
-	int			i;
 	t_envlist	*temp;
 
-	i = 0;
 	temp = vars->var_list;
-	while (vars->environ[i] != NULL)
-	{
-		print_sys_env(*vars, i);
-		i++;
-	}
-	while (temp != NULL)
-	{
-		print_usr_env(temp);
-		temp = temp->next;
-	}
+	order_sys_env(*vars);
+	order_usr_env(temp);
 	return (0);
 }
 
