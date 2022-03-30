@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/28 18:11:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/30 14:48:01 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 15:53:24 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h> /* Free & malloc */
 #include <unistd.h> /* Getcwd */
 
-void	add_oldpwd(t_vars *vars)
+static void	add_oldpwd(t_vars *vars)
 {
 	int		i;
 	char	**temp_env;
@@ -39,7 +39,7 @@ void	add_oldpwd(t_vars *vars)
 	free(temp_env);
 }
 
-int	find_env_oldpwd(t_vars *vars)
+static int	find_env_oldpwd(t_vars *vars)
 {
 	int	i;
 

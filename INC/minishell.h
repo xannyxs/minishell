@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   minishell.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/03/30 15:44:21 by xvoorvaa      #+#    #+#                 */
+/*   Updated: 2022/03/30 15:53:59 by xvoorvaa      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -13,7 +25,7 @@
 # define M_PS_REDIRECTED_STDIN (2)
 # define M_PS_REDIRECTION_FAILED (4)
 # define M_PS_EMPTY (8)
-# define M_PS_HEREDOC_SIGINT (16)
+# define M_PS_HEREDOC_SIGINT (16) /* <- Cursed AF */
 
 # define SUCCESS 0
 # define ERROR 1
@@ -25,10 +37,10 @@ enum e_token {
 	T_LITERAL_QUOTED,
 	T_LITERAL_NONEXPANDING,
 	T_PIPE,
-	T_REDIRECT_STDOUT_TO_FILE, /* > */
-	T_REDIRECT_STDOUT_TO_FILE_APPEND, /* >> */
-	T_REDIRECT_FILE_TO_STDIN, /* < */
-	T_HEREDOC /* << */
+	T_REDIRECT_STDOUT_TO_FILE,
+	T_REDIRECT_STDOUT_TO_FILE_APPEND,
+	T_REDIRECT_FILE_TO_STDIN,
+	T_HEREDOC
 };
 
 typedef struct s_envlist
@@ -52,21 +64,13 @@ typedef struct s_token
 
 typedef struct s_vars
 {
-	unsigned char	exit_code;
 	char			*old_pwd;
 	char			*pwd;
 	char			**environ;
 	t_token			*token_list;
 	t_envlist		*var_list;
+	unsigned char	exit_code;
 }	t_vars;
-
-typedef struct pipe_vars
-{
-	int		*infd;
-	int		*outfd;
-	char	infd_is_pipe;
-	char	outfd_is_pipe;
-}	t_pipe_vars;
 
 /*
 	MINISHELL
@@ -87,10 +91,6 @@ int		exec_cd(char *argv[], t_vars *vars);
 int		change_env_pwd(t_vars *vars);
 
 int		change_env_oldpwd(t_vars *vars);
-
-void	add_oldpwd(t_vars *vars);
-
-int		find_env_oldpwd(t_vars *vars);
 
 int		exec_pwd(char *argv[], t_vars *vars);
 
@@ -134,15 +134,9 @@ void	token_free_list(t_token **lst);
 
 void	token_make_list_doubly_linked(t_token *lst);
 
-int		token_count_occurrences(t_token *lst, int (*f)(const t_token *));
-
 t_token	*token_get_first_occurrence(t_token *lst, int (*f)(const t_token *));
 
-int		token_is_literal(const t_token *tok);
-
 int		token_is_redirect(const t_token *tok);
-
-size_t	token_lst_size(t_token *lst);
 
 /*
 	LEXER
@@ -171,16 +165,6 @@ void	split_literals_with_spaces(t_vars *vars);
 void	fatal_perror(const char *msg);
 
 void	malloc_fail(void);
-
-/*
-	ACCESS
-*/
-
-char	**find_dir(char *envp[]);
-
-char	*path_check(char *func, char **path);
-
-char	*ft_getenv(const char *name, char *environ[]);
 
 /*
 	PIPE EXECUTING
@@ -221,9 +205,9 @@ int		ft_strequel(const char *str);
 
 int		ft_getargc(char *argv[]);
 
-char	*remove_spaces(char *str);
-
 int		ft_valued_chars(char *argv);
+
+char	*ft_getenv(const char *name, char *environ[]);
 
 /*
 	main thread redirection and restoring

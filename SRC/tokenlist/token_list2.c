@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 13:22:17 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/29 15:55:58 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 15:48:27 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,6 @@ void	token_make_list_doubly_linked(t_token *lst)
 		prev = lst;
 		lst = lst->next;
 	}
-}
-
-/* loops over the list, calls function f with the current token, and adds the
- * result to sum, returns the sum. */
-int	token_count_occurrences(t_token *lst, int (*f)(const t_token *))
-{
-	int	sum;
-
-	sum = 0;
-	while (lst)
-	{
-		sum += (*f)(lst);
-		lst = lst->next;
-	}
-	return (sum);
 }
 
 /* loops over the list, calls function f with the current token,
