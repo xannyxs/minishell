@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/18 11:55:37 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/30 14:47:54 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 15:14:20 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 	ECHO FUNC:
 	Pretty easy. It just prints the line out to STDOUT.
 	We only need to use -n as flag, which doesn't place a newline at the end.
-
-	LEAK FREE
 */
 
 static bool	is_valid_n_flag(const char *arg)
@@ -69,15 +67,15 @@ int	exec_echo(char *argv[], t_vars *vars)
 	int	i;
 
 	i = 1;
-	vars->exit_code = 0;
+	(void) vars;
 	if (argv[1] == NULL)
 	{
 		ft_putchar_fd('\n', STDOUT_FILENO);
-		return (vars->exit_code);
+		return (SUCCESS);
 	}
 	i = skip_n_flags(argv, i);
 	print_echo(i, argv);
 	if (i == 1)
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	return (vars->exit_code);
+	return (SUCCESS);
 }

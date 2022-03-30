@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/29 15:50:21 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 15:24:39 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@
 #include <stdlib.h> /* free */
 #include <unistd.h> /* STD */
 
-static void	print_error(char *argv)
+static int	nonfatal_error(char *argv)
 {
 	ft_dprintf(STDERR_FILENO, \
 		"minishell: export: %s: not a valid identifier\n", argv);
+	return (ERROR);
 }
 
 static int	print_export(t_vars *vars)
@@ -30,7 +31,7 @@ static int	print_export(t_vars *vars)
 	temp = vars->var_list;
 	order_sys_env(*vars);
 	order_usr_env(temp);
-	return (0);
+	return (SUCCESS);
 }
 
 static void	allocate_var(char *argv, char **content, char **variable)
@@ -70,8 +71,8 @@ int	exec_export(char *argv[], t_vars *vars)
 				new_node(&vars->var_list, variable, content);
 		}
 		else
-			print_error(argv[i]);
+			return (nonfatal_error(argv[i]));
 		i++;
 	}
-	return (0);
+	return (SUCCESS);
 }

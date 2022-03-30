@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 16:48:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/29 15:55:07 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 15:35:13 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	check_usr_vars(char *argv, t_vars *vars)
 		free(temp_env->variable);
 		free(temp_env->content);
 		free(temp_env);
-		return (0);
+		return (SUCCESS);
 	}
 	while (temp_env != NULL && ft_strcmp(temp_env->variable, argv) != 0)
 	{
@@ -56,7 +56,7 @@ static int	check_usr_vars(char *argv, t_vars *vars)
 	free(temp_env->variable);
 	free(temp_env->content);
 	free(temp_env);
-	return (0);
+	return (SUCCESS);
 }
 
 static void	moves_lines_up(t_vars *vars, char *temp_var, int i)
@@ -79,14 +79,14 @@ static int	check_sys_vars(char *argv, t_vars *vars)
 	i = 0;
 	temp_var = ft_strjoin(argv, "=");
 	if (temp_var == NULL)
-		fatal_perror("malloc:");
+		malloc_fail();
 	while (vars->environ[i] != NULL)
 	{
 		if (ft_strncmp(temp_var, vars->environ[i], \
 				ft_strlen(temp_var)) == 0)
 		{
 			moves_lines_up(vars, temp_var, i);
-			return (0);
+			return (SUCCESS);
 		}
 		i++;
 	}
@@ -102,7 +102,7 @@ int	exec_unset(char *argv[], t_vars *vars)
 	i = 0;
 	vars->exit_code = 0;
 	if (argv[1] == NULL)
-		return (0);
+		return (SUCCESS);
 	while (argv[i] != NULL)
 	{
 		if (ft_valued_chars(argv[i]) == false)

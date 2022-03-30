@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 22:18:38 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/29 15:47:38 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 15:16:00 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,11 @@
 
 #include <unistd.h> /* STDs */
 
-static int	error_handeling(t_vars *vars, char *argv)
+static int	error_handeling(char *argv)
 {
 	ft_dprintf(STDERR_FILENO, "env: %s: No such file or directory\n", \
 	argv);
-	vars->exit_code = 127 + (errno == 2);
-	return (vars->exit_code);
+	return (127 + (errno == 2));
 }
 
 int	exec_env(char *argv[], t_vars *vars)
@@ -30,9 +29,8 @@ int	exec_env(char *argv[], t_vars *vars)
 
 	i = 0;
 	temp = vars->var_list;
-	vars->exit_code = 0;
 	if (ft_getargc(argv) > 1)
-		return (error_handeling(vars, argv[1]));
+		return (error_handeling(argv[1]));
 	while (vars->environ[i] != NULL)
 	{
 		ft_printf("%s\n", vars->environ[i]);
@@ -44,5 +42,5 @@ int	exec_env(char *argv[], t_vars *vars)
 			ft_printf("%s=%s\n", temp->variable, temp->content);
 		temp = temp->next;
 	}
-	return (0);
+	return (SUCCESS);
 }

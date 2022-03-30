@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 11:06:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/29 15:49:24 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 15:20:08 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	exec_exit(char *argv[], t_vars *vars)
 		write_num_error(argv[1]);
 	if (argv[2] != NULL)
 	{
-		vars->exit_code = 1;
+		vars->exit_code = ERROR;
+		ft_dprintf(STDERR_FILENO, "exit\n");
 		ft_dprintf(STDERR_FILENO, "minishell: exit: too many arguments\n");
 	}
 	else

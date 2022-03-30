@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/29 15:47:02 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 15:14:01 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,10 @@
 	LEAK FREE
 */
 
-static int	nonfatal_error(t_vars *vars, char *argv[])
+static int	nonfatal_error(char *argv[])
 {
 	ft_dprintf(STDERR_FILENO, "minishell: cd: %s", argv[1]);
 	perror(" ");
-	vars->exit_code = errno;
 	return (-1);
 }
 
@@ -48,14 +47,13 @@ static int	change_homedir(char *argv[], char *environ[], t_vars *vars)
 		if (home == NULL)
 		{
 			ft_dprintf(STDERR_FILENO, "minishell: cd: HOME not set\n");
-			vars->exit_code = 1;
 			return (-1);
 		}
 		change_env_oldpwd(vars);
 		err = chdir(home);
 		free(home);
 		if (err != 0)
-			return (nonfatal_error(vars, argv));
+			return (nonfatal_error(argv));
 		return (true);
 	}
 	free(home);
@@ -75,7 +73,7 @@ static int	change_dir(char *argv[], t_vars vars)
 	else
 		err = chdir(argv[1]);
 	if (err != 0)
-		return (nonfatal_error(&vars, argv));
+		return (nonfatal_error(argv));
 	return (0);
 }
 
@@ -84,7 +82,6 @@ static int	examine_input(t_vars *vars, char *argv[], char **temp_pwd)
 	if (vars->old_pwd == NULL && ft_strcmp(argv[1], "-") == 0)
 	{
 		ft_dprintf(STDERR_FILENO, "minishell: cd: OLDPWD not set\n");
-		errno = ERROR;
 		return (-1);
 	}
 	else if (ft_strcmp(argv[1], "-") != 0)
@@ -112,12 +109,12 @@ int	exec_cd(char *argv[], t_vars *vars)
 	if (ret == true)
 		return (change_env_pwd(vars));
 	else if (ret == -1)
-		return (1);
+		return (ERROR);
 	check_dash = examine_input(vars, argv, &temp_pwd);
 	if (check_dash == -1)
-		return (errno);
+		return (ERROR);
 	if (change_dir(argv, *vars) != 0)
-		return (errno);
+		return (ERROR);
 	if (check_dash == 1)
 	{
 		free(vars->old_pwd);

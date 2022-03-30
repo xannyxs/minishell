@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/30 14:48:18 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 15:08:23 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include <unistd.h> /* execve, dup, close etc. */
 #include <stdlib.h> /* malloc */
 #include <sys/wait.h> /* wait */
-#include <sys/types.h>
-#include <errno.h> /* ECHILD */
 
 static pid_t	pn_fork(int readfd, int *pfds, char **argv, t_vars *vars)
 {
@@ -73,11 +71,7 @@ pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 	return (pipe_next(pfds[0], tlst, vars));
 }
 
-<<<<<<< HEAD
-int	execute_multiple(t_vars *vars)
-=======
 static void	wait_for_childs(const pid_t final_pid, t_vars *vars)
->>>>>>> master
 {
 	pid_t	waitchild;
 	int		status;
@@ -108,8 +102,8 @@ int	execute_multiple(t_vars *vars)
 
 	deactivate_signals_pipes();
 	final_pid = pipe_next(-1, vars->token_list, vars);
-	if (errno != 0)
-		vars->exit_code = errno;
+	// if (errno != 0)
+	// 	vars->exit_code = errno;
 	wait_for_childs(final_pid, vars);
 	signals_default();
 	return (vars->exit_code);
