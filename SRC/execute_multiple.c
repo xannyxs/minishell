@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/29 16:02:32 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 14:48:18 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,50 +16,33 @@
 #include <unistd.h> /* execve, dup, close etc. */
 #include <stdlib.h> /* malloc */
 #include <sys/wait.h> /* wait */
-#include <stdio.h> /* perror */
+#include <sys/types.h>
+#include <errno.h> /* ECHILD */
 
-/* runs a builtin if it encounters it. */
-static void	m_run_builtin(char **args, t_vars *vars)
+static pid_t	pn_fork(int readfd, int *pfds, char **argv, t_vars *vars)
 {
-	t_function	tf;
+	pid_t	pid;
 
-	tf = get_function(*args);
-	if (tf.key != NULL)
+	pid = fork();
+	if (pid == -1)
+		fatal_perror("fork");
+	else if (pid == 0)
 	{
-		exit((*tf.func)(args, vars));
+		signals_pipe();
+		close(pfds[0]);
+		m_proc(readfd, pfds[1], argv, vars);
 	}
+	return (pid);
 }
 
-static void	m_proc(int infd, int outfd, char **args, t_vars *vars)
+/* damn you norm! */
+static void	pn_cleanup(int readfd, int *pfds, char **argv)
 {
-	char	*path;
-
-	if (infd != -1)
-	{
-		close(STDIN_FILENO);
-		if (dup(infd) == -1)
-			fatal_perror("dup(infd)");
-		close(infd);
-	}
-	if (outfd != -1)
-	{
-		close(STDOUT_FILENO);
-		if (dup(outfd) == -1)
-			fatal_perror("dup(outfd)");
-		close(outfd);
-	}
-	m_run_builtin(args, vars);
-	path = pathresolve_tryfind(*args, vars->environ);
-	if (!path)
-		path = "";
-	if (execve(path, args, vars->environ) == -1)
-	{
-		perror(*args);
-		exit(126 + (errno == 2));
-	}
+	free(argv);
+	ft_close_fd(readfd);
+	ft_close_fd(pfds[1]);
 }
 
-// TODO: norm
 /* runs the next command in the pipe list. Returns the pid of the final
  * command executed. */
 pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
@@ -80,20 +63,8 @@ pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 		pfds[1] = -1;
 	}
 	if (pstatus >= 0)
-	{
-		pid = fork();
-		if (pid == -1)
-			fatal_perror("fork");
-		else if (pid == 0)
-		{
-			signals_pipe();
-			close(pfds[0]);
-			m_proc(readfd, pfds[1], argv, vars);
-		}
-	}
-	free(argv);
-	ft_close_fd(readfd);
-	ft_close_fd(pfds[1]);
+		pid = pn_fork(readfd, pfds, argv, vars);
+	pn_cleanup(readfd, pfds, argv);
 	if (tlst == NULL)
 	{
 		close(pfds[0]);
@@ -102,16 +73,15 @@ pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 	return (pipe_next(pfds[0], tlst, vars));
 }
 
+<<<<<<< HEAD
 int	execute_multiple(t_vars *vars)
+=======
+static void	wait_for_childs(const pid_t final_pid, t_vars *vars)
+>>>>>>> master
 {
 	pid_t	waitchild;
-	pid_t	final_pid;
 	int		status;
 
-	deactivate_signals_pipes();
-	final_pid = pipe_next(-1, vars->token_list, vars);
-	if (errno != 0)
-		vars->exit_code = errno;
 	while (true)
 	{
 		waitchild = wait(&status);
@@ -129,6 +99,18 @@ int	execute_multiple(t_vars *vars)
 				vars->exit_code = WTERMSIG(status) + 128;
 		}
 	}
+}
+
+// TODO: signal error returns. <-- What does this mean?
+int	execute_multiple(t_vars *vars)
+{
+	pid_t	final_pid;
+
+	deactivate_signals_pipes();
+	final_pid = pipe_next(-1, vars->token_list, vars);
+	if (errno != 0)
+		vars->exit_code = errno;
+	wait_for_childs(final_pid, vars);
 	signals_default();
 	return (vars->exit_code);
 }

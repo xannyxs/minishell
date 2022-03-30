@@ -166,6 +166,8 @@ int		is_token_char_present(const char c);
 
 int		lex_validate(t_token *lst);
 
+void	split_literals_with_spaces(t_vars *vars);
+
 /*
 	ERRORS
 */

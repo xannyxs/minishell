@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/29 15:44:11 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 14:48:31 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,42 @@
 
 #include <stdlib.h> /* free */
 
-/* expands the variables, removes the empty literals. */
+/* expands the variables, i.e. $USER becomes jobvan-d */
 static void	expand_vars(t_vars *vars)
+{
+	t_token	*lst;
+
+	lst = vars->token_list;
+	while (lst)
+	{
+		if (lst->token == T_LITERAL || lst->token == T_LITERAL_QUOTED)
+		{
+			expand_token(lst, vars);
+		}
+		lst = lst->next;
+	}
+}
+
+/* removes unqouted empty literals from empty/whitespace variables. */
+static void	remove_empty_literals(t_vars *vars)
 {
 	t_token	**tracer;
 	t_token	*to_remove;
 
 	tracer = &vars->token_list;
-	while (*tracer != NULL)
+	while (*tracer)
 	{
-		if ((*tracer)->token == T_LITERAL
-			|| (*tracer)->token == T_LITERAL_QUOTED)
+		if ((*tracer)->token == T_LITERAL && *((*tracer)->content) == 0)
 		{
-			expand_token(*tracer, vars);
-			if ((*tracer)->token == T_LITERAL && *((*tracer)->content) == 0)
+			to_remove = *tracer;
+			*tracer = to_remove->next;
+			if (*tracer)
 			{
-				to_remove = *tracer;
-				*tracer = (*tracer)->next;
-				if (*tracer)
-				{
-					(*tracer)->separated_from_previous
-						= to_remove->separated_from_previous;
-				}
-				token_free(to_remove);
-				continue ;
+				(*tracer)->separated_from_previous
+					= to_remove->separated_from_previous;
 			}
+			token_free(to_remove);
+			continue ;
 		}
 		tracer = &((*tracer)->next);
 	}
@@ -70,15 +81,19 @@ static bool	try_merge(t_token *lst)
 
 /* basic process:
  * 1: expand the literals that need expansion
- * 2: boil all literals down to just T_LITERAL.
- * 3: merge literals that are together.
- * 4: make list doubly linked.
- * 5: done. */
+ * 2: because of bash weirdness, split T_LITERALs with spaces into separate
+ *    args. Ex. l$TEST where $TEST="s -ltra" should work(but not l"$TEST")
+ * 3: boil all literals down to just T_LITERAL.
+ * 4: merge literals that are together.
+ * 5: make list doubly linked.
+ * 6: done. */
 static int	parse(t_vars *vars)
 {
 	t_token	*cur;
 
 	expand_vars(vars);
+	split_literals_with_spaces(vars);
+	remove_empty_literals(vars);
 	cur = vars->token_list;
 	while (cur)
 	{
