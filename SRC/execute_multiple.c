@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/30 15:43:56 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 15:56:55 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ static void	wait_for_childs(const pid_t final_pid, t_vars *vars)
 	}
 }
 
-// TODO: signal error returns. <-- What does this mean?
 int	execute_multiple(t_vars *vars)
 {
 	pid_t	final_pid;
