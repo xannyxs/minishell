@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/22 14:59:23 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/29 15:45:26 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 16:33:09 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,10 @@ static void	child(const char *limiter, const int writefd)
 		free(line);
 }
 
-// TODO: should heredoc fail be handled?
-void	redir_heredoc(t_token *tok, int *infd, int *status)
+static pid_t	heredoc_dofork(t_token *tok, int *pfds)
 {
-	int		status_child;
-	int		exit_code;
-	int		pfds[2];
 	pid_t	pid;
 
-	exit_code = 0;
-	ft_close_fd(*infd);
-	if (pipe(pfds) == -1)
-		fatal_perror("pipe");
 	pid = fork();
 	if (pid == -1)
 		fatal_perror("fork");
@@ -73,6 +65,21 @@ void	redir_heredoc(t_token *tok, int *infd, int *status)
 		close(pfds[1]);
 		exit(0);
 	}
+	return (pid);
+}
+
+void	redir_heredoc(t_token *tok, int *infd, int *status)
+{
+	int		status_child;
+	int		exit_code;
+	int		pfds[2];
+	pid_t	pid;
+
+	exit_code = 0;
+	ft_close_fd(*infd);
+	if (pipe(pfds) == -1)
+		fatal_perror("pipe");
+	pid = heredoc_dofork(tok, pfds);
 	deactivate_signals_heredoc();
 	close(pfds[1]);
 	*infd = pfds[0];
