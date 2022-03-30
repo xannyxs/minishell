@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/02 18:13:21 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/09 17:59:20 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/30 14:53:37 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,13 @@ static enum	e_token	token_after(t_token *cur)
 
 /* does some basic validation of the input.
  * (ex. redirect is followed by a literal) */
-// TODO: more accurate validation. for ex. > wc | cat is valid but shouldn't
 int	lex_validate(t_token *lst)
 {
 	while (lst)
 	{
 		if (lst->token == T_PIPE)
 		{
-			if (token_before(lst) != T_LITERAL
-				|| token_after(lst) != T_LITERAL)
+			if (token_before(lst) != T_LITERAL || lst->next == NULL)
 			{
 				ft_putendl_fd("minishell: syntax error, invalid pipe", 2);
 				return (0);

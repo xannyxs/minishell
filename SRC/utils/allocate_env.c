@@ -6,14 +6,14 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/14 21:18:01 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/29 15:46:00 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 15:37:16 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h" /* ft_atoi */
 
-#include <stdlib.h> /* Malloc */
+#include <stdlib.h> /* malloc */
 
 static char	*increment_shlvl(char *environ)
 {

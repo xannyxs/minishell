@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:25:24 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/29 18:58:30 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/30 14:57:19 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ typedef struct s_function
 
 t_function	get_function(const char *name);
 
-void	m_proc(int infd, int outfd, char **args, t_vars *vars);
+void		m_proc(int infd, int outfd, char **args, t_vars *vars);
 
 #endif

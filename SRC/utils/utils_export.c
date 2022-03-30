@@ -6,15 +6,15 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/14 17:04:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/29 15:59:59 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 15:37:54 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h" /* strcmp */
+#include "libft.h"
+#include "ft_printf.h"
 
-#include <stdlib.h> /* free * malloc */
-#include <stdio.h> /* Printf */
+#include <stdlib.h>
 
 void	print_sys_env(t_vars vars, int i)
 {
@@ -24,20 +24,20 @@ void	print_sys_env(t_vars vars, int i)
 	if (split_env == NULL)
 		malloc_fail();
 	if (split_env[1] == NULL)
-		printf("declare -x %s=\"\"\n", split_env[0]);
+		ft_printf("declare -x %s=\"\"\n", split_env[0]);
 	else
-		printf("declare -x %s=\"%s\"\n", split_env[0], split_env[1]);
+		ft_printf("declare -x %s=\"%s\"\n", split_env[0], split_env[1]);
 	ft_free_str_arr(split_env);
 }
 
 void	print_usr_env(t_envlist *temp)
 {
 	if (temp->content != NULL)
-		printf("declare -x %s=\"%s\"\n", temp->variable, temp->content);
+		ft_printf("declare -x %s=\"%s\"\n", temp->variable, temp->content);
 	else if (temp->content == NULL)
-		printf("declare -x %s\n", temp->variable);
+		ft_printf("declare -x %s\n", temp->variable);
 	else
-		printf("declare -x %s=\"\"\n", temp->variable);
+		ft_printf("declare -x %s=\"\"\n", temp->variable);
 }
 
 bool	check_dup_env(t_vars vars, char *variable)

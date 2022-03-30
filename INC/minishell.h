@@ -120,10 +120,6 @@ int		exec_exit(char *argv[], t_vars *vars);
 
 void	new_node(t_envlist **head, char *variable, char *content);
 
-void	print_list(t_envlist *head);
-
-void	print_token(t_token *head);
-
 t_token	*token_new(char *content, const enum e_token type);
 
 t_token	*token_li_last(t_token *lst);

@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:44:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/30 14:48:03 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 15:38:14 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ static int	execute_single_cmd(t_vars *vars)
 }
 
 //TODO: Error handeling
-// TODO: unify?
 int	execute_line(t_vars *vars)
 {
 	if (token_get_first_occurrence(vars->token_list, &is_pipe) != NULL)

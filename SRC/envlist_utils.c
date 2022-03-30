@@ -6,14 +6,12 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 16:15:22 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/29 16:00:17 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 15:38:10 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
-
-#include <stdlib.h> /* malloc */
 
 void	new_node(t_envlist **head, char *variable, char *content)
 {
