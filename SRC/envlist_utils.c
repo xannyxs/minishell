@@ -6,29 +6,12 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 16:15:22 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/22 14:51:42 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/30 14:56:38 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
-
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-
-// TODO: remove on final build!
-void	print_list(t_envlist *head)
-{
-	printf("\n");
-	while (head != NULL)
-	{
-		printf("%s -> ", head->content);
-		head = head->next;
-	}
-	printf("NULL\n");
-	write(1, "\n", 1);
-}
 
 void	new_node(t_envlist **head, char *variable, char *content)
 {

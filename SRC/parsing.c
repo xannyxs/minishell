@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/29 16:14:08 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/30 14:56:20 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,5 @@ int	init_vars(const char *line, t_vars *vars)
 	parse(vars);
 	if (!lex_validate(vars->token_list))
 		return (-1);
-	// print_list(parsing->token_list);
-	// print_token(parsing->token_list);
 	return (0);
 }

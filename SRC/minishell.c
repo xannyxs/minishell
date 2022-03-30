@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/29 14:20:23 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 15:02:43 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	main(void)
 				token_free_list(&vars.token_list);
 				continue ;
 			}
-			// print_token(vars.token_list);
 			if (vars.token_list != NULL)
 			{
 				vars.exit_code = execute_line(&vars);

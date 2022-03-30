@@ -6,14 +6,13 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 12:23:00 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/29 14:19:41 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 14:58:11 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 #include <stdlib.h> /* free */
-#include <stdio.h>
 
 /* I know it's kind of ugly to essentially do the same if statement twice
  * (see is_token_char_present in lexer_util.c), but it seems to me the 

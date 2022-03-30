@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 14:10:19 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/15 14:12:05 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 14:59:08 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	**get_paths_array(char **envp)
 	ret = ft_split(*envp + ft_strlen(PATH_ENTRY), ':');
 	if (!ret)
 	{
-		fatal_perror("malloc ft_split in get_paths_array");
+		malloc_fail();
 	}
 	else if (*ret == 0)
 	{
@@ -76,7 +76,7 @@ static char	*try_command(char *file, const char *path)
 	ret = ft_strjoin(path, file);
 	if (!ret)
 	{
-		fatal_perror("malloc ft_strjoin in try_command");
+		malloc_fail();
 	}
 	if (access(ret, X_OK) == 0)
 	{

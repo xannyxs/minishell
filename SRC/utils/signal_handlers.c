@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/22 20:47:34 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/28 17:53:48 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/30 15:01:08 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 void	sighandler_heredoc(int sig)
 {
-	write(STDOUT_FILENO, "\n", 1);
+	ft_printf("\n");
 	exit(1);
 	(void) sig;
 }
