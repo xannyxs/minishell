@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 14:10:19 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/30 14:59:08 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/31 16:06:58 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	append_slash_paths(char **paths)
 			free(tmp);
 			if (!*paths)
 			{
-				fatal_perror("malloc ft_strjoin in append_slash_paths");
+				malloc_fail();
 			}
 		}
 		paths++;
@@ -123,7 +123,7 @@ char	*pathresolve_tryfind(char *name, char **envp)
 {
 	char	*ret;
 
-	if (ft_strchr(name, '/') == NULL)
+	if (ft_strchr(name, '/') == NULL && *name != 0)
 		ret = tryfind(name, envp);
 	else
 		ret = name;
