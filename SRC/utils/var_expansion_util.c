@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/21 18:23:51 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/29 14:20:00 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/31 13:42:31 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ static void	m_var_lookup_uservar(t_envlist *lst,
 	}
 }
 
-/* looks up a variable. kind of specialized function, hence it's weird. */
+/* looks up a variable. kind of specialized function, hence it's weird.
+ * you cannot replace the environ lookup with ft_getenv, as it would
+ * check the entire string, rather stop at len. */
 static char	*var_lookup(const char *var, const t_vars *vars, size_t len)
 {
 	char		*value;

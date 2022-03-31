@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 14:36:18 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/31 13:27:59 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/31 13:45:07 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,14 @@ static void	expand_tilde(t_token *el, const t_vars *vars)
 
 	home = ft_getenv("HOME", vars->environ);
 	if (!home)
-		home = "";
-	new = ft_strjoin(home, el->content + 1);
+	{
+		new = ft_strdup(el->content + 1);
+	}
+	else
+	{
+		new = ft_strjoin(home, el->content + 1);
+		free(home);
+	}
 	if (!new)
 		malloc_fail();
 	free(el->content);

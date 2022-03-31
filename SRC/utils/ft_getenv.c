@@ -6,33 +6,33 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/08 14:35:25 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/29 15:56:54 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/31 13:40:29 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h" /* Several functions */
+#include "libft.h" /* ft_str functioms */
 
+/* attempts to get an environment variable. Returns the variable,
+ * allocated using malloc. It must be freed. Returns NULL when
+ * the variable was not found. */
 char	*ft_getenv(const char *name, char *environ[])
 {
-	int		i;
 	size_t	namelen;
 	char	*env;
 
-	i = 0;
 	namelen = ft_strlen(name);
-	while (environ[i] != NULL)
+	while (*environ != NULL)
 	{
-		if (ft_strncmp(environ[i], name, namelen) == 0
-			&& environ[i][namelen] == '=')
+		if (ft_strncmp(*environ, name, namelen) == 0
+			&& (*environ)[namelen] == '=')
 		{
-			env = ft_substr(environ[i], namelen + 1, \
-				ft_strlen(environ[i]) - namelen - 1);
+			env = ft_strdup(*environ + namelen + 1);
 			if (env == NULL)
 				malloc_fail();
 			return (env);
 		}
-		i++;
+		environ++;
 	}
 	return (NULL);
 }
