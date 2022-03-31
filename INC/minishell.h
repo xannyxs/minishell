@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/30 15:44:21 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/31 14:12:41 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/31 15:36:45 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,8 @@ char	**create_argv_advanced(t_token **lst, int *infd, int *outfd,
 	var expansion
 */
 void	expand_token(t_token *el, const t_vars *vars);
+
+void	expansion_star(t_token *el, const t_vars *vars);
 
 char	*ve_get_part(size_t i, char **cstr, const t_vars *vars);
 

@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 14:36:18 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/31 13:45:07 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/31 15:35:38 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,6 @@ void	expand_token(t_token *el, const t_vars *vars)
 	}
 	if (new_content)
 		token_expand_finish(el, cstr, new_content);
+	if (el->token == T_LITERAL && ft_str_contains_char(el->content, '*'))
+		expansion_star(el, vars);
 }
