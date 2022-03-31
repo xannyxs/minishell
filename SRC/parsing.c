@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:15:14 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/30 15:38:51 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/31 13:56:54 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ static bool	try_merge(t_token *lst)
  *    args. Ex. l$TEST where $TEST="s -ltra" should work(but not l"$TEST")
  * 3: boil all literals down to just T_LITERAL.
  * 4: merge literals that are together.
- * 5: make list doubly linked.
- * 6: done. */
+ * 5: done. */
 static int	parse(t_vars *vars)
 {
 	t_token	*cur;
@@ -110,7 +109,6 @@ static int	parse(t_vars *vars)
 		if (!try_merge(cur))
 			cur = cur->next;
 	}
-	token_make_list_doubly_linked(vars->token_list);
 	return (1);
 }
 

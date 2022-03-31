@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 16:16:23 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/29 15:42:41 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/31 14:11:05 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_token	*token_new(char *content, const enum e_token type)
 		li->token = type;
 		li->separated_from_previous = 1;
 		li->next = NULL;
-		li->prev = NULL;
 	}
 	return (li);
 }

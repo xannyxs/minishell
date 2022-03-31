@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 13:22:17 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/30 15:48:27 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/31 13:55:59 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,6 @@ t_token	*token_li_pop_back(t_token **tlst)
 		*tracer = NULL;
 	}
 	return (to_return);
-}
-
-/* converts the token list from singly linked to doubly linked. */
-void	token_make_list_doubly_linked(t_token *lst)
-{
-	t_token	*prev;
-
-	prev = NULL;
-	while (lst)
-	{
-		lst->prev = prev;
-		prev = lst;
-		lst = lst->next;
-	}
 }
 
 /* loops over the list, calls function f with the current token,

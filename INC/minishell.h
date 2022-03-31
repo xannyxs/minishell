@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/30 15:44:21 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/30 15:53:59 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/31 14:12:41 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,12 @@ typedef struct s_envlist
 	struct s_envlist	*next;
 }	t_envlist;
 
-/* So, standard this is a singly linked list. But when the list is
- * "finalized", it becomes as doubly linked one so it's easier to parse it.
- * Note that ALL token functions do not support doubly linked lists! */
 typedef struct s_token
 {
 	char			*content;
+	struct s_token	*next;
 	int				separated_from_previous;
 	enum e_token	token;
-	struct s_token	*next;
-	struct s_token	*prev;
 }	t_token;
 
 typedef struct s_vars
@@ -132,8 +128,6 @@ void	token_free(t_token *token);
 
 void	token_free_list(t_token **lst);
 
-void	token_make_list_doubly_linked(t_token *lst);
-
 t_token	*token_get_first_occurrence(t_token *lst, int (*f)(const t_token *));
 
 int		token_is_redirect(const t_token *tok);
@@ -154,7 +148,7 @@ void	lex_check_other_token_and_loop(t_token *cur, const char *str,
 
 int		is_token_char_present(const char c);
 
-int		lex_validate(t_token *lst);
+int		lex_validate(const t_token *lst);
 
 void	split_literals_with_spaces(t_vars *vars);
 
