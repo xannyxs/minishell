@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 14:36:18 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/30 14:48:35 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/31 13:27:59 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	expand_token(t_token *el, const t_vars *vars)
 	char	*new_content;
 	char	*cstr;
 
-	if (*el->content == '~')
+	if (*el->content == '~' && el->token == T_LITERAL)
 		expand_tilde(el, vars);
 	cstr = el->content;
 	new_content = NULL;
