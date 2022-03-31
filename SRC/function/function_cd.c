@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/30 15:14:01 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/31 11:59:39 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,18 @@ static int	change_homedir(char *argv[], char *environ[], t_vars *vars)
 	char	*home;
 
 	home = ft_getenv("HOME", environ);
-	if ((argv[1] != NULL && ft_strcmp(argv[1], home) == 0) || \
-		(ft_strcmp(argv[0], "cd") == 0 && argv[1] == NULL))
+	if (home == NULL)
 	{
-		if (home == NULL)
+		if (ft_strcmp(argv[0], "cd") == 0 && argv[1] == NULL)
 		{
 			ft_dprintf(STDERR_FILENO, "minishell: cd: HOME not set\n");
 			return (-1);
 		}
+		return (false);
+	}
+	if ((argv[1] != NULL && ft_strcmp(argv[1], home) == 0) || \
+		(ft_strcmp(argv[0], "cd") == 0 && argv[1] == NULL))
+	{
 		change_env_oldpwd(vars);
 		err = chdir(home);
 		free(home);

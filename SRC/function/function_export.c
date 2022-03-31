@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/30 17:04:10 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/31 13:42:47 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 #include <stdlib.h> /* free */
 #include <unistd.h> /* STD */
 
-static int	nonfatal_error(char *argv)
+static void	nonfatal_error(t_vars *vars, char *argv)
 {
 	ft_dprintf(STDERR_FILENO, \
 		"minishell: export: %s: not a valid identifier\n", argv);
-	return (ERROR);
+	vars->exit_code = 1;
 }
 
 static int	print_export(t_vars *vars)
@@ -48,31 +48,38 @@ static void	allocate_var(char *argv, char **content, char **variable)
 		malloc_fail();
 }
 
+static void	add_var_to_env(t_vars *vars, char *argv)
+{
+	char	*variable;
+	char	*content;
+
+	if (ft_strlen(argv) > 0 && ft_valued_chars(argv) == true)
+	{
+		allocate_var(argv, &content, &variable);
+		if (check_dup_env(*vars, variable) == true)
+		{
+			replace_dup_env(vars, variable, content);
+			free(variable);
+		}
+		else
+			new_node(&vars->var_list, variable, content);
+	}
+	else
+		nonfatal_error(vars, argv);
+}
+
 int	exec_export(char *argv[], t_vars *vars)
 {
-	int			i;
-	char		*variable;
-	char		*content;
+	int	i;
 
+	vars->exit_code = 0;
 	if (argv[1] == NULL)
 		return (print_export(vars));
 	i = 1;
 	while (argv[i] != NULL)
 	{
-		if (ft_strlen(argv[i]) > 0 && ft_valued_chars(argv[i]) == true)
-		{
-			allocate_var(argv[i], &content, &variable);
-			if (check_dup_env(*vars, variable) == true)
-			{
-				replace_dup_env(vars, variable, content);
-				free(variable);
-			}
-			else
-				new_node(&vars->var_list, variable, content);
-		}
-		else
-			return (nonfatal_error(argv[i]));
+		add_var_to_env(vars, argv[i]);
 		i++;
 	}
-	return (SUCCESS);
+	return (vars->exit_code);
 }
