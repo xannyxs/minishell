@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/14 17:04:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/30 15:37:54 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/03/31 13:53:27 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void	replace_dup_env(t_vars *vars, char *variable, char *content)
 
 	i = 0;
 	temp = vars->var_list;
+	if (content == NULL)
+		return ;
 	while (vars->environ[i] != NULL)
 	{
 		if (ft_strncmp(vars->environ[i], variable, ft_strlen(variable)) == 0)
