@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/09 12:42:49 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/31 16:13:05 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/03/31 16:36:45 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,9 @@ static void	fancy_error(const char *path, const char *cmd_name)
 	exit_code = 126;
 	if (errno == EACCES)
 	{
-		stat(path, &path_stat);
-		if (S_ISDIR(path_stat.st_mode))
+		if (stat(path, &path_stat) == -1)
+			fatal_perror("stat");
+		else if (S_ISDIR(path_stat.st_mode))
 		{
 			msg = "is a directory";
 		}
