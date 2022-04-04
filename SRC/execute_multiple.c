@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
-/*   Updated: 2022/04/04 15:13:58 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/04/04 17:24:07 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,6 @@ int	execute_multiple(t_vars *vars)
 
 	deactivate_signals_pipes();
 	final_pid = pipe_next(-1, vars->token_list, vars);
-	if (errno != 0)
-		vars->exit_code = errno;
 	wait_for_childs(final_pid, vars);
 	signals_default();
 	return (vars->exit_code);
