@@ -6,13 +6,13 @@
 #    By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 14:31:21 by xvoorvaa      #+#    #+#                  #
-#    Updated: 2022/04/04 18:56:16 by xvoorvaa      ########   odam.nl          #
+#    Updated: 2022/04/04 19:19:55 by xvoorvaa      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	minishell
 CC				=	gcc
-CFLAGS			=	-Wall -Wextra -Werror
+CFLAGS			=	-Wall -Wextra -Werror -O2
 OBJ_DIR			=	OBJ
 SRC_DIR			=	SRC
 INC_DIR			=	INC
