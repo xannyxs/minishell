@@ -6,7 +6,7 @@
 #    By: jobvan-d <jobvan-d@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/12/14 12:53:47 by jobvan-d      #+#    #+#                  #
-#    Updated: 2022/03/30 16:46:16 by jobvan-d      ########   odam.nl          #
+#    Updated: 2022/04/04 18:58:17 by xvoorvaa      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ $(OBJ_DIR):
 	mkdir $@
 
 clean:
-	rm -f $(OBJ_DIR)/*.o
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
 	rm -f $(NAME).a
