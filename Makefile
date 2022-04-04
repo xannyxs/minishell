@@ -6,7 +6,7 @@
 #    By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 14:31:21 by xvoorvaa      #+#    #+#                  #
-#    Updated: 2022/03/29 16:04:20 by xvoorvaa      ########   odam.nl          #
+#    Updated: 2022/04/04 18:56:16 by xvoorvaa      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,46 @@ BREW_LIB_DIR	=	~/.brew/opt/readline/lib
 LIBFT_H			=	$(LIBFT_DIR)/libft.h
 LIBFT_A			=	$(LIBFT_DIR)/libft.a
 
+SOURCES			=	SRC/minishell.c \
+					SRC/envlist_utils.c \
+					SRC/errors.c \
+					SRC/execute_line.c \
+					SRC/execute_multiple.c \
+					SRC/parsing.c \
+					SRC/path_resolving.c \
+					SRC/redir_heredoc.c \
+					SRC/redirection.c \
+					SRC/signals.c \
+					SRC/var_expansion.c \
+					SRC/utils/allocate_env.c \
+					SRC/utils/create_argv.c \
+					SRC/utils/ft_getargc.c \
+					SRC/utils/ft_getenv.c \
+					SRC/utils/ft_strequel.c \
+					SRC/utils/ft_valued_chars.c \
+					SRC/utils/function_utils.c \
+					SRC/utils/literal_splitting.c \
+					SRC/utils/oldpwd.c \
+					SRC/utils/order_export_lst.c \
+					SRC/utils/redirection_recovery.c \
+					SRC/utils/signal_handlers.c \
+					SRC/utils/utils_export.c \
+					SRC/utils/var_expansion_util.c \
+					SRC/tokenlist/token_list.c \
+					SRC/tokenlist/token_list2.c \
+					SRC/lexer/lex_validation.c \
+					SRC/lexer/lexer_util.c \
+					SRC/lexer/lexer.c \
+					SRC/function/function_cd.c \
+					SRC/function/function_echo.c \
+					SRC/function/function_env.c \
+					SRC/function/function_exit.c \
+					SRC/function/function_export.c \
+					SRC/function/function_pwd.c \
+					SRC/function/function_unset.c \
+					SRC/gnl/get_next_line.c \
+					SRC/gnl/get_next_line_utils.c
+
 # ft_printf stuff
 PF_H			=	$(PF_DIR)/ft_printf.h $(PF_DIR)/pf_util.h $(LIBFT_H)
 PF_A			=	$(PF_DIR)/libftprintf.a
@@ -32,9 +72,7 @@ PF_PDEPS		=	pf_parsing.c pf_print_hex.c pf_print_int.c \
 PF_DEPS			=	$(PF_PDEPS:%.c=$(PF_DIR)/%.c)
 PF_OBJ			=	$(PF_DEPS:$(PF_DIR)/%.c=$(PF_DIR)/$(OBJ_DIR)/%.o)
 
-# using temporary wildcards for now
-SOURCES		:= $(shell find $(SRC_DIR) -type f -name "*.c")
-HEADERS		:= $(LIBFT_H) $(wildcard INC/*.h)
+HEADERS		:= $(LIBFT_H) INC/function.h INC/get_next_line.h INC/minishell.h
 OBJS		:= $(SOURCES:.c=.o)
 OBJECTS		:= $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(OBJS))
 
@@ -86,7 +124,7 @@ $(PF_DIR)/$(OBJ_DIR):
 clean:
 	@echo "\n"
 	@echo $(OBJECTS)
-	@rm -rf $(OBJ_DIR)/*
+	@rm -rf $(OBJ_DIR)
 	@printf $(REM_MESSAGE)
 	@echo "\n"
 
@@ -94,7 +132,7 @@ clean:
 fclean:		clean
 	@rm -f $(NAME)
 	@rm -rf $(NAME).dSYM
-	@rm -f $(PF_DIR)/$(OBJ_DIR)/*.o
+	@rm -rf $(PF_DIR)/$(OBJ_DIR)
 	@rm -f $(LIBFT_A)
 	@rm -f $(PF_A)
 	$(MAKE) -C $(LIBFT_DIR) $@
