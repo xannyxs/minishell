@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 11:06:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/30 15:20:08 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/04/05 00:18:16 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,19 @@ static void	write_num_error(const char *arg)
 	exit(255);
 }
 
+static void	check_valid_chars(char *argv[])
+{
+	int	i;
+
+	i = 0;
+	if (argv[1][0] == '-')
+		i++;
+	while (ft_isdigit(argv[1][i]) == true)
+		i++;
+	if (ft_isdigit(argv[1][i]) == false && argv[1][i] != '\0')
+		write_num_error(argv[1]);
+}
+
 /*
 	FUNCTION EXIT:
 	You type in "exit" and it will exit the shell.
@@ -32,25 +45,18 @@ static void	write_num_error(const char *arg)
 */
 int	exec_exit(char *argv[], t_vars *vars)
 {
-	int	i;
-
-	i = 0;
+	ft_dprintf(STDERR_FILENO, "exit\n");
 	if (argv[1] == NULL)
 		exit(vars->exit_code);
-	while (ft_isdigit(argv[1][i]) == true)
-		i++;
-	if (ft_isdigit(argv[1][i]) == false && argv[1][i] != '\0')
-		write_num_error(argv[1]);
+	check_valid_chars(argv);
 	if (argv[2] != NULL)
 	{
 		vars->exit_code = ERROR;
-		ft_dprintf(STDERR_FILENO, "exit\n");
 		ft_dprintf(STDERR_FILENO, "minishell: exit: too many arguments\n");
 	}
 	else
 	{
 		vars->exit_code = ft_atoi(argv[1]);
-		ft_dprintf(STDERR_FILENO, "exit\n");
 		exit(vars->exit_code);
 	}
 	return (vars->exit_code);

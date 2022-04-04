@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/14 17:04:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/04/04 19:34:58 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/04/05 00:05:18 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,18 @@ static void	replace_sys_env(char **environ, char *variable, char *content)
 
 void	replace_dup_env(t_vars *vars, char *variable, char *content)
 {
-	size_t		var_len;
 	t_envlist	*temp;
 	int			i;
 
 	i = 0;
-	var_len = ft_strlen(variable);
 	temp = vars->var_list;
 	if (content == NULL)
 		return ;
 	while (vars->environ[i] != NULL)
 	{
-		if (ft_strncmp(vars->environ[i], variable, var_len) == 0
-			&& vars->environ[i][var_len] == '=')
-		{
-			replace_sys_env(&vars->environ[i], variable, content);
-			return ;
-		}
+		if (ft_strncmp(vars->environ[i], variable, ft_strlen(variable)) == 0
+			&& vars->environ[i][ft_strlen(variable)] == '=')
+			return (replace_sys_env(&vars->environ[i], variable, content));
 		i++;
 	}
 	while (temp != NULL)
