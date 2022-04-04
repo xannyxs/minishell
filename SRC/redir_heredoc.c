@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/22 14:59:23 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/30 16:33:09 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/04/04 17:02:30 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 
 #include <sys/wait.h> /* wait */
 
-// TODO: is forking for heredoc really necessary?
+#include <signal.h> /* signal, kill */
+
 static void	child(const char *limiter, const int writefd)
 {
 	char	*line;
@@ -79,6 +80,7 @@ void	redir_heredoc(t_token *tok, int *infd, int *status)
 	ft_close_fd(*infd);
 	if (pipe(pfds) == -1)
 		fatal_perror("pipe");
+	signal(SIGUSR1, SIG_IGN);
 	pid = heredoc_dofork(tok, pfds);
 	deactivate_signals_heredoc();
 	close(pfds[1]);
@@ -88,6 +90,10 @@ void	redir_heredoc(t_token *tok, int *infd, int *status)
 	if (WIFEXITED(status_child) == true)
 		exit_code = WEXITSTATUS(status_child);
 	if (exit_code != 0)
+	{
 		*status |= M_PS_HEREDOC_SIGINT;
+		kill(0, SIGUSR1);
+	}
+	signal(SIGUSR1, SIG_DFL);
 	signals_default();
 }

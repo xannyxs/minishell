@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 14:05:01 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/29 15:45:06 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/04/04 14:34:30 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	signals_pipe(void)
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 	signal(SIGINT, sighandler_pipes);
 	signal(SIGQUIT, sighandler_default);
+	signal(SIGUSR1, sighandler_usr);
 }
 
 void	signals_heredoc(void)

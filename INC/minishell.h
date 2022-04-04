@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/30 15:44:21 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/31 14:12:41 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/04/04 14:33:51 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,6 +220,8 @@ void	sighandler_default(int sig);
 void	sighandler_heredoc(int sig);
 
 void	sighandler_pipes(int sig);
+
+void	sighandler_usr(int sig);
 
 void	sighandler_pipes_quit(int sig);
 

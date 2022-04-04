@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/30 15:56:55 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/04/04 15:13:58 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 	if (pstatus >= 0)
 		pid = pn_fork(readfd, pfds, argv, vars);
 	pn_cleanup(readfd, pfds, argv);
-	if (tlst == NULL)
+	if (tlst == NULL || (pstatus & M_PS_HEREDOC_SIGINT))
 	{
 		close(pfds[0]);
 		return (pid);

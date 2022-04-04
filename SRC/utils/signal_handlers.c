@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/22 20:47:34 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/30 15:41:45 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/04/04 14:28:35 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,12 @@ void	sighandler_default(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	(void) sig;
+}
+
+/* for when the heredoc gets CTRL+C, we need to kill all the children. */
+void	sighandler_usr(int sig)
+{
+	exit(1);
 	(void) sig;
 }
