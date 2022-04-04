@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 12:00:46 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/31 11:59:39 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/04/04 19:27:20 by xvoorvaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,11 @@
 
 static int	nonfatal_error(char *argv[])
 {
-	ft_dprintf(STDERR_FILENO, "minishell: cd: %s", argv[1]);
-	perror(" ");
+	if (argv[1] != NULL)
+	{
+		ft_dprintf(STDERR_FILENO, "minishell: cd: %s", argv[1]);
+		perror(" ");
+	}
 	return (-1);
 }
 
