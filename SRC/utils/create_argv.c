@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/11 16:15:34 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/28 13:21:55 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/04/04 18:02:06 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,20 @@ static void	create_argv_adv_cleanup(t_token **lst, size_t size, int *status)
 		*lst = (*lst)->next;
 	if (size == 0)
 	{
-		*status |= -1;
+		*status |= 1 << (sizeof(int) * 8 - 1);
 		*status |= M_PS_EMPTY;
 	}
 }
 
 /* creates a null-terminated string array of arguments(i.e. argv).
  * it increments the token list so that the next command starts after a
- * pipe. status is negative on failure; status is OR'd with M_PS_EMPTY
- * for when there is nothing to execute, or M_PS_REDIRECTION_FAILED when
- * a redirection is performed but failed. M_PS_REDIRECTED is set when
- * an redirection(succesfull or not) was performed.
+ * pipe. status is negative(negative, *NOT* -1) on failure;
+ * that is, that the current command should not be executed(i.e.
+ * empty/redir failure). status is OR'd with M_PS_EMPTY for when there is
+ * nothing to execute, or M_PS_REDIRECTION_FAILED when a redirection is
+ * performed but failed. M_PS_REDIRECTED is set when an
+ * redirection(succesfull or not) was performed. M_PS_HEREDOC_SIGINT is set
+ * when the heredoc process received a SIGINT.
  * WARNING: return value must be freed, however * NOT * its contents,
  * as these are borrowed from the token list. */
 char	**create_argv_advanced(t_token **lst, int *infd, int *outfd,

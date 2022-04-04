@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 13:13:02 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/28 17:37:46 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/04/04 17:51:58 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	m_check_error(t_token *tok, int fd, int *status)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		perror(tok->next->content);
-		*status |= -1;
+		*status |= 1 << (sizeof(int) * 8 - 1);
 		*status |= M_PS_REDIRECTION_FAILED;
 	}
 }

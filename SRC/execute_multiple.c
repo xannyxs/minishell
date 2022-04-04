@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/10 10:50:28 by xander        #+#    #+#                 */
-/*   Updated: 2022/04/04 15:13:58 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/04/04 17:59:46 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 	if (pipe(pfds) == -1)
 		fatal_perror("pipe");
 	argv = create_argv_advanced(&tlst, &readfd, &pfds[1], &pstatus);
-	if (pstatus & M_PS_HEREDOC_SIGINT)
-		vars->exit_code = ERROR;
 	if (pstatus < 0 || (tlst == NULL && !(pstatus & M_PS_REDIRECTED_STDOUT)))
 	{
 		close(pfds[1]);
@@ -65,6 +63,8 @@ pid_t	pipe_next(int readfd, t_token *tlst, t_vars *vars)
 	pn_cleanup(readfd, pfds, argv);
 	if (tlst == NULL || (pstatus & M_PS_HEREDOC_SIGINT))
 	{
+		if (pstatus & M_PS_HEREDOC_SIGINT)
+			vars->exit_code = ERROR;
 		close(pfds[0]);
 		return (pid);
 	}

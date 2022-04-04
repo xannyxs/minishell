@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/22 14:59:23 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/04/04 17:02:30 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/04/04 17:53:06 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	redir_heredoc(t_token *tok, int *infd, int *status)
 		exit_code = WEXITSTATUS(status_child);
 	if (exit_code != 0)
 	{
-		*status |= M_PS_HEREDOC_SIGINT;
+		*status |= (1 << (sizeof(int) * 8 - 1)) | M_PS_HEREDOC_SIGINT;
 		kill(0, SIGUSR1);
 	}
 	signal(SIGUSR1, SIG_DFL);
