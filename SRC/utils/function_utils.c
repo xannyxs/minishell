@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/09 12:42:49 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/03/31 16:36:45 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/04/05 13:58:09 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,15 @@ static void	fancy_error(const char *path, const char *cmd_name)
 		if (stat(path, &path_stat) == -1)
 			fatal_perror("stat");
 		else if (S_ISDIR(path_stat.st_mode))
-		{
 			msg = "is a directory";
-		}
 	}
 	else if (errno == ENOENT)
 	{
 		msg = "command not found";
 		exit_code++;
 	}
+	else if (errno == ENOEXEC)
+		exit_code++;
 	if (!msg)
 		msg = strerror(errno);
 	ft_dprintf(2, "minishell: %s: %s\n", cmd_name, msg);
