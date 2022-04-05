@@ -1,31 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_valued_chars.c                                  :+:    :+:            */
+/*   ft_is_valid_setarg.c                               :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/25 19:39:37 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/29 15:57:02 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/04/05 16:55:46 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft.h" /* ft_isalnum etc. */
 
 #include <stdbool.h> /* Bool */
 
-bool	ft_valued_chars(char *argv)
+bool	ft_is_valid_setarg(const char *arg)
 {
 	int	i;
 
-	if (ft_isalpha(argv[0]) == false && argv[0] != '_')
+	if (ft_isalpha(arg[0]) == false && arg[0] != '_')
 		return (false);
 	i = 0;
-	while (argv[i] != '\0' && argv[i] != '=')
+	while (arg[i] != '\0' && arg[i] != '=')
 	{
-		if (ft_isalnum(argv[i]) == false && argv[i] != '_')
+		if (ft_isalnum(arg[i]) == false && arg[i] != '_')
 			return (false);
 		i++;
+	}
+	return (true);
+}
+
+bool	ft_is_valid_unsetarg(const char *arg)
+{
+	if (ft_isalpha(*arg) == false && *arg != '_')
+	{
+		return (false);
+	}
+	arg++;
+	while (*arg)
+	{
+		if (!ft_isalnum(*arg) && *arg != '_')
+			return (false);
+		arg++;
 	}
 	return (true);
 }

@@ -6,7 +6,7 @@
 #    By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 14:31:21 by xvoorvaa      #+#    #+#                  #
-#    Updated: 2022/04/05 14:35:43 by jobvan-d      ########   odam.nl          #
+#    Updated: 2022/04/05 16:52:29 by jobvan-d      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ SOURCES			=	SRC/minishell.c \
 					SRC/utils/ft_getargc.c \
 					SRC/utils/ft_getenv.c \
 					SRC/utils/ft_strequel.c \
-					SRC/utils/ft_valued_chars.c \
+					SRC/utils/ft_is_valid_setarg.c \
 					SRC/utils/function_utils.c \
 					SRC/utils/literal_splitting.c \
 					SRC/utils/oldpwd.c \

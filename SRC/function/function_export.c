@@ -6,7 +6,7 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 21:34:06 by xander        #+#    #+#                 */
-/*   Updated: 2022/04/04 19:25:39 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/04/05 16:55:19 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	add_var_to_env(t_vars *vars, char *argv)
 	char	*variable;
 	char	*content;
 
-	if (ft_strlen(argv) > 0 && ft_valued_chars(argv) == true)
+	if (ft_is_valid_setarg(argv) == true)
 	{
 		allocate_var(argv, &content, &variable);
 		if (check_dup_env(*vars, variable) == true)

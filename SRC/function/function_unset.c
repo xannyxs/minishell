@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 16:48:33 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/30 15:35:13 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/04/05 16:56:06 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	exec_unset(char *argv[], t_vars *vars)
 		return (SUCCESS);
 	while (argv[i] != NULL)
 	{
-		if (ft_valued_chars(argv[i]) == false)
+		if (ft_is_valid_unsetarg(argv[i]) == false)
 		{
 			nonfatal_error(argv[i]);
 			vars->exit_code = ERROR;

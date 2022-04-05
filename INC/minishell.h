@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/30 15:44:21 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/04/04 14:33:51 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/04/05 16:55:52 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,9 @@ int		ft_strequel(const char *str);
 
 int		ft_getargc(char *argv[]);
 
-int		ft_valued_chars(char *argv);
+bool	ft_is_valid_setarg(const char *arg);
+
+bool	ft_is_valid_unsetarg(const char *arg);
 
 char	*ft_getenv(const char *name, char *environ[]);
 
