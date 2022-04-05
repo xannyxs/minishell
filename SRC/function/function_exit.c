@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 11:06:19 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/04/05 00:18:16 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/04/05 14:41:39 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ static void	write_num_error(const char *arg)
 	exit(255);
 }
 
-static void	check_valid_chars(char *argv[])
+static void	check_valid_chars(const char *arg)
 {
 	int	i;
 
 	i = 0;
-	if (argv[1][0] == '-')
+	if (arg[0] == '-')
 		i++;
-	while (ft_isdigit(argv[1][i]) == true)
+	while (ft_isdigit(arg[i]) == true)
 		i++;
-	if (ft_isdigit(argv[1][i]) == false && argv[1][i] != '\0')
-		write_num_error(argv[1]);
+	if (ft_isdigit(arg[i]) == false && arg[i] != '\0')
+		write_num_error(arg);
 }
 
 /*
@@ -48,7 +48,7 @@ int	exec_exit(char *argv[], t_vars *vars)
 	ft_dprintf(STDERR_FILENO, "exit\n");
 	if (argv[1] == NULL)
 		exit(vars->exit_code);
-	check_valid_chars(argv);
+	check_valid_chars(argv[1]);
 	if (argv[2] != NULL)
 	{
 		vars->exit_code = ERROR;
