@@ -103,7 +103,6 @@ $(OBJ_DIR):
 $(NAME): $(OBJECTS) $(LIBFT_A) $(PF_A)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) -L$(LIBFT_DIR) -L$(PF_DIR) \
 		-L $(BREW_LIB_DIR) -lreadline -lftprintf -lft
-	@clear
 	@echo $(START)
 	@printf $(COMP_MESSAGE) $(SOURCES)
 	@echo $(MESSAGE)
