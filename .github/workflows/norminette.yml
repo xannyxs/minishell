@@ -5,11 +5,15 @@ name: CI Norminette
 on:
   pull_request:
     branches:
+      - master
       - main
     paths:
       - '**.c'
       - '**.h'
   push:
+    branches:
+      - master
+      - main
     paths:
       - '**.c'
       - '**.h'
