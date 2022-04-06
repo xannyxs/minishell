@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/11 16:15:34 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/04/04 18:02:06 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/04/06 13:32:35 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	create_argv_adv_cleanup(t_token **lst, size_t size, int *status)
 		*lst = (*lst)->next;
 	if (size == 0)
 	{
-		*status |= 1 << (sizeof(int) * 8 - 1);
+		*status |= get_negative_bit();
 		*status |= M_PS_EMPTY;
 	}
 }

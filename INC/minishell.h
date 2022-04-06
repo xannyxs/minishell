@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/30 15:44:21 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/04/05 16:55:52 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/04/06 13:34:21 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,8 @@ bool	ft_is_valid_setarg(const char *arg);
 bool	ft_is_valid_unsetarg(const char *arg);
 
 char	*ft_getenv(const char *name, char *environ[]);
+
+int		get_negative_bit(void);
 
 /*
 	main thread redirection and restoring

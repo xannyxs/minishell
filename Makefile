@@ -6,7 +6,7 @@
 #    By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 14:31:21 by xvoorvaa      #+#    #+#                  #
-#    Updated: 2022/04/05 16:52:29 by jobvan-d      ########   odam.nl          #
+#    Updated: 2022/04/06 13:33:08 by jobvan-d      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SOURCES			=	SRC/minishell.c \
 					SRC/utils/ft_strequel.c \
 					SRC/utils/ft_is_valid_setarg.c \
 					SRC/utils/function_utils.c \
+					SRC/utils/get_negative_bit.c \
 					SRC/utils/literal_splitting.c \
 					SRC/utils/oldpwd.c \
 					SRC/utils/order_export_lst.c \
