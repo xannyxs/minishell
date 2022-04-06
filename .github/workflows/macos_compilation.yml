@@ -15,9 +15,9 @@ jobs:
     - uses: actions/checkout@v3
     - name: Install readline
       run: brew install readline
-    - name: make re
+    - name: make workflow
       run: |
-            make re
+            make workflow
     - name: Execute minishell
       run: ./minishell
     - name: Hi mom!
