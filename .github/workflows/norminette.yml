@@ -7,16 +7,10 @@ on:
     branches:
       - master
       - main
-    paths:
-      - '**.c'
-      - '**.h'
   push:
     branches:
       - master
       - main
-    paths:
-      - '**.c'
-      - '**.h'
 
 jobs:
   build:
