@@ -6,13 +6,14 @@
 #    By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/01 14:31:21 by xvoorvaa      #+#    #+#                  #
-#    Updated: 2022/04/06 13:33:08 by jobvan-d      ########   odam.nl          #
+#    Updated: 2022/04/06 16:23:28 by xvoorvaa      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	minishell
 CC				=	gcc
 CFLAGS			=	-Wall -Wextra -Werror
+CFLAGS_WORKFLOW	=	-Wall -Wextra
 OBJ_DIR			=	OBJ
 SRC_DIR			=	SRC
 INC_DIR			=	INC
@@ -107,6 +108,10 @@ $(NAME): $(OBJECTS) $(LIBFT_A) $(PF_A)
 	@echo $(START)
 	@printf $(COMP_MESSAGE) $(SOURCES)
 	@echo $(MESSAGE)
+
+workflow: $(OBJECTS) $(LIBFT_A) $(PF_A)
+	$(CC) $(CFLAGS_WORKFLOW) $(OBJECTS) -o $(NAME) -L$(LIBFT_DIR) -L$(PF_DIR) \
+		-L $(BREW_LIB_DIR) -lreadline -lftprintf -lft
 
 $(LIBFT_A): $(LIBFT_H)
 	$(MAKE) -C $(LIBFT_DIR)
