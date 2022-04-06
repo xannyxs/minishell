@@ -1,13 +1,39 @@
-name: 42 norminette v3
+# Thanks to https://github.com/caio-vinicius/norminette-github-actions for this file
+# this is for norminette 3.3.51
+name: CI Norminette
 
-on: [push, pull_request]
+on:
+  pull_request:
+    branches:
+      - master
+      - main
+    paths:
+      - '**.c'
+      - '**.h'
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - '**.c'
+      - '**.h'
 
 jobs:
-  norminette_job:
+  build:
     runs-on: ubuntu-latest
-    name: norminette
+    strategy:
+      matrix:
+        python-version: [3.8]
     steps:
     - uses: actions/checkout@v2
-    - uses: alexandregv/norminette-action@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
       with:
-        flags: '.'
+        python-version: ${{ matrix.python-version }}
+    - name: Install Norminette
+      run: |
+        python -m pip install --upgrade pip
+        pip install norminette==3.3.51
+    - name: Linter with Norminette
+      run: |
+        norminette
