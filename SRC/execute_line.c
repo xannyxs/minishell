@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:44:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/04/06 14:13:13 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/04/06 14:19:06 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static int	m_run_builtin(t_vars *vars, t_token *tlst, t_function tf)
 	return (status);
 }
 
-//TODO: Error handeling
 // perhaps check if thing is a builtin or not.
 // then branch cuz easier.
 // slightly cursed tho. but we have to, because a builtin does not fork,
@@ -86,7 +85,6 @@ static int	execute_single_cmd(t_vars *vars)
 	return (vars->exit_code);
 }
 
-//TODO: Error handeling
 int	execute_line(t_vars *vars)
 {
 	if (token_get_first_occurrence(vars->token_list, &is_pipe) != NULL)
