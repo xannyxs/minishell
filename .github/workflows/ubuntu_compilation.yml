@@ -2,17 +2,9 @@ name: Minishell Ubuntu compile check CI
 
 on:
   push:
-    branches: [ master main ]
-    paths:
-      - '**.c'
-      - '**.h'
-      - '**/Makefile'
+    branches: [ master ]
   pull_request:
-    branches: [ master main ]
-    paths:
-      - '**.c'
-      - '**.h'
-      - '**/Makefile'
+    branches: [ master ]
 
 jobs:
   build:
@@ -22,7 +14,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: make re
-      run: make re
+      run: |
+            make re
     - name: Execute minishell
       run: ./minishell
     - name: Echo hoi
