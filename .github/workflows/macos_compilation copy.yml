@@ -1,0 +1,31 @@
+name: Minishell MacOs compile check CI
+
+on:
+  push:
+    branches: [ master main ]
+    paths:
+      - '**.c'
+      - '**.h'
+      - '**/Makefile'
+  pull_request:
+    branches: [ master main ]
+    paths:
+      - '**.c'
+      - '**.h'
+      - '**/Makefile'
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: make re
+      run: make re
+    - name: Execute minishell
+      run: ./minishell
+    - name: Echo hoi
+      run: echo hoi
+    - name: Exit shell
+      run: exit
