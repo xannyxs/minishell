@@ -6,16 +6,22 @@
 /*   By: xander <xander@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 18:11:55 by xander        #+#    #+#                 */
-/*   Updated: 2022/03/30 15:38:41 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/04/07 13:25:09 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-#include <stdio.h> /* FILE */
 #include <stdlib.h> /* free */
+#include <stdio.h> /* FILE(required for readline) */
 #include <readline/readline.h> /* Readline */
 #include <readline/history.h> /* add_history */
+
+/* this is the string for the prompt. the \001 and \002 are to specifiy the
+ * begin and end of characters to ignore in width calculation
+ * (they are for colours). The reason why the variable name is so short is
+ * because of norm. */
+#define P_STR ("\001\e[1;36m\002minishell \001\e[0;32m\002$> \001\e[0m\002")
 
 static void	init_base_vars(t_vars *vars)
 {
@@ -38,7 +44,7 @@ static void	prompt_shell(t_vars *vars)
 
 	while (true)
 	{
-		line = readline("\e[1;36mminishell \e[0;32m$> \e[0m");
+		line = readline(P_STR);
 		add_history(line);
 		if (!line)
 			exit(vars->exit_code);
