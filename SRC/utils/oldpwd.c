@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/28 18:11:20 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/30 15:53:24 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/04/07 18:00:50 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,11 @@
 
 static void	add_oldpwd(t_vars *vars)
 {
-	int		i;
+	size_t	i;
 	char	**temp_env;
 
-	i = 0;
 	temp_env = vars->environ;
-	while (temp_env[i] != NULL)
-		i++;
+	i = calc_envp_length(temp_env);
 	vars->environ = malloc((i + 2) * sizeof(char *));
 	if (vars->environ == NULL)
 		fatal_perror("malloc");
