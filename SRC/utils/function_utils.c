@@ -6,7 +6,7 @@
 /*   By: jobvan-d <jobvan-d@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/09 12:42:49 by jobvan-d      #+#    #+#                 */
-/*   Updated: 2022/04/05 13:58:09 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/04/07 15:31:51 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	m_proc(int infd, int outfd, char **args, t_vars *vars)
 	path = pathresolve_tryfind(*args, vars->environ);
 	if (!path)
 		path = "";
-	if (execve(path, args, vars->environ) == -1)
+	if (execve(path, args, generate_envp(vars)) == -1)
 	{
 		fancy_error(path, *args);
 	}

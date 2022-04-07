@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/30 15:44:21 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/04/06 13:34:21 by jobvan-d      ########   odam.nl         */
+/*   Updated: 2022/04/07 15:51:45 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ int		exec_exit(char *argv[], t_vars *vars);
 
 void	new_node(t_envlist **head, char *variable, char *content);
 
+size_t	envlist_len(t_envlist *lst);
+
 t_token	*token_new(char *content, const enum e_token type);
 
 t_token	*token_li_last(t_token *lst);
@@ -206,6 +208,10 @@ bool	ft_is_valid_unsetarg(const char *arg);
 char	*ft_getenv(const char *name, char *environ[]);
 
 int		get_negative_bit(void);
+
+char	**generate_envp(t_vars *vars);
+
+size_t	calc_envp_length(char **envp);
 
 /*
 	main thread redirection and restoring

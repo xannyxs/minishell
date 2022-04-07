@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/14 21:18:01 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/30 15:37:16 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/04/07 15:51:34 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,19 @@
 #include "libft.h" /* ft_atoi */
 
 #include <stdlib.h> /* malloc */
+
+/* returns the length of a char** */
+size_t	calc_envp_length(char **envp)
+{
+	size_t	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		i++;
+	}
+	return (i);
+}
 
 static char	*increment_shlvl(char *environ)
 {
@@ -24,18 +37,6 @@ static char	*increment_shlvl(char *environ)
 	layer_shell = ft_atoi(shlvl) + 1;
 	shlvl = ft_itoa(layer_shell);
 	return (shlvl);
-}
-
-static void	malloc_env(t_vars *vars, char **environ)
-{
-	int	i;
-
-	i = 0;
-	while (environ[i] != NULL)
-		i++;
-	vars->environ = malloc((i + 1) * sizeof(char *));
-	if (vars->environ == NULL)
-		malloc_fail();
 }
 
 /*
@@ -49,8 +50,10 @@ void	allocate_env(t_vars *vars)
 	char		*temp;
 	extern char	**environ;
 
+	vars->environ = malloc((calc_envp_length(environ) + 1) * sizeof(char *));
+	if (vars->environ == NULL)
+		malloc_fail();
 	i = 0;
-	malloc_env(vars, environ);
 	while (environ[i] != NULL)
 	{
 		if (ft_strncmp(environ[i], "OLDPWD=", 7) == 0)

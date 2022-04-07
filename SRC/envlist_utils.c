@@ -6,7 +6,7 @@
 /*   By: xvoorvaa <xvoorvaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 16:15:22 by xvoorvaa      #+#    #+#                 */
-/*   Updated: 2022/03/30 15:38:10 by xvoorvaa      ########   odam.nl         */
+/*   Updated: 2022/04/07 15:42:51 by jobvan-d      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,18 @@ void	new_node(t_envlist **head, char *variable, char *content)
 			last_node = last_node->next;
 		last_node->next = new_node;
 	}
+}
+
+/* returns the length of a envlist */
+size_t	envlist_len(t_envlist *lst)
+{
+	size_t	i;
+
+	i = 0;
+	while (lst)
+	{
+		i++;
+		lst = lst->next;
+	}
+	return (i);
 }
