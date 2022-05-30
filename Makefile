@@ -110,10 +110,6 @@ $(NAME): $(OBJECTS) $(LIBFT_A) $(PF_A)
 	@printf $(COMP_MESSAGE) $(SOURCES)
 	@echo $(MESSAGE)
 
-workflow: $(OBJECTS) $(LIBFT_A) $(PF_A)
-	$(CC) $(CFLAGS_WORKFLOW) $(OBJECTS) -o $(NAME) -L$(LIBFT_DIR) -L$(PF_DIR) \
-		-L $(BREW_LIB_DIR) -lreadline -lftprintf -lft
-
 $(LIBFT_A): $(LIBFT_H)
 	$(MAKE) -C $(LIBFT_DIR)
 
