@@ -7,7 +7,9 @@
   
 [![Minishell Ubuntu compile check CI](https://github.com/xvoorvaa/minishell/actions/workflows/ubuntu_compilation.yml/badge.svg)](https://github.com/xvoorvaa/minishell/actions/workflows/ubuntu_compilation.yml)
 
-## Dependencies
+A small shell in C
+
+### Dependencies
 
 mac:
 ```sh
@@ -20,4 +22,15 @@ sudo apt-get install libreadline-dev
 ```
 
 Don't forget `make`, `gcc`/`clang`, and `git` of course!
+
+### Compiling
+
+```sh
+make
+```
+
+### Running
+```sh
+./minishell
+```
 
